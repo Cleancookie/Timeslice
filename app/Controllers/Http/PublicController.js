@@ -2,9 +2,8 @@
 var AppController = require('./AppController');
 
 class PublicController extends AppController {
-  home(ctx) {
-    console.log('test');
-    return super.home(ctx);
+  home({req, res, view}) {
+    return super.home({req, res, view});
   }
 }
 

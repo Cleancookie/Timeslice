@@ -17,3 +17,6 @@
 const Route = use('Route')
 
 Route.get('/', 'PublicController.home')
+Route.get('/login', 'UserController.login')
+Route.get('/users/:id', 'UserController.showProfile').middleware('auth')
+Route.post('/login', 'UserController.authenticateUser').middleware('guest')
