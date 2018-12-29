@@ -20,4 +20,4 @@ Route.get('/', 'PublicController.home')
 
 Route.get('/login', 'UserController.login').as('user.login')
 Route.post('/login', 'UserController.authenticateUser')
-Route.get('/dashboard', 'UserController.dashboard')
+Route.get('/dashboard', 'UserController.dashboard').middleware('auth').as('user.dashboard')

@@ -7,37 +7,58 @@
 
 var PublicController = require('./PublicController');
 
+/** @type {typeof import('@adonisjs/framework/src/Hash')} */
+const Hash = use('Hash')
+
 class UserController extends PublicController {
   /**
-   * POST Log in a user
+   * GET show login form
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {AuthSession} ctx.auth
    */
-  login({request, response, view}) {
+  async login({request, response, view}) {
     return view.render('User/login');
   }
 
-  authenticateUser({request, response, auth}) {
+    /**
+   * POST authenticate a user
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {AuthSession} ctx.auth
+   */
+  async authenticateUser({request, response, auth}) {
     console.log(request);
-    let { username, password } = request.all();
-    auth.attempt(username, password);
+    let { username, password } = request.all()
+    let hashedPassword = await Hash.make(password)
 
-    return response.redirect('/dashboard');
+    if (await auth.attempt(username, password)) {
+      response.redirect('/dashboard')
+      return
+    }
+
+    response.redirect('/login')
+    return
+  }
+
+  async logout({response, auth}) {
+    await auth.logout()
+    return
   }
 
   /**
-   * Displays a user's dashboard
+   * GET Displays a user's dashboard
    *
    * @param {object} ctx
    * @param {AuthSession} ctx.auth
    * @param {object} ctx.params
    * @param {View} ctx.view
    */
-  dashboard({auth, params, view}) {
-
+  async dashboard({auth, params, view}) {
     return view.render('User/dashboard');
   }
 }
