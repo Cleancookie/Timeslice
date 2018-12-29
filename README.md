@@ -1,31 +1,28 @@
-# Adonis fullstack application
+# Notes
 
-This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
-
-1. Bodyparser
-2. Session
-3. Authentication
-4. Web security middleware
-5. CORS
-6. Edge template engine
-7. Lucid ORM
-8. Migrations and seeds
-
-## Setup
-
-Use the adonis command to install the blueprint
-
-```bash
-adonis new yardstick
-```
-
-or manually clone the repo and then run `npm install`.
-
-
-### Migrations
-
-Run the following command to run startup migrations.
-
+## IntelliSense
 ```js
-adonis migration:run
+/** @typedef {import('@adonisjs/auth/src/Schemes/Session')} AuthSession */
+/** @typedef {import('@adonisjs/framework/src/Env')} Env */
+/** @typedef {import('@adonisjs/lucid/src/Factory')} Factory */
+/** @typedef {import('@adonisjs/framework/src/Hash')} Hash */
+/** @typedef {import('@adonisjs/ignitor/src/Helpers')} Helpers */
+/** @typedef {import('@adonisjs/framework/src/Request')} Request */
+/** @typedef {import('@adonisjs/framework/src/Response')} Response */
+/** @typedef {import('@adonisjs/framework/src/Route/Manager'} Route */
+/** @typedef {import('@adonisjs/lucid/src/Schema')} Schema */
+/** @typedef {import('@adonisjs/framework/src/Server')} Server */
+/** @typedef {import('@adonisjs/session/src/Session')} Session */
+/** @typedef {import('@adonisjs/framework/src/View')} View */
+/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
+```
+```js
+  /**
+   * POST Log in a user
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {AuthSession} ctx.auth
+   */
 ```
