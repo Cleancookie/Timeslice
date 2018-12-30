@@ -32,7 +32,6 @@ class UserController extends PublicController {
    * @param {AuthSession} ctx.auth
    */
   async authenticateUser({request, response, auth}) {
-    console.log(request);
     let { username, password } = request.all()
     let hashedPassword = await Hash.make(password)
 
@@ -47,6 +46,7 @@ class UserController extends PublicController {
 
   async logout({response, auth}) {
     await auth.logout()
+    response.redirect('/login')
     return
   }
 

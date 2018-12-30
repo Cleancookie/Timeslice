@@ -19,5 +19,6 @@ const Route = use('Route')
 Route.get('/', 'PublicController.home')
 
 Route.get('/login', 'UserController.login').as('user.login')
-Route.post('/login', 'UserController.authenticateUser')
-Route.get('/dashboard', 'UserController.dashboard').middleware('auth').as('user.dashboard')
+Route.get('/logout', 'UserController.logout').as('user.logout')
+Route.post('/login', 'UserController.authenticateUser').as('user.authenticate')
+Route.get('/dashboard', 'UserController.dashboard').as('user.dashboard').middleware('auth')
