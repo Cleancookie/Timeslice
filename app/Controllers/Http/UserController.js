@@ -1,15 +1,5 @@
 'use strict'
-/** @typedef {import('@adonisjs/auth/src/Schemes/Session')} AuthSession */
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
-/** @typedef {import('@adonisjs/session/src/Session')} Session */
-
-
-var PublicController = require('./PublicController');
-
-/** @type {typeof import('@adonisjs/framework/src/Hash')} */
-const Hash = use('Hash')
+const PublicController = require('./PublicController');
 
 class UserController extends PublicController {
   /**
@@ -18,13 +8,25 @@ class UserController extends PublicController {
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {AuthSession} ctx.auth
    */
   async login({request, response, view}) {
     return view.render('User/login');
   }
 
-    /**
+  /**
+   * GET logs a user out
+   *
+   * @param {object} ctx
+   * @param {Response} ctx.response
+   * @param {AuthSession} ctx.auth
+   */
+  async logout({response, auth}) {
+    await auth.logout()
+    response.redirect('/login')
+    return
+  }
+
+  /**
    * POST authenticate a user
    *
    * @param {object} ctx
@@ -50,16 +52,14 @@ class UserController extends PublicController {
     return
   }
 
-  /**
-   * GET logs a user out
-   *
-   * @param {object} ctx
-   * @param {Response} ctx.response
-   * @param {AuthSession} ctx.auth
-   */
-  async logout({response, auth}) {
-    await auth.logout()
-    response.redirect('/login')
+  async register({request, response, session}) {
+    if (request.body['password'] !== request.body['confirm-password']) {
+      session.flash({validationError: "Passwords do not match"})
+      response.redirect('/login')
+      return
+    }
+
+    response.redirect('/')
     return
   }
 
