@@ -3,6 +3,7 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+/** @typedef {import('@adonisjs/session/src/Session')} Session */
 
 
 var PublicController = require('./PublicController');
@@ -30,17 +31,23 @@ class UserController extends PublicController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {AuthSession} ctx.auth
+   * @param {Session} ctx.session
    */
-  async authenticateUser({request, response, auth}) {
-    let { username, password } = request.all()
-    let hashedPassword = await Hash.make(password)
+  async authenticateUser({request, response, auth, session}) {
+    let loggedIn = false;
+    try {
+      loggedIn = await auth.attempt(request.body['username'], request.body['password'])
+    } catch(e) {
+      session.flash({ invalidLogin : "Your login details were incorrect.  Please try again" });
+    }
 
-    if (await auth.attempt(username, password)) {
+    if (loggedIn) {
       response.redirect('/dashboard')
       return
     }
 
-    response.redirect('/login')
+
+    response.redirect('/login', true)
     return
   }
 

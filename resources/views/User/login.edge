@@ -10,6 +10,12 @@
   <div class="row justify-content-center">
     <div class="col-3 push-4">
       <form action="/login" method="POST">
+        @if(flashMessage('invalidLogin'))
+        <div class="alert alert-danger" role="alert">
+          {{ flashMessage('invalidLogin') }}
+        </div>
+        @endif
+
         {{ csrfField() }}
         <div class="form-group">
           <label for="username">Username</label>
