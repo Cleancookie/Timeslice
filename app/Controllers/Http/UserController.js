@@ -46,11 +46,17 @@ class UserController extends PublicController {
       return
     }
 
-
     response.redirect('/login', true)
     return
   }
 
+  /**
+   * GET logs a user out
+   *
+   * @param {object} ctx
+   * @param {Response} ctx.response
+   * @param {AuthSession} ctx.auth
+   */
   async logout({response, auth}) {
     await auth.logout()
     response.redirect('/login')
