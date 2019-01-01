@@ -1,27 +1,24 @@
 'use strict'
+
 const PublicController = use('App/Controllers/Http/PublicController')
 
-/** @typedef {import "@adonisjs/lucid/src/Lucid/Model/Base"} */
+/** @type {typeof import('../../Models/User')} */
 const User = use('App/Models/User')
 
 class UserController extends PublicController {
   /**
    * GET show login form
    *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
+   * @param {Context} ctx
    */
-  async login({request, response, view}) {
+  async login({view}) {
     return view.render('User/login');
   }
 
   /**
    * GET logs a user out
    *
-   * @param {object} ctx
-   * @param {Response} ctx.response
-   * @param {AuthSession} ctx.auth
+   * @param {Context} ctx
    */
   async logout({response, auth}) {
     await auth.logout()
@@ -32,11 +29,7 @@ class UserController extends PublicController {
   /**
    * POST authenticate a user
    *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {AuthSession} ctx.auth
-   * @param {Session} ctx.session
+   * @param {Context} ctx
    */
   async authenticateUser({request, response, auth, session}) {
     let loggedIn = false;
@@ -58,11 +51,7 @@ class UserController extends PublicController {
   /**
    * POST register, validates and logs in a user
    *
-   * @param {object} ctx Context
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {Session} ctx.session
-   * @param {AuthSession} ctx.auth
+   * @param {Context} ctx
    */
   async register({request, response, session, auth}) {
     if (request.body['password'] !== request.body['confirm-password']) {
@@ -95,10 +84,7 @@ class UserController extends PublicController {
   /**
    * GET Displays a user's dashboard
    *
-   * @param {object} ctx
-   * @param {AuthSession} ctx.auth
-   * @param {object} ctx.params
-   * @param {View} ctx.view
+   * @param {Context} ctx
    */
   async dashboard({auth, params, view}) {
     return view.render('User/dashboard');

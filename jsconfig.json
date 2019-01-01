@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+      "target": "es2015"
+  },
+  "include": [
+      "**/*"
+  ],
+  "files": [
+    "node_modules/adonisjs-types/index.d.ts",
+    "config/typings.d.ts",
+  ]
+}
