@@ -1,15 +1,8 @@
 'use strict'
-/** @typedef {import('@adonisjs/auth/src/Schemes/Session')} AuthSession */
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
-/** @typedef {import('@adonisjs/session/src/Session')} Session */
+const PublicController = use('App/Controllers/Http/PublicController')
 
-
-var PublicController = require('./PublicController');
-
-/** @type {typeof import('@adonisjs/framework/src/Hash')} */
-const Hash = use('Hash')
+/** @typedef {import "@adonisjs/lucid/src/Lucid/Model/Base"} */
+const User = use('App/Models/User')
 
 class UserController extends PublicController {
   /**
@@ -18,13 +11,25 @@ class UserController extends PublicController {
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {AuthSession} ctx.auth
    */
   async login({request, response, view}) {
     return view.render('User/login');
   }
 
-    /**
+  /**
+   * GET logs a user out
+   *
+   * @param {object} ctx
+   * @param {Response} ctx.response
+   * @param {AuthSession} ctx.auth
+   */
+  async logout({response, auth}) {
+    await auth.logout()
+    response.redirect('/login')
+    return
+  }
+
+  /**
    * POST authenticate a user
    *
    * @param {object} ctx
@@ -51,14 +56,38 @@ class UserController extends PublicController {
   }
 
   /**
-   * GET logs a user out
+   * POST register, validates and logs in a user
    *
-   * @param {object} ctx
+   * @param {object} ctx Context
+   * @param {Request} ctx.request
    * @param {Response} ctx.response
+   * @param {Session} ctx.session
    * @param {AuthSession} ctx.auth
    */
-  async logout({response, auth}) {
-    await auth.logout()
+  async register({request, response, session, auth}) {
+    if (request.body['password'] !== request.body['confirm-password']) {
+      session.flash({validationError: "Passwords do not match"})
+      response.redirect('/login')
+      return
+    }
+
+    await User.create({
+      username: request.body['username'],
+      password: request.body['password']
+    })
+
+    let loggedIn = false;
+    try {
+      loggedIn = await auth.attempt(request.body['username'], request.body['password'])
+    } catch(e) {
+      session.flash({ invalidLogin : "Your account has been created but we were unable to log you in" })
+    }
+
+    if (loggedIn) {
+      response.redirect('/dashboard')
+      return
+    }
+
     response.redirect('/login')
     return
   }

@@ -1,33 +1,22 @@
 @layout("layouts/default")
 
 @section('content')
-<div class="d-flex flex-column text-center pt-3">
-    <h1>Login</h1>
-    <p>Placeholder page</p>
-</div>
-
-<div class="d-flex flex-column container">
-  <div class="w-100 w-md-50 m-auto">
-      <form action="/login" method="POST">
-        @if(flashMessage('invalidLogin'))
-        <div class="alert alert-danger" role="alert">
-          {{ flashMessage('invalidLogin') }}
-        </div>
-        @endif
-        {{ csrfField() }}
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" class="form-control" name="username" id="username" placeholder="Username">
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="d-flex flex-column text-center pt-3">
+        <h1>Register</h1>
+        <p>Placeholder page</p>
+      </div>
+      @include('partials/registerForm')
+    </div>
+    <div class="col">
+        <div class="d-flex flex-column text-center pt-3">
+            <h1>Login</h1>
+            <p>Placeholder page</p>
+          </div>
+      @include('partials/loginForm')
+    </div>
   </div>
-
 </div>
 @endsection
