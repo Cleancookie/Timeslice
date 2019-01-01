@@ -1,5 +1,8 @@
 'use strict'
-const PublicController = require('./PublicController');
+const PublicController = use('App/Controllers/Http/PublicController')
+
+/** @typedef {import "@adonisjs/lucid/src/Lucid/Model/Base"} */
+const User = use('App/Models/User')
 
 class UserController extends PublicController {
   /**
@@ -52,14 +55,40 @@ class UserController extends PublicController {
     return
   }
 
-  async register({request, response, session}) {
+  /**
+   * POST register, validates and logs in a user
+   *
+   * @param {object} ctx Context
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {Session} ctx.session
+   * @param {AuthSession} ctx.auth
+   */
+  async register({request, response, session, auth}) {
     if (request.body['password'] !== request.body['confirm-password']) {
       session.flash({validationError: "Passwords do not match"})
       response.redirect('/login')
       return
     }
 
-    response.redirect('/')
+    await User.create({
+      username: request.body['username'],
+      password: request.body['password']
+    })
+
+    let loggedIn = false;
+    try {
+      loggedIn = await auth.attempt(request.body['username'], request.body['password'])
+    } catch(e) {
+      session.flash({ invalidLogin : "Your account has been created but we were unable to log you in" })
+    }
+
+    if (loggedIn) {
+      response.redirect('/dashboard')
+      return
+    }
+
+    response.redirect('/login')
     return
   }
 
