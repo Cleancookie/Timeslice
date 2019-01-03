@@ -2,7 +2,7 @@
 
 const PublicController = use('App/Controllers/Http/PublicController')
 
-/** @type {typeof import('../../Models/User')} */
+/** @type {typeof import('App/Models/User')} */
 const User = use('App/Models/User')
 
 class UserController extends PublicController {
