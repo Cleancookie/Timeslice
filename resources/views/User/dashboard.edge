@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="projects--container">
+  @!each(project in projects, include = 'partials/project-card')
 </div>
 
 <div class="tasks--container">

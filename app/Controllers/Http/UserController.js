@@ -86,8 +86,11 @@ class UserController extends PublicController {
    *
    * @param {Context} ctx
    */
-async dashboard({auth, params, view}) {
-    return view.render('User/dashboard');
+  async dashboard({auth, params, view}) {
+    let projects = [];
+    return view.render('User/dashboard', {
+      projects: projects
+    });
   }
 }
 
