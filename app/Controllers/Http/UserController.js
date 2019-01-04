@@ -1,5 +1,6 @@
 'use strict'
 
+/** @type {typeof import('App/Controllers/Http/PublicController')} */
 const PublicController = use('App/Controllers/Http/PublicController')
 
 /** @type {typeof import('App/Models/User')} */
@@ -87,10 +88,11 @@ class UserController extends PublicController {
    * @param {Context} ctx
    */
   async dashboard({auth, params, view}) {
-    let projects = [];
+    let projects = await auth.user.with('projects').fetch();
+
     return view.render('User/dashboard', {
-      projects: projects
-    });
+      projects: projects.toJSON()
+    })
   }
 }
 
