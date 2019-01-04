@@ -1,13 +1,17 @@
 @layout("layouts/default")
 
 @section('content')
-<div class="projects--container">
-  @!each(project in projects, include = 'partials/project-card')
-</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-md-1 projects--container">
+        @!each(project in projects, include = 'partials/project-card')
+      </div>
 
-<div class="tasks--container">
-</div>
+      <div class="col-12 col-md-11">
+      </div>
 
-<div class="taks--details">
+      <div class="taks--details">
+      </div>
+  </div>
 </div>
 @endsection

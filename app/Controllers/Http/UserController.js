@@ -88,7 +88,7 @@ class UserController extends PublicController {
    * @param {Context} ctx
    */
   async dashboard({auth, params, view}) {
-    let projects = await auth.user.with('projects').fetch();
+    let projects = await auth.user.projects().fetch();
 
     return view.render('User/dashboard', {
       projects: projects.toJSON()
