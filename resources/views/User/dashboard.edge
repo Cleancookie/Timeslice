@@ -3,14 +3,14 @@
 @section('content')
 <div class="container-fluid">
   <div class="row">
-    <div class="col-12 col-md-1 projects--container">
+    <div class="col-12 col-md-2 projects--container">
       <a href="#" data-create-project class="projects--create-new-project">Create new project</a>
-      <ul data-project-list class="projects--list">
+      <ul data-project-list class="projects--list list-group">
         @!each(project in projects, include = 'partials/project-card')
       </ul>
     </div>
 
-    <div class="col-12 col-md-11">
+    <div class="col-12 col-md-10">
     </div>
 
     <div class="taks--details">
