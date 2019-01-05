@@ -30,6 +30,7 @@ class ProjectController {
    * @param {View} ctx.view
    */
   async create ({ request, response, view }) {
+    return view.render('/Project/create')
   }
 
   /**

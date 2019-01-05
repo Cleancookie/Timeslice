@@ -1,6 +1,11 @@
+'use strict'
 import $ from 'jquery'
-import boostrap from 'bootstrap'
+// import boostrap from 'bootstrap'
+import DashboardComponent from './components/dashboard/index'
 
-$(document).ready(() => {
+const dashboardComponent = new DashboardComponent()
+dashboardComponent.init()
+
+$(document).ready(function() {
   console.log('js loaded')
 })

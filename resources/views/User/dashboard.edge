@@ -4,8 +4,10 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 col-md-1 projects--container">
-      <a href="#">Create new project</a>
-      @!each(project in projects, include = 'partials/project-card')
+      <a href="#" data-create-project class="projects--create-new-project">Create new project</a>
+      <ul data-project-list class="projects--list">
+        @!each(project in projects, include = 'partials/project-card')
+      </ul>
     </div>
 
     <div class="col-12 col-md-11">
