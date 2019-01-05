@@ -1,5 +1,6 @@
-import * as $ from './libraries/jQuery'
+import $ from 'jquery'
+import boostrap from 'bootstrap'
 
-$(document).on('ready', function(){
-  alert('yerd')
+$(document).ready(() => {
+  console.log('js loaded')
 })
