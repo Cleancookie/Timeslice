@@ -4,6 +4,9 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+/** @type {typeof import('App/Models/Project')} */
+const Project = use('App/Models/Project')
+
 /**
  * Resourceful controller for interacting with projects
  */
@@ -29,7 +32,7 @@ class ProjectController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create ({ request, response, view }) {
+  async create ({ request, response, view, auth }) {
     return view.render('/Project/create')
   }
 
@@ -37,11 +40,20 @@ class ProjectController {
    * Create/save a new project.
    * POST projects
    *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
+   * @param {Context} ctx
    */
-  async store ({ request, response }) {
+  async store ({ request, response, auth, view }) {
+    let user = await auth.getUser()
+    if (user) {
+      let newProject = await Project.create({
+        "name": request.body['name']
+      })
+      newProject.users().save(user)
+
+      return view.render('partials/project-card', {
+        project: newProject
+      })
+    }
   }
 
   /**

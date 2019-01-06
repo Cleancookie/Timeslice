@@ -15,11 +15,19 @@ export default class ProjectComponent {
         }).catch(function(error) {
           console.log(error)
         })
-      }.bind(this))
-
-      $('[data-submit-new-project]').submit(function(event) {
-        event.preventDefault();
       })
+
+      $('[data-create-project-form]').on('submit', (function(event) {
+        event.preventDefault();
+        axios.post('/projects/store', {
+          name: $('[data-new-project-name]').val()
+        }).then(function(res) {
+          $('[data-create-project-form]').parent('li').remove()
+          $('[data-project-list]').append(res.data)
+        }).catch(function(error) {
+          console.log(error)
+        })
+      }))
     })
   }
 }

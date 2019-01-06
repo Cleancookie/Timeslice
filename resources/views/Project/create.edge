@@ -1,11 +1,16 @@
-<li class="projects--item list-group-item">
-  <form action="/project/store" method="POST" id="create-new-project" data-create-project-form>
+<li class="projects--item list-group-item" data-create-project-form-container>
+  <form action="/projects/store" method="POST" id="create-new-project" data-create-project-form>
     {{ csrfField() }}
     <div class="form-group input-group">
-      <input type="text" class="form-control" name="project-name" id="project-name" placeholder="Project Name">
+      <input type="text" class="form-control" name="project-name" id="project-name" placeholder="Project Name" data-new-project-name>
       <div class="input-group-append">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Add</button>
       </div>
     </div>
   </form>
+  <script>
+    DashboardComponent.init();
+  </script>
 </li>
+
+
