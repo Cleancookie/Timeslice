@@ -3,9 +3,12 @@
 @section('content')
 <div class="container-fluid dashboard--container" data-dashboard-container>
   <div class="row">
-    <div class="col-12 col-md-2 projects--container">
-      <a href="#" data-create-project class="projects--create-new-project">Create new project</a>
-      <form action="/projects/store" method="POST" id="create-new-project" class="invisible " data-create-project-form>
+
+    <div class="col-12 col-md-2 py-3 projects--container">
+      <div class="text-center container-fluid">
+          <a href="#" data-create-project class="projects--create-new-project ">Create new project</a>
+      </div>
+      <form action="/projects/store" method="POST" id="create-new-project" class="invisible my-1" data-create-project-form>
         {{ csrfField() }}
         <div class="form-group input-group">
           <input type="text" class="form-control" name="project-name" id="project-name" placeholder="Project Name" data-create-project-name>
