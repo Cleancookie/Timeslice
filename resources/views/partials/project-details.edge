@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <h1>{{ project.name }}</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      People assigned:
+      <ul class="list-group d-flex">
+          @!each(user in users, include = 'partials/user-icon')
+      </ul>
+    </div>
+  </div>
+</div>

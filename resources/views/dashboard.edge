@@ -1,11 +1,11 @@
 @layout("layouts/default")
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid dashboard--container" data-dashboard-container>
   <div class="row">
     <div class="col-12 col-md-2 projects--container">
       <a href="#" data-create-project class="projects--create-new-project">Create new project</a>
-      <form action="/projects/store" method="POST" id="create-new-project" style="display: none" data-create-project-form>
+      <form action="/projects/store" method="POST" id="create-new-project" class="invisible " data-create-project-form>
         {{ csrfField() }}
         <div class="form-group input-group">
           <input type="text" class="form-control" name="project-name" id="project-name" placeholder="Project Name" data-create-project-name>
@@ -22,7 +22,7 @@
     <div class="col-12 col-md-10">
     </div>
 
-    <div class="taks--details">
+    <div class="details bg-light p-3" style="display: none" data-details>
     </div>
   </div>
 </div>

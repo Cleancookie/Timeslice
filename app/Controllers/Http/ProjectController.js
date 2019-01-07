@@ -1,17 +1,14 @@
 'use strict'
-
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
-
 /** @type {typeof import('App/Models/Project')} */
 const Project = use('App/Models/Project')
+/** @type {typeof import('App/Models/User')} */
+const User = use('App/Models/User')
 
 class ProjectController {
 
   /**
    * Create/save a new project.
-   * POST projects
+   * POST /projects/store
    *
    * @param {Context} ctx
    */
@@ -35,6 +32,22 @@ class ProjectController {
       "error": "Invalid user"
     })
     return
+  }
+
+  /**
+   * Get details about the selected project
+   * GET /projects/:id
+   *
+   * @param {Context} ctx
+   */
+  async read ({ params, request, response, auth, view }) {
+    let project = await Project.find(params.id)
+    let users = await project.users().fetch()
+
+    return view.render('ajax/project-details', {
+      project: project.toJSON(),
+      users: users.toJSON()
+    })
   }
 }
 

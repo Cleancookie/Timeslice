@@ -1,5 +1,17 @@
 @charset "UTF-8";
 
+.dashboard--container {
+  position: relative;
+}
+
+.details {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 600px;
+}
+
 /*!
  * Bootstrap v4.2.1 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors

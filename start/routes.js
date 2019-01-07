@@ -25,3 +25,4 @@ Route.get('/dashboard', 'UserController.dashboard').as('user.dashboard').middlew
 Route.post('/register', 'UserController.register').as('user.register')
 
 Route.post('/projects/store', 'ProjectController.create').middleware('auth')
+Route.get('/projects/:id', 'ProjectController.read')
