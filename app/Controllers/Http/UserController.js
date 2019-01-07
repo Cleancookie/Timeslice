@@ -13,7 +13,7 @@ class UserController extends PublicController {
    * @param {Context} ctx
    */
   async login({view}) {
-    return view.render('User/login');
+    return view.render('login');
   }
 
   /**
@@ -90,7 +90,7 @@ class UserController extends PublicController {
   async dashboard({auth, params, view}) {
     let projects = await auth.user.projects().fetch();
 
-    return view.render('User/dashboard', {
+    return view.render('dashboard', {
       projects: projects.toJSON()
     })
   }

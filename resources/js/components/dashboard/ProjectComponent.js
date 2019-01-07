@@ -10,19 +10,20 @@ export default class ProjectComponent {
   init() {
     $(document).ready(function() {
       $('[data-create-project]').on('click', function() {
-        axios.get('/projects/create').then(function(res) {
-          $('[data-project-list]').append(res.data)
-        }).catch(function(error) {
-          console.log(error)
-        })
+        $('[data-create-project-form]').toggle()
       })
 
       $('[data-create-project-form]').on('submit', (function(event) {
+        $('[data-create-project-name]').attr('disabled', true)
+        $('[data-create-project-submit]').text('Saving...')
         event.preventDefault();
         axios.post('/projects/store', {
-          name: $('[data-new-project-name]').val()
+          name: $('[data-create-project-name]').val()
         }).then(function(res) {
-          $('[data-create-project-form]').parent('li').remove()
+          $('[data-create-project-form]').hide()
+          $('[data-create-project-name]').attr('disabled', false)
+          $('[data-create-project-name]').val('')
+          $('[data-create-project-submit]').text('Add')
           $('[data-project-list]').append(res.data)
         }).catch(function(error) {
           console.log(error)
