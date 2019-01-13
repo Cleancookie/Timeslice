@@ -26,3 +26,4 @@ Route.post('/register', 'UserController.register').as('user.register')
 
 Route.post('/projects/store', 'ProjectController.create').middleware('auth')
 Route.get('/projects/:id', 'ProjectController.read')
+Route.post('/projects/delete/:id', 'ProjectController.delete').middleware('auth')

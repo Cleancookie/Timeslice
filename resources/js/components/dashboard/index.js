@@ -1,6 +1,6 @@
 'use strict'
 import $ from 'jquery'
-import axios from 'axios'
+// import axios from 'axios'
 
 import ProjectComponent from './ProjectComponent'
 
