@@ -1,6 +1,6 @@
 'use strict'
-import $ from 'jquery'
-// import boostrap from 'bootstrap'
+import 'jquery'
+import 'bootstrap'
 import DashboardComponent from './components/dashboard/index'
 
 window.DashboardComponent = new DashboardComponent();

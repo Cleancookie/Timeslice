@@ -5,6 +5,21 @@
     </div>
   </div>
 
+  <div data-delete-project data-project-id="{{project.id}}">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-project-modal">
+      Delete this project
+    </button>
+
+    @!component('partials/modals/danger-modal', {
+      modal: {
+        id: 'delete-project-modal',
+        data: project.id,
+        title: 'You are about to delete ' + project.name,
+        body: 'Are you sure you would like to delete ' + project.name + '?'
+      }
+    })
+  </div>
+
   <div class="row">
     <div class="col">
       People assigned:
