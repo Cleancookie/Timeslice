@@ -55,7 +55,7 @@ class ProjectController {
    *
    * @param {Context} ctx
    */
-  async edit ({params, request, response, auth}) {
+  async edit ({params, request, auth, view}) {
     let user = await auth.getUser()
     let project = await Project.find(params.id)
 
@@ -66,9 +66,32 @@ class ProjectController {
 
       // DEVTODO: Need to be able to edit who is assigned to it too
 
-      project.save();
+      project = await project.save()
     }
 
+    let users = project.users().fetch()
+
+    return view.render('ajax/project-details', {
+      project: project.toJSON(),
+      users: users.toJSON()
+    })
+  }
+
+  /**
+   * Deletes a project
+   *
+   * @param {Context} ctx
+   */
+  async delete ({params, response, auth}) {
+    let user = await auth.getUser()
+    let project = await Project.find(params.id)
+
+    if (project.findAssignedUser(user.id)) {
+      project.users().delete()
+      project.delete()
+    }
+
+    response.send('deleted project ' + project.toJSON().id);
     return
   }
 }
