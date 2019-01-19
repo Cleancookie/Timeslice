@@ -49,6 +49,28 @@ class ProjectController {
       users: users.toJSON()
     })
   }
+
+  /**
+   * Edits a projects details
+   *
+   * @param {Context} ctx
+   */
+  async edit ({params, request, response, auth}) {
+    let user = await auth.getUser()
+    let project = await Project.find(params.id)
+
+    if (user && project) {
+      project.merge({
+        name: request.body['name']
+      })
+
+      // DEVTODO: Need to be able to edit who is assigned to it too
+
+      project.save();
+    }
+
+    return
+  }
 }
 
 module.exports = ProjectController
