@@ -3,6 +3,8 @@
 const Project = use('App/Models/Project')
 /** @type {typeof import('App/Models/User')} */
 const User = use('App/Models/User')
+/** @type {typeof import('@adonisjs/lucid/src/Database')} */
+const Database = use('Adonis/Src/Database')
 
 class ProjectController {
 
@@ -86,12 +88,18 @@ class ProjectController {
     let user = await auth.getUser()
     let project = await Project.find(params.id)
 
-    if (project.findAssignedUser(user.id)) {
-      project.users().delete()
-      project.delete()
-    }
+    // Check the user they claim to be is assigned
+    if (await project.findAssignedUser(user.id)) {
+      let assignedUsers = await project.users().fetch();
 
-    response.send('deleted project ' + project.toJSON().id);
+      // DEVTODO: Efficiency, this could be done in 2 queries instead on n+1 by putting all the
+      // user ids into an array and detaching that array
+
+    }
+    await project.users().detach()
+    await project.delete()
+
+    response.send('deleted project ' + project.toJSON().id)
     return
   }
 }

@@ -29,3 +29,18 @@
     </div>
   </div>
 </div>
+
+<script>
+  $('[data-modal-confirm]').click((e) => {
+    axios.post('/projects/delete/{{project.id}}').then(function(response) {
+      $('#delete-project-modal').modal('hide')
+
+      $('[data-project-id={{ project.id }}][data-project-item]').attr('style', 'background-color: red; border: solid 1px red')
+      $('[data-project-id={{ project.id }}][data-project-item]').slideUp(400)
+      $('[data-project-id={{ project.id }}][data-project-item]').promise().done(function() {
+        $('[data-project-id={{ project.id }}][data-project-item]').remove()
+      })
+
+    })
+  })
+</script>
