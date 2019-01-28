@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <h1>{{ project.name }}</h1>
+    </div>
+  </div>
+
+  <div data-delete-project data-project-id="{{project.id}}">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-project-modal">
+      Delete this project
+    </button>
+
+    @!component('partials/modals/danger-modal', {
+      modal: {
+        id: 'delete-project-modal',
+        data: project.id,
+        title: 'You are about to delete ' + project.name,
+        body: 'Are you sure you would like to delete ' + project.name + '?'
+      }
+    })
+  </div>
+
+  <div class="row">
+    <div class="col">
+      People assigned:
+      <ul class="list-group d-flex">
+          @!each(user in users, include = 'partials/user-icon')
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('[data-modal-confirm]').click((e) => {
+    axios.post('/projects/delete/{{project.id}}').then(function(response) {
+      $('#delete-project-modal').modal('hide')
+
+      $('[data-project-id={{ project.id }}][data-project-item]').attr('style', 'background-color: red; border: solid 1px red')
+      $('[data-project-id={{ project.id }}][data-project-item]').slideUp(400)
+      $('[data-project-id={{ project.id }}][data-project-item]').promise().done(function() {
+        $('[data-project-id={{ project.id }}][data-project-item]').remove()
+      })
+
+    })
+  })
+</script>

@@ -1,0 +1,32 @@
+@layout("layouts/default")
+
+@section('content')
+<div class="container-fluid dashboard--container" data-dashboard-container>
+  <div class="row">
+
+    <div class="col-12 col-md-2 py-3 projects--container">
+      <div class="text-center container-fluid">
+          <a href="#" data-create-project class="projects--create-new-project ">Create new project</a>
+      </div>
+      <form action="/projects/store" method="POST" id="create-new-project" class="invisible my-1" data-create-project-form>
+        {{ csrfField() }}
+        <div class="form-group input-group">
+          <input type="text" class="form-control" name="project-name" id="project-name" placeholder="Project Name" data-create-project-name>
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary" data-create-project-submit>Add</button>
+          </div>
+        </div>
+      </form>
+      <ul data-project-list class="projects--list list-group">
+        @!each(project in projects, include = 'partials/project-card')
+      </ul>
+    </div>
+
+    <div class="col-12 col-md-10">
+    </div>
+
+    <div class="details bg-light p-3" style="display: none" data-details>
+    </div>
+  </div>
+</div>
+@endsection
