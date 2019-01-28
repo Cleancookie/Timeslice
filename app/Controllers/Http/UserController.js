@@ -12,8 +12,10 @@ class UserController extends PublicController {
    *
    * @param {Context} ctx
    */
-  async login({view}) {
-    return view.render('login');
+  async login({request, auth}) {
+    let {email, password} = request.all()
+    let token = await auth.attempt(email, password)
+    return token;
   }
 
   /**
@@ -28,58 +30,24 @@ class UserController extends PublicController {
   }
 
   /**
-   * POST authenticate a user
-   *
-   * @param {Context} ctx
-   */
-  async authenticateUser({request, response, auth, session}) {
-    let loggedIn = false;
-    try {
-      loggedIn = await auth.attempt(request.body['username'], request.body['password'])
-    } catch(e) {
-      session.flash({ invalidLogin : "Your login details were incorrect.  Please try again" });
-    }
-
-    if (loggedIn) {
-      response.redirect('/dashboard')
-      return
-    }
-
-    response.redirect('/login', true)
-    return
-  }
-
-  /**
    * POST register, validates and logs in a user
    *
    * @param {Context} ctx
    */
-  async register({request, response, session, auth}) {
+  async register({request, response, auth}) {
     if (request.body['password'] !== request.body['confirm-password']) {
-      session.flash({validationError: "Passwords do not match"})
-      response.redirect('/login')
+      response.json({
+        errors: [
+          {
+            'field': 'confirm-password',
+            'message': 'Passwords do not match'
+          }
+        ]
+      })
       return
     }
 
-    await User.create({
-      username: request.body['username'],
-      password: request.body['password']
-    })
-
-    let loggedIn = false;
-    try {
-      loggedIn = await auth.attempt(request.body['username'], request.body['password'])
-    } catch(e) {
-      session.flash({ invalidLogin : "Your account has been created but we were unable to log you in" })
-    }
-
-    if (loggedIn) {
-      response.redirect('/dashboard')
-      return
-    }
-
-    response.redirect('/login')
-    return
+    return this.login(...arguments)
   }
 
   /**
