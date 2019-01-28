@@ -7,6 +7,10 @@ const User = use('App/Models/User')
 const Database = use('Adonis/Src/Database')
 
 class ProjectController {
+  async index({auth}) {
+    const user = await auth.getUser()
+    return await user.projects().fetch()
+  }
 
   /**
    * Create/save a new project.
