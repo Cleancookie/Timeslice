@@ -23,9 +23,9 @@ class UserController extends PublicController {
    *
    * @param {Context} ctx
    */
-  async logout({response, auth}) {
-    await auth.logout()
-    response.redirect('/login')
+  async logout({request, response, auth}) {
+    let { token } = request.all();
+    await auth.authenticator('jwt').revokeTokens([token])
     return
   }
 
@@ -48,19 +48,6 @@ class UserController extends PublicController {
     }
 
     return this.login(...arguments)
-  }
-
-  /**
-   * GET Displays a user's dashboard
-   *
-   * @param {Context} ctx
-   */
-  async dashboard({auth, params, view}) {
-    let projects = await auth.user.projects().fetch();
-
-    return view.render('dashboard', {
-      projects: projects.toJSON()
-    })
   }
 }
 
