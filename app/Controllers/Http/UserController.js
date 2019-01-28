@@ -13,8 +13,8 @@ class UserController extends PublicController {
    * @param {Context} ctx
    */
   async login({request, auth}) {
-    let {email, password} = request.all()
-    let token = await auth.attempt(email, password)
+    let {username, password} = request.all()
+    let token = await auth.attempt(username, password)
     return token;
   }
 
