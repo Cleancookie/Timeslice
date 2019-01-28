@@ -18,11 +18,11 @@ const Route = use('Route')
 
 Route.get('/', 'PublicController.home')
 
-Route.get('/login', 'UserController.login').as('user.login')
-Route.get('/logout', 'UserController.logout').as('user.logout')
-Route.post('/login', 'UserController.authenticateUser').as('user.authenticate')
+Route.post('api/login', 'UserController.login').as('user.login')
+Route.post('api/logout', 'UserController.logout').as('user.logout')
+Route.post('api/register', 'UserController.register').as('user.register')
+
 Route.get('/dashboard', 'UserController.dashboard').as('user.dashboard').middleware('auth')
-Route.post('/register', 'UserController.register').as('user.register')
 
 Route.post('/projects/store', 'ProjectController.create').middleware('auth')
 Route.get('/projects/:id', 'ProjectController.read')
