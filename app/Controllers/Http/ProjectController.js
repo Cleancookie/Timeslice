@@ -51,7 +51,7 @@ class ProjectController {
     let { id } = params
     let project = await Project.find(id)
 
-    if (!await project.canBeEditedBy(user)) {
+    if (!(await project.canBeEditedBy(user))) {
       return response.status(403).json({
         error:
           "User(" +
@@ -62,7 +62,7 @@ class ProjectController {
       })
     }
 
-    project.merge(request.only('name'))
+    project.merge(request.only("name"))
 
     await project.save()
     return project
