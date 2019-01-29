@@ -2,6 +2,8 @@
 
 /** @type {typeof import('app/Models/Base')} */
 const Model = use("Model")
+/** @type {typeof import('App/Exceptions/UserNotAllowedException')} */
+const UserNotAllowedException = user("App/Exceptions/UserNotAllowedException")
 
 class Project extends Model {
   users() {
@@ -13,7 +15,7 @@ class Project extends Model {
       .where("user_id", user.id)
       .fetch()
     if (!authenticatedUser) {
-      throw new Error("User cannot delete this project")
+      throw new UserNotAllowedException()
     }
     return
   }
