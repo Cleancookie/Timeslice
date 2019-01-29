@@ -39,7 +39,7 @@ class ProjectController {
    *
    * @param {Context} ctx
    */
-  async read({ request, auth, params }) {}
+  async show({ request, auth, params }) {}
 
   /**
    * Edits a projects details
