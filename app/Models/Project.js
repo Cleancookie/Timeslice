@@ -8,10 +8,10 @@ class Project extends Model {
     return this.belongsToMany("App/Models/User")
   }
 
-  async canBeDeletedByUser(user) {
+  async canBeEditedBy(user) {
     let authenticatedUser = await this.users()
       .where("user_id", user.id)
-      .fetch()
+      .first()
     if (!authenticatedUser) {
       return false
     }

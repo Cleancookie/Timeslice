@@ -46,7 +46,27 @@ class ProjectController {
    *
    * @param {Context} ctx
    */
-  async update({ request, auth, params }) {}
+  async update({ request, response, auth, params }) {
+    let user = await auth.getUser()
+    let { id } = params
+    let project = await Project.find(id)
+
+    if (!await project.canBeEditedBy(user)) {
+      return response.status(403).json({
+        error:
+          "User(" +
+          _.capitalize(user.username) +
+          ") is not permitted to update project(" +
+          _.capitalize(project.name) +
+          ")"
+      })
+    }
+
+    project.merge(request.only('name'))
+
+    await project.save()
+    return project
+  }
 
   /**
    * Deletes a project
@@ -58,7 +78,7 @@ class ProjectController {
     let { id } = params
     let project = await Project.find(id)
 
-    if (await project.canBeDeletedByUser(user)) {
+    if (await project.canBeEditedBy(user)) {
       return response.status(403).json({
         error:
           "User(" +
