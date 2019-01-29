@@ -3,9 +3,6 @@
 /** @type {typeof import('App/Controllers/Http/PublicController')} */
 const PublicController = use("App/Controllers/Http/PublicController")
 
-/** @type {typeof import('App/Exceptions/PasswordsDoNotMatchException')} */
-const PasswordsDoNotMatchException = use("App/Exceptions/PasswordsDoNotMatch")
-
 /** @type {typeof import('App/Models/User')} */
 const User = use("App/Models/User")
 
@@ -43,14 +40,24 @@ class UserController extends PublicController {
       password,
       "confirm-password": confirmPassword
     } = request.all()
+
     if (password !== confirmPassword) {
-      throw new PasswordsDoNotMatchException()
+      return response.status(403).json({
+        error: [
+          {
+            field: "confirm-password",
+            message: "Passwords do not match"
+          }
+        ]
+      })
     }
 
     let user = new User()
     user.fill({
-      username: username
+      username: username,
+      password: password
     })
+    user.save()
 
     return this.login(...arguments)
   }

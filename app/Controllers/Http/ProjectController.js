@@ -56,7 +56,11 @@ class ProjectController {
     let { id } = params
     let project = await Project.find(id)
 
-    await project.canBeDeletedByUser(user)
+    if (await project.canBeDeletedByUser(user)) {
+      return response.status(403).json({
+        error: "This user is not permitted to delete this project"
+      })
+    }
 
     project.deleted_at = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
     let success = await project.save()
