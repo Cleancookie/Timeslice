@@ -1,11 +1,20 @@
 'use strict'
 
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
+/** @type {typeof import('app/Models/Base')} */
 const Model = use('Model')
 
 class Project extends Model {
   users() {
     return this.belongsToMany('App/Models/User')
+  }
+
+  async canBeDeletedByUser(user) {
+    console.log(user.id)
+    let authenticatedUser = await this.users().where('user_id', user.id).fetch()
+    if (!authenticatedUser) {
+      throw new Error()
+    }
+    return
   }
 
   /**

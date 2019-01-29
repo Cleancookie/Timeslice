@@ -6,6 +6,8 @@ const User = use('App/Models/User')
 /** @type {typeof import('@adonisjs/lucid/src/Database')} */
 const Database = use('Adonis/Src/Database')
 
+const moment = require('moment')
+
 class ProjectController {
   async index({ auth }) {
     const user = await auth.getUser()
@@ -23,7 +25,7 @@ class ProjectController {
     let project = new Project()
 
     project.fill({
-      name
+      name: name
     })
 
     await user.projects().save(project);
@@ -51,10 +53,19 @@ class ProjectController {
    *
    * @param {Context} ctx
    */
-  async delete ({ request, auth, params }) {
-    const user = auth.getUser()
-    const { id } = params
-    const project = await Project.findByOrFail(id)
+  async delete ({ request, response, auth, params }) {
+    let user = await auth.getUser()
+    let { id } = params
+    let project = await Project.find(id)
+    await project.canBeDeletedByUser(user)
+
+    project.deleted_at = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+    let success = await project.save()
+
+    return {
+      success: success,
+      project: project
+    }
   }
 }
 
