@@ -1,12 +1,12 @@
-'use strict'
+"use strict"
 /** @type {typeof import('App/Models/Project')} */
-const Project = use('App/Models/Project')
+const Project = use("App/Models/Project")
 /** @type {typeof import('App/Models/User')} */
-const User = use('App/Models/User')
+const User = use("App/Models/User")
 /** @type {typeof import('@adonisjs/lucid/src/Database')} */
-const Database = use('Adonis/Src/Database')
+const Database = use("Adonis/Src/Database")
 
-const moment = require('moment')
+const moment = require("moment")
 
 class ProjectController {
   async index({ auth }) {
@@ -19,7 +19,7 @@ class ProjectController {
    *
    * @param {Context} ctx
    */
-  async create ({ request, auth }) {
+  async create({ request, auth }) {
     let user = await auth.getUser()
     let { name } = request.all()
     let project = new Project()
@@ -28,8 +28,8 @@ class ProjectController {
       name: name
     })
 
-    await user.projects().save(project);
-    return project;
+    await user.projects().save(project)
+    return project
   }
 
   /**
@@ -37,29 +37,28 @@ class ProjectController {
    *
    * @param {Context} ctx
    */
-  async read ({ request, auth, params }) {
-  }
+  async read({ request, auth, params }) {}
 
   /**
    * Edits a projects details
    *
    * @param {Context} ctx
    */
-  async edit ({ request, auth, params }) {
-  }
+  async edit({ request, auth, params }) {}
 
   /**
    * Deletes a project
    *
    * @param {Context} ctx
    */
-  async delete ({ request, response, auth, params }) {
+  async delete({ request, response, auth, params }) {
     let user = await auth.getUser()
     let { id } = params
     let project = await Project.find(id)
+
     await project.canBeDeletedByUser(user)
 
-    project.deleted_at = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+    project.deleted_at = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
     let success = await project.save()
 
     return {

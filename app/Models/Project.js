@@ -9,10 +9,9 @@ class Project extends Model {
   }
 
   async canBeDeletedByUser(user) {
-    console.log(user.id)
     let authenticatedUser = await this.users().where('user_id', user.id).fetch()
     if (!authenticatedUser) {
-      throw new Error()
+      throw new Error('User cannot delete this project')
     }
     return
   }
