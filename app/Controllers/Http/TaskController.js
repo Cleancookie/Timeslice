@@ -1,4 +1,6 @@
-'use strict'
+"use strict"
+
+const moment = require('moment')
 
 /** @type {typeof import('App/Models/Project')} */
 const Project = use("App/Models/Project")
@@ -55,6 +57,44 @@ class TaskController {
     await project.tasks().save(task)
 
     return task
+  }
+
+  /**
+   * Edits a projects details
+   *
+   * @param {Context} ctx
+   */
+  async update({ request, response, auth, params }) {
+    let user = await auth.getUser()
+    let { id } = params
+    let task = await Task.find(id)
+
+    task.merge(request.only([
+      'name',
+      'description'
+    ]))
+
+    await task.save()
+    return task
+  }
+
+  /**
+   * Deletes a project
+   *
+   * @param {Context} ctx
+   */
+  async delete({ request, response, auth, params }) {
+    let user = await auth.getUser()
+    let { id } = params
+    let task = await Task.find(id)
+
+    task.deleted_at = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+    let success = await task.save()
+
+    return {
+      success: success,
+      data: task
+    }
   }
 }
 

@@ -94,7 +94,7 @@ class ProjectController {
 
     return {
       success: success,
-      project: project
+      data: project
     }
   }
 }

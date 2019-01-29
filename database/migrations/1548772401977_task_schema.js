@@ -10,6 +10,7 @@ class TaskSchema extends Schema {
       table.string('name', 255)
       table.integer('project_id')
       table.text('description')
+      table.datetime('deleted_at')
       table.timestamps()
     })
   }

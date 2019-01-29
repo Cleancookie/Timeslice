@@ -31,5 +31,5 @@ Route.post('api/projects/:id/delete', 'ProjectController.delete').middleware('au
 Route.get('api/projects/:id/tasks', 'TaskController.index').middleware('auth')
 Route.get('api/projects/:id/tasks/id', 'TaskController.show').middleware('auth')
 Route.post('api/projects/:id/tasks', 'TaskController.create').middleware('auth')
-Route.post('api/projects/:id/tasks/:id', 'TaskController.update').middleware('auth')
-Route.post('api/projects/:id/tasks/:id/delete', 'TaskController.delete').middleware('auth')
+Route.post('api/tasks/:id', 'TaskController.update').middleware('auth')
+Route.post('api/tasks/:id/delete', 'TaskController.delete').middleware('auth')
