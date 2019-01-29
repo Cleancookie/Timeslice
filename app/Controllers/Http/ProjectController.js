@@ -18,26 +18,17 @@ class ProjectController {
    *
    * @param {Context} ctx
    */
-  async create ({ request, response, auth, view}) {
+  async create ({ request, auth}) {
     let user = await auth.getUser()
+    let { name } = request.all()
+    let project = new Project()
 
-    if (user) {
-      let newProject = await Project.create({
-        "name": request.body['name']
-      })
-      newProject.users().save(user)
-
-      return view.render('ajax/project-card', {
-        "project": newProject
-      })
-    }
-
-    response.status(500)
-    response.send({
-      "success": "false",
-      "error": "Invalid user"
+    project.fill({
+      name
     })
-    return
+
+    await user.projects().save(project);
+    return project;
   }
 
   /**

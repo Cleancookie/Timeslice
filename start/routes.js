@@ -23,6 +23,7 @@ Route.post('api/logout', 'UserController.logout').as('user.logout')
 Route.post('api/register', 'UserController.register').as('user.register')
 
 Route.get('api/projects', 'ProjectController.index').as('project.index').middleware('auth')
+Route.post('api/projects/create', 'ProjectController.create').as('project.create').middleware('auth')
 
 Route.post('/projects/store', 'ProjectController.create').middleware('auth')
 Route.get('/projects/:id', 'ProjectController.read')
