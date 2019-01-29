@@ -57,7 +57,7 @@ class UserController extends PublicController {
       username: username,
       password: password
     })
-    user.save()
+    await user.save()
 
     return this.login(...arguments)
   }

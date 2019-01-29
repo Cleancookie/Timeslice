@@ -5,6 +5,8 @@ const Project = use("App/Models/Project")
 const User = use("App/Models/User")
 /** @type {typeof import('@adonisjs/lucid/src/Database')} */
 const Database = use("Adonis/Src/Database")
+/** @type {typeof import('lodash')} */
+const _ = use('lodash')
 
 const moment = require("moment")
 
@@ -55,10 +57,11 @@ class ProjectController {
     let user = await auth.getUser()
     let { id } = params
     let project = await Project.find(id)
+    console.log(user);
 
     if (await project.canBeDeletedByUser(user)) {
       return response.status(403).json({
-        error: "This user is not permitted to delete this project"
+        error: "User(" + _.capitalize(user.username) + ") is not permitted to delete project(" + _.capitalize(project.name) + ")"
       })
     }
 
