@@ -8,6 +8,10 @@ class Project extends Model {
     return this.belongsToMany("App/Models/User")
   }
 
+  tasks() {
+    return this.hasMany("App/Models/Task")
+  }
+
   async canBeEditedBy(user) {
     let authenticatedUser = await this.users()
       .where("user_id", user.id)
