@@ -1,82 +1,71 @@
-'use strict'
+"use strict"
 /** @type {typeof import('App/Models/Project')} */
-const Project = use('App/Models/Project')
+const Project = use("App/Models/Project")
 /** @type {typeof import('App/Models/User')} */
-const User = use('App/Models/User')
+const User = use("App/Models/User")
 /** @type {typeof import('@adonisjs/lucid/src/Database')} */
-const Database = use('Adonis/Src/Database')
+const Database = use("Adonis/Src/Database")
+/** @type {typeof import('lodash')} */
+const _ = use("lodash")
+
+const moment = require("moment")
 
 class ProjectController {
+  async index({ auth }) {
+    const user = await auth.getUser()
+    return await user.projects().fetch()
+  }
 
   /**
-   * Create/save a new project.
-   * POST /projects/store
+   * Create a new project
    *
    * @param {Context} ctx
    */
-  async create ({ request, response, auth, view}) {
+  async create({ request, auth }) {
     let user = await auth.getUser()
+    let { name } = request.all()
+    let project = new Project()
 
-    if (user) {
-      let newProject = await Project.create({
-        "name": request.body['name']
-      })
-      newProject.users().save(user)
-
-      return view.render('ajax/project-card', {
-        "project": newProject
-      })
-    }
-
-    response.status(500)
-    response.send({
-      "success": "false",
-      "error": "Invalid user"
+    project.fill({
+      name: name
     })
-    return
+
+    await user.projects().save(project)
+    return project
   }
 
   /**
    * Get details about the selected project
-   * GET /projects/:id
    *
    * @param {Context} ctx
    */
-  async read ({ params, request, response, auth, view }) {
-    let project = await Project.find(params.id)
-    let users = await project.users().fetch()
-
-    return view.render('ajax/project-details', {
-      project: project.toJSON(),
-      users: users.toJSON()
-    })
-  }
+  async read({ request, auth, params }) {}
 
   /**
    * Edits a projects details
    *
    * @param {Context} ctx
    */
-  async edit ({params, request, auth, view}) {
+  async update({ request, response, auth, params }) {
     let user = await auth.getUser()
-    let project = await Project.find(params.id)
+    let { id } = params
+    let project = await Project.find(id)
 
-    if (user && project) {
-      project.merge({
-        name: request.body['name']
+    if (!(await project.canBeEditedBy(user))) {
+      return response.status(403).json({
+        error:
+          "User(" +
+          _.capitalize(user.username) +
+          ") is not permitted to update project(" +
+          _.capitalize(project.name) +
+          ")"
       })
-
-      // DEVTODO: Need to be able to edit who is assigned to it too
-
-      project = await project.save()
     }
 
-    let users = project.users().fetch()
+    project.merge(request.only("name"))
 
-    return view.render('ajax/project-details', {
-      project: project.toJSON(),
-      users: users.toJSON()
-    })
+    await project.save()
+    return project
   }
 
   /**
@@ -84,23 +73,29 @@ class ProjectController {
    *
    * @param {Context} ctx
    */
-  async delete ({params, response, auth}) {
+  async delete({ request, response, auth, params }) {
     let user = await auth.getUser()
-    let project = await Project.find(params.id)
+    let { id } = params
+    let project = await Project.find(id)
 
-    // Check the user they claim to be is assigned
-    if (await project.findAssignedUser(user.id)) {
-      let assignedUsers = await project.users().fetch();
-
-      // DEVTODO: Efficiency, this could be done in 2 queries instead on n+1 by putting all the
-      // user ids into an array and detaching that array
-
+    if (await project.canBeEditedBy(user)) {
+      return response.status(403).json({
+        error:
+          "User(" +
+          _.capitalize(user.username) +
+          ") is not permitted to delete project(" +
+          _.capitalize(project.name) +
+          ")"
+      })
     }
-    await project.users().detach()
-    await project.delete()
 
-    response.send('deleted project ' + project.toJSON().id)
-    return
+    project.deleted_at = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+    let success = await project.save()
+
+    return {
+      success: success,
+      project: project
+    }
   }
 }
 

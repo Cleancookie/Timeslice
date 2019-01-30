@@ -1,11 +1,21 @@
-'use strict'
+"use strict"
 
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Model = use('Model')
+/** @type {typeof import('app/Models/Base')} */
+const Model = use("Model")
 
 class Project extends Model {
   users() {
-    return this.belongsToMany('App/Models/User')
+    return this.belongsToMany("App/Models/User")
+  }
+
+  async canBeEditedBy(user) {
+    let authenticatedUser = await this.users()
+      .where("user_id", user.id)
+      .first()
+    if (!authenticatedUser) {
+      return false
+    }
+    return true
   }
 
   /**
@@ -13,16 +23,16 @@ class Project extends Model {
    * @param {number} id
    */
   async findAssignedUser(id) {
-    let relatedUsers = await this.users().fetch();
-    let found = false;
+    let relatedUsers = await this.users().fetch()
+    let found = false
 
-    relatedUsers.toJSON().forEach(user => {
+    relatedUsers.toJSON().forEach((user) => {
       if (user.id == id) {
-        found = true;
+        found = true
       }
     })
 
-    return found;
+    return found
   }
 }
 

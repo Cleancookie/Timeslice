@@ -1,10 +1,10 @@
-'use strict'
+"use strict"
 
 /** @type {typeof import('App/Controllers/Http/PublicController')} */
-const PublicController = use('App/Controllers/Http/PublicController')
+const PublicController = use("App/Controllers/Http/PublicController")
 
 /** @type {typeof import('App/Models/User')} */
-const User = use('App/Models/User')
+const User = use("App/Models/User")
 
 class UserController extends PublicController {
   /**
@@ -12,8 +12,10 @@ class UserController extends PublicController {
    *
    * @param {Context} ctx
    */
-  async login({view}) {
-    return view.render('login');
+  async login({ request, auth }) {
+    let { username, password } = request.all()
+    let token = await auth.attempt(username, password)
+    return token
   }
 
   /**
@@ -21,31 +23,9 @@ class UserController extends PublicController {
    *
    * @param {Context} ctx
    */
-  async logout({response, auth}) {
-    await auth.logout()
-    response.redirect('/login')
-    return
-  }
-
-  /**
-   * POST authenticate a user
-   *
-   * @param {Context} ctx
-   */
-  async authenticateUser({request, response, auth, session}) {
-    let loggedIn = false;
-    try {
-      loggedIn = await auth.attempt(request.body['username'], request.body['password'])
-    } catch(e) {
-      session.flash({ invalidLogin : "Your login details were incorrect.  Please try again" });
-    }
-
-    if (loggedIn) {
-      response.redirect('/dashboard')
-      return
-    }
-
-    response.redirect('/login', true)
+  async logout({ request, response, auth }) {
+    let { token } = request.all()
+    await auth.authenticator("jwt").revokeTokens([token])
     return
   }
 
@@ -54,45 +34,32 @@ class UserController extends PublicController {
    *
    * @param {Context} ctx
    */
-  async register({request, response, session, auth}) {
-    if (request.body['password'] !== request.body['confirm-password']) {
-      session.flash({validationError: "Passwords do not match"})
-      response.redirect('/login')
-      return
+  async register({ request, response, auth }) {
+    const {
+      username,
+      password,
+      "confirm-password": confirmPassword
+    } = request.all()
+
+    if (password !== confirmPassword) {
+      return response.status(403).json({
+        error: [
+          {
+            field: "confirm-password",
+            message: "Passwords do not match"
+          }
+        ]
+      })
     }
 
-    await User.create({
-      username: request.body['username'],
-      password: request.body['password']
+    let user = new User()
+    user.fill({
+      username: username,
+      password: password
     })
+    await user.save()
 
-    let loggedIn = false;
-    try {
-      loggedIn = await auth.attempt(request.body['username'], request.body['password'])
-    } catch(e) {
-      session.flash({ invalidLogin : "Your account has been created but we were unable to log you in" })
-    }
-
-    if (loggedIn) {
-      response.redirect('/dashboard')
-      return
-    }
-
-    response.redirect('/login')
-    return
-  }
-
-  /**
-   * GET Displays a user's dashboard
-   *
-   * @param {Context} ctx
-   */
-  async dashboard({auth, params, view}) {
-    let projects = await auth.user.projects().fetch();
-
-    return view.render('dashboard', {
-      projects: projects.toJSON()
-    })
+    return this.login(...arguments)
   }
 }
 

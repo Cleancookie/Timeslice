@@ -1,10 +1,6 @@
-'use strict'
-var AppController = require('./AppController');
+"use strict"
+var AppController = require("./AppController")
 
-class PublicController extends AppController {
-  async home({req, res, view}) {
-    return super.home({req, res, view})
-  }
-}
+class PublicController extends AppController {}
 
 module.exports = PublicController
