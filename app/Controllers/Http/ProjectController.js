@@ -6,11 +6,16 @@ const User = use("App/Models/User")
 /** @type {typeof import('@adonisjs/lucid/src/Database')} */
 const Database = use("Adonis/Src/Database")
 /** @type {typeof import('lodash')} */
-const _ = use("lodash")
+const _ = require("lodash")
 
 const moment = require("moment")
 
 class ProjectController {
+  /**
+   * Show all projects
+   *
+   * @param {Context} ctx
+   */
   async index({ auth }) {
     const user = await auth.getUser()
     return await user.projects().fetch()

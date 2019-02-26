@@ -12,6 +12,11 @@ class Project extends Model {
     return this.hasMany("App/Models/Task")
   }
 
+  /**
+   * Checks if user has permission to edit the current project
+   *
+   * @param {import('./User')} user
+   */
   async canBeEditedBy(user) {
     let authenticatedUser = await this.users()
       .where("user_id", user.id)
@@ -24,6 +29,7 @@ class Project extends Model {
 
   /**
    * Checks if a user ID has been assigned to a project
+   *
    * @param {number} id
    */
   async findAssignedUser(id) {

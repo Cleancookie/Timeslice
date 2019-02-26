@@ -1,6 +1,6 @@
 "use strict"
 
-const moment = require('moment')
+const moment = require("moment")
 
 /** @type {typeof import('App/Models/Project')} */
 const Project = use("App/Models/Project")
@@ -8,6 +8,11 @@ const Project = use("App/Models/Project")
 const Task = use("App/Models/Task")
 
 class TaskController {
+  /**
+   * Show all tasks in a project
+   *
+   * @param {Context} ctx
+   */
   async index({ auth, params }) {
     let user = await auth.getUser()
     let { id } = params
@@ -69,10 +74,7 @@ class TaskController {
     let { id } = params
     let task = await Task.find(id)
 
-    task.merge(request.only([
-      'name',
-      'description'
-    ]))
+    task.merge(request.only(["name", "description"]))
 
     await task.save()
     return task
