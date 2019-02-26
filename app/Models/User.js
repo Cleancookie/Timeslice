@@ -38,7 +38,8 @@ class User extends Model {
   /**
    * User can belong to many projects at once
    * @method tokens
-   * @return {Object}
+   *
+   * @return {import('./Project')}
    */
   projects() {
     return this.belongsToMany("App/Models/Project")

@@ -8,7 +8,7 @@ const User = use("App/Models/User")
 
 class UserController extends PublicController {
   /**
-   * GET show login form
+   * Authenticate a user and return JWT
    *
    * @param {Context} ctx
    */
@@ -19,7 +19,7 @@ class UserController extends PublicController {
   }
 
   /**
-   * GET logs a user out
+   * Invalidate a given JWT
    *
    * @param {Context} ctx
    */
