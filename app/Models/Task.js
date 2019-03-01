@@ -4,8 +4,8 @@
 const Model = use('Model')
 
 class Task extends Model {
-  tasks() {
-    return this.belongsTo("App/Models/Project")
+  projects() {
+    return this.belongsToMany('App/Models/Project')
   }
 }
 

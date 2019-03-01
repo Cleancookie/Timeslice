@@ -19,21 +19,36 @@ class TaskController {
     let project = await Project.find(id)
 
     if (!(await project.canBeEditedBy(user))) {
-      return response.status(403).json({
-        error:
-          'User(' +
-          _.capitalize(user.username) +
-          ') is not permitted to update project(' +
-          _.capitalize(project.name) +
-          ')'
-      })
+      response.status(403)
+      return {
+        success: false,
+        error: 403,
+        message: `Could not find project(${project.name})`
+      }
     }
 
     const tasks = await project.tasks().fetch()
 
+    console.log(await project.users().fetch())
+
     return {
       success: true,
       data: tasks
+    }
+  }
+
+  /**
+   * Gets all details about a task
+   *
+   * @param {Context} ctx
+   */
+  async show({ request, response, auth, params }) {
+    let { id } = request.params
+    let task = await Task.findBy('id', id).with('stage')
+
+    return {
+      success: true,
+      data: task
     }
   }
 

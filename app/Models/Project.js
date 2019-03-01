@@ -1,7 +1,7 @@
-"use strict"
+'use strict'
 
 /** @type {typeof import('app/Models/Base')} */
-const Model = use("Model")
+const Model = use('Model')
 
 class Project extends Model {
   /**
@@ -10,7 +10,7 @@ class Project extends Model {
    * @return {import('@adonisjs/lucid/src/Lucid/Relations/BelongsToMany')}
    */
   users() {
-    return this.belongsToMany("App/Models/User")
+    return this.belongsToMany('App/Models/User')
   }
 
   /**
@@ -19,7 +19,11 @@ class Project extends Model {
    * @return {import('@adonisjs/lucid/src/Lucid/Relations/HasMany')}
    */
   tasks() {
-    return this.hasMany("App/Models/Task")
+    return this.hasMany('App/Models/Task')
+  }
+
+  projects() {
+    return this.belongsToMany('App/Models/Project')
   }
 
   /**
@@ -31,7 +35,7 @@ class Project extends Model {
    */
   async canBeEditedBy(user) {
     let authenticatedUser = await this.users()
-      .where("user_id", user.id)
+      .where('user_id', user.id)
       .first()
     if (!authenticatedUser) {
       return false

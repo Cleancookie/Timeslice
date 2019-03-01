@@ -30,7 +30,7 @@ Route.group(()=>{
   Route.delete('projects/:id', 'ProjectController.delete').middleware('auth')
 
   Route.get('projects/:id/tasks', 'TaskController.index').middleware('auth')
-  Route.get('projects/:id/tasks/id', 'TaskController.show').middleware('auth')
+  Route.get('tasks/:id', 'TaskController.show').middleware('auth')
   Route.post('projects/:id/tasks', 'TaskController.create').middleware('auth')
   Route.post('tasks/:id', 'TaskController.update').middleware('auth')
   Route.post('tasks/:id/delete', 'TaskController.delete').middleware('auth')

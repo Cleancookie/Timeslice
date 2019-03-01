@@ -61,6 +61,8 @@ class ProjectController {
     const { id } = request.params
     const project = await Project.findBy('id', id)
 
+    console.log(await project.projects().fetch())
+
     if (!project) {
       response.status(404)
       return {
