@@ -23,7 +23,7 @@ class Project extends Model {
   }
 
   projects() {
-    return this.belongsToMany('App/Models/Project')
+    return this.belongsTo('App/Models/Project')
   }
 
   /**
