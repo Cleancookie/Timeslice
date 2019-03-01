@@ -1,11 +1,11 @@
-"use strict"
+'use strict'
 
-const moment = require("moment")
+const moment = require('moment')
 
 /** @type {typeof import('App/Models/Project')} */
-const Project = use("App/Models/Project")
+const Project = use('App/Models/Project')
 /** @type {typeof import('App/Models/Project')} */
-const Task = use("App/Models/Task")
+const Task = use('App/Models/Task')
 
 class TaskController {
   /**
@@ -21,15 +21,20 @@ class TaskController {
     if (!(await project.canBeEditedBy(user))) {
       return response.status(403).json({
         error:
-          "User(" +
+          'User(' +
           _.capitalize(user.username) +
-          ") is not permitted to update project(" +
+          ') is not permitted to update project(' +
           _.capitalize(project.name) +
-          ")"
+          ')'
       })
     }
 
-    return await project.tasks().fetch()
+    const tasks = await project.tasks().fetch()
+
+    return {
+      success: true,
+      data: tasks
+    }
   }
 
   /**
@@ -46,11 +51,11 @@ class TaskController {
     if (!(await project.canBeEditedBy(user))) {
       return response.status(403).json({
         error:
-          "User(" +
+          'User(' +
           _.capitalize(user.username) +
-          ") is not permitted to update project(" +
+          ') is not permitted to update project(' +
           _.capitalize(project.name) +
-          ")"
+          ')'
       })
     }
 
@@ -59,9 +64,12 @@ class TaskController {
       name: name,
       description: description
     })
-    await project.tasks().save(task)
+    const success = await project.tasks().save(task)
 
-    return task
+    return {
+      success: success,
+      data: task
+    }
   }
 
   /**
@@ -74,7 +82,7 @@ class TaskController {
     let { id } = params
     let task = await Task.find(id)
 
-    task.merge(request.only(["name", "description"]))
+    task.merge(request.only(['name', 'description']))
 
     await task.save()
     return task
@@ -90,7 +98,7 @@ class TaskController {
     let { id } = params
     let task = await Task.find(id)
 
-    task.deleted_at = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+    task.deleted_at = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     let success = await task.save()
 
     return {
