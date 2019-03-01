@@ -24,7 +24,7 @@ Route.group(()=>{
   Route.post('register', 'UserController.register').as('user.register')
 
   Route.get('projects', 'ProjectController.index').as('project.index').middleware('auth')
-  Route.get('projects/:id', 'ProjectController.read').middleware('auth')
+  Route.get('projects/:id', 'ProjectController.show').middleware('auth')
   Route.post('projects', 'ProjectController.create').as('project.create').middleware('auth')
   Route.post('projects/:id', 'ProjectController.update').middleware('auth')
   Route.delete('projects/:id', 'ProjectController.delete').middleware('auth')
