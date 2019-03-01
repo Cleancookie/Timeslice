@@ -4,7 +4,7 @@ const moment = require('moment')
 
 /** @type {typeof import('App/Models/Project')} */
 const Project = use('App/Models/Project')
-/** @type {typeof import('App/Models/Project')} */
+/** @type {typeof import('App/Models/Task')} */
 const Task = use('App/Models/Task')
 
 class TaskController {
@@ -26,10 +26,7 @@ class TaskController {
         message: `Could not find project(${project.name})`
       }
     }
-
     const tasks = await project.tasks().fetch()
-
-    console.log(await project.users().fetch())
 
     return {
       success: true,
@@ -44,7 +41,13 @@ class TaskController {
    */
   async show({ request, response, auth, params }) {
     let { id } = request.params
-    let task = await Task.findBy('id', id).with('stage')
+
+    let task = await Task.find(id)
+    task = await Task.query()
+      .where('id', id)
+      .with('stages')
+      .with('users')
+      .fetch()
 
     return {
       success: true,

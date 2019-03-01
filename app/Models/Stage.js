@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Stage extends Model {
+  tasks() {
+    return this.hasMany('App/Models/Task')
+  }
 }
 
 module.exports = Stage
