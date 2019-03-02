@@ -62,7 +62,7 @@ class TaskController {
    */
   async create({ request, auth, params }) {
     let user = await auth.getUser()
-    let { name, description } = request.all()
+    let { name, description, project_id, stage_id } = request.all()
     let { id } = params
     let project = await Project.find(id)
 
@@ -80,8 +80,11 @@ class TaskController {
     let task = new Task()
     task.fill({
       name: name,
-      description: description
+      description: description,
+      project_id: project_id,
+      stage_id: stage_id
     })
+
     const success = await project.tasks().save(task)
 
     return {
@@ -102,8 +105,11 @@ class TaskController {
 
     task.merge(request.only(['name', 'description']))
 
-    await task.save()
-    return task
+    const success = await task.save()
+    return {
+      success: success,
+      data: task
+    }
   }
 
   /**
