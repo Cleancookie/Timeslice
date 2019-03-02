@@ -12,10 +12,21 @@
 */
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
-// const Factory = use('Factory')
+const Factory = use('Factory')
+/** @type {import('@adonisjs/framework/src/Hash')} */
+const Hash = use('Hash')
+/** @type {import('@adonisjs/lucid/src/Database')} */
+const Database = use('Database')
 
-// Factory.blueprint('App/Models/User', (faker) => {
-//   return {
-//     username: faker.username()
-//   }
-// })
+Factory.blueprint('App/Models/User', async (faker) => {
+  return {
+    username: faker.username(),
+    password: await Hash.make(faker.password())
+  }
+})
+
+Factory.blueprint('App/Models/Stage', (faker) => {
+  return {
+    name: faker.word()
+  }
+})

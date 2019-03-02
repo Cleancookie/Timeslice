@@ -1,3 +1,4 @@
 start/routes.js
 webpack.mix.js
 package-lock.json
+database/migrations/**/*.js

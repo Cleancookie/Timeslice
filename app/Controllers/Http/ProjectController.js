@@ -1,14 +1,14 @@
-"use strict"
+'use strict'
 /** @type {typeof import('App/Models/Project')} */
-const Project = use("App/Models/Project")
+const Project = use('App/Models/Project')
 /** @type {typeof import('App/Models/User')} */
-const User = use("App/Models/User")
+const User = use('App/Models/User')
 /** @type {typeof import('@adonisjs/lucid/src/Database')} */
-const Database = use("Adonis/Src/Database")
+const Database = use('Adonis/Src/Database')
 /** @type {typeof import('lodash')} */
-const _ = require("lodash")
+const _ = require('lodash')
 
-const moment = require("moment")
+const moment = require('moment')
 
 class ProjectController {
   /**
@@ -18,7 +18,12 @@ class ProjectController {
    */
   async index({ auth }) {
     const user = await auth.getUser()
-    return await user.projects().fetch()
+    const projects = await user.projects().fetch()
+
+    return {
+      success: true,
+      data: projects
+    }
   }
 
   /**
@@ -35,8 +40,16 @@ class ProjectController {
       name: name
     })
 
-    await user.projects().save(project)
-    return project
+    const success = await user.projects().save(project)
+
+    if (!success) {
+      // TODO: check if project actually saved or has validation errors
+    }
+
+    return {
+      success: true,
+      data: project
+    }
   }
 
   /**
@@ -44,7 +57,28 @@ class ProjectController {
    *
    * @param {Context} ctx
    */
-  async show({ request, auth, params }) {}
+  async show({ request, response, auth, params }) {
+    const { id } = request.params
+    let project = await Project.find(id)
+    project = await Project.query()
+      .where({ id: id })
+      .with('projects')
+      .fetch()
+
+    if (!project) {
+      response.status(404)
+      return {
+        success: false,
+        error: '404',
+        message: `Project(${id}) not found`
+      }
+    }
+
+    return {
+      success: true,
+      data: project
+    }
+  }
 
   /**
    * Edits a projects details
@@ -58,19 +92,25 @@ class ProjectController {
 
     if (!(await project.canBeEditedBy(user))) {
       return response.status(403).json({
-        error:
-          "User(" +
-          _.capitalize(user.username) +
-          ") is not permitted to update project(" +
-          _.capitalize(project.name) +
-          ")"
+        success: false,
+        error: 403,
+        message: `User(${user.username}) could not update project(${
+          project.name
+        })`
       })
     }
 
-    project.merge(request.only("name"))
+    project.merge(request.only('name'))
+    const success = await project.save()
 
-    await project.save()
-    return project
+    if (!success) {
+      // TODO check for validation errors
+    }
+
+    return {
+      success: success,
+      data: project
+    }
   }
 
   /**
@@ -85,17 +125,20 @@ class ProjectController {
 
     if (await project.canBeEditedBy(user)) {
       return response.status(403).json({
-        error:
-          "User(" +
-          _.capitalize(user.username) +
-          ") is not permitted to delete project(" +
-          _.capitalize(project.name) +
-          ")"
+        success: false,
+        error: 403,
+        message: `User(${user.username}) could not delete project(${
+          project.name
+        })`
       })
     }
 
-    project.deleted_at = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+    project.deleted_at = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     let success = await project.save()
+
+    if (!success) {
+      // TODO: Check for errors
+    }
 
     return {
       success: success,
