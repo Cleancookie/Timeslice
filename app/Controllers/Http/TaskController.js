@@ -107,8 +107,21 @@ class TaskController {
     let { id } = params
     let task = await Task.find(id)
 
-    task.merge(request.only(['name', 'description']))
+    task.merge(request.only(['name', 'description', 'stage_id']))
 
+    const success = await task.save()
+    return {
+      success: success,
+      data: task
+    }
+  }
+
+  async reassignUser({ request, response, auth, params }) {
+    // const user = await auth.getUser()
+    const { userId } = request.all()
+    const { id } = params
+    let task = await Task.find(id)
+    task.user_id = userId
     const success = await task.save()
     return {
       success: success,
