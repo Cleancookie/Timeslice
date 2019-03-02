@@ -26,7 +26,11 @@ class TaskController {
         message: `Could not find project(${project.name})`
       }
     }
-    const tasks = await project.tasks().fetch()
+    const tasks = await project
+      .tasks()
+      .with('users')
+      .with('stages')
+      .fetch()
 
     return {
       success: true,
