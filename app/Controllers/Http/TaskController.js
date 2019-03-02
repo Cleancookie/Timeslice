@@ -116,13 +116,37 @@ class TaskController {
     }
   }
 
-  async reassignUser({ request, response, auth, params }) {
+  async updateUser({ request, response, auth, params }) {
     // const user = await auth.getUser()
     const { userId } = request.all()
     const { id } = params
     let task = await Task.find(id)
     task.user_id = userId
     const success = await task.save()
+    return {
+      success: success,
+      data: task
+    }
+  }
+
+  async updateStage({ request, response, auth, params }) {
+    const { stageId } = request.all()
+    const { id } = params
+    let task = await Task.find(id)
+
+    task.stage_id = stageId
+
+    const success = await task.save()
+
+    if (!success) {
+      response.status(403)
+      return {
+        success: false,
+        error: 403,
+        message: 'Could not update stage'
+      }
+    }
+
     return {
       success: success,
       data: task

@@ -35,5 +35,6 @@ Route.group(()=>{
   Route.post('tasks/:id', 'TaskController.update').middleware('auth')
   Route.post('tasks/:id/delete', 'TaskController.delete').middleware('auth')
 
-  Route.post('tasks/:id/assignUser', 'TaskController.reassignUser')
+  Route.post('tasks/:id/update-user', 'TaskController.updateUser')
+  Route.post('tasks/:id/update-stage', 'TaskController.updateStage')
 }).prefix('api/v1')
