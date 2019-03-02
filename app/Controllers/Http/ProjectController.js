@@ -59,7 +59,11 @@ class ProjectController {
    */
   async show({ request, response, auth, params }) {
     const { id } = request.params
-    const project = await Project.findBy('id', id)
+    let project = await Project.find(id)
+    project = await Project.query()
+      .where({ id: id })
+      .with('projects')
+      .fetch()
 
     if (!project) {
       response.status(404)
