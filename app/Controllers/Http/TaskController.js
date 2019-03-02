@@ -159,7 +159,6 @@ class TaskController {
    * @param {Context} ctx
    */
   async delete({ request, response, auth, params }) {
-    let user = await auth.getUser()
     let { id } = params
     let task = await Task.find(id)
 
