@@ -55,6 +55,7 @@ class UserController {
       password: password
     })
     await user.save()
+    console.log('New account created')
 
     return this.login(...arguments)
   }
