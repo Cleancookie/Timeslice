@@ -16,7 +16,10 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
+// Frontend
 Route.get('/', 'PublicController.home')
+Route.get('/login', 'PublicController.login')
+Route.get('/dashboard', 'PublicController.dashboard')
 
 Route.group(()=>{
   // Login API

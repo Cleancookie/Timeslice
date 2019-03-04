@@ -1,12 +1,9 @@
-"use strict"
-
-/** @type {typeof import('App/Controllers/Http/PublicController')} */
-const PublicController = use("App/Controllers/Http/PublicController")
+'use strict'
 
 /** @type {typeof import('App/Models/User')} */
-const User = use("App/Models/User")
+const User = use('App/Models/User')
 
-class UserController extends PublicController {
+class UserController {
   /**
    * Authenticate a user and return JWT
    *
@@ -25,7 +22,7 @@ class UserController extends PublicController {
    */
   async logout({ request, response, auth }) {
     let { token } = request.all()
-    await auth.authenticator("jwt").revokeTokens([token])
+    await auth.authenticator('jwt').revokeTokens([token])
     return
   }
 
@@ -38,15 +35,15 @@ class UserController extends PublicController {
     const {
       username,
       password,
-      "confirm-password": confirmPassword
+      'confirm-password': confirmPassword
     } = request.all()
 
     if (password !== confirmPassword) {
       return response.status(403).json({
         error: [
           {
-            field: "confirm-password",
-            message: "Passwords do not match"
+            field: 'confirm-password',
+            message: 'Passwords do not match'
           }
         ]
       })
