@@ -24,8 +24,14 @@ class PublicController {
    *
    * @param {Context} ctx
    */
-  async dashboard({ req, res, auth, view }) {
-    return view.render('dashboard')
+  async dashboard({ request, response, auth, view }) {
+    try {
+      await auth.getUser()
+      return view.render('dashboard')
+    } catch (error) {
+      console.log(error)
+      return response.redirect('/login')
+    }
   }
 }
 

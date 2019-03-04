@@ -26,12 +26,12 @@ class LoginComponent {
 
       loginResponse
         .then((data) => {
-          console.log(data)
-          window.theResponse = data
           $('[data-login-submit]').prop('disabled', false)
+          console.log(data)
           window.location.href = '/dashboard'
         })
         .catch((data) => {
+          console.log(data)
           $('[data-login-submit]').addClass('animated shake error')
           $('[data-login-submit]').on('animationend', function() {
             $('[data-login-submit]').removeClass('animated shake error')

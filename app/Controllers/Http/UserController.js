@@ -23,7 +23,11 @@ class UserController {
   async logout({ request, response, auth }) {
     let { token } = request.all()
     await auth.authenticator('jwt').revokeTokens([token])
-    return
+    await auth.logout()
+    return {
+      success: true,
+      message: 'logged out'
+    }
   }
 
   /**

@@ -25,6 +25,7 @@ Route.group(()=>{
   // Login API
   Route.post('login', 'UserController.login').as('user.login')
   Route.post('logout', 'UserController.logout').as('user.logout')
+  Route.get('logout', 'UserController.logout')
   Route.post('register', 'UserController.register').as('user.register')
 
   // Projects API
