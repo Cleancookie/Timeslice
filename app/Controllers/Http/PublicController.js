@@ -6,7 +6,7 @@ class PublicController {
    *
    * @param {Context} ctx
    */
-  async home({ req, res, view }) {
+  async home({ reé, res, view }) {
     return view.render('homepage')
   }
 
@@ -15,7 +15,7 @@ class PublicController {
    *
    * @param {Context} ctx
    */
-  async login({ req, res, view }) {
+  async login({ req, res, auth, view }) {
     return view.render('login')
   }
 
@@ -24,7 +24,7 @@ class PublicController {
    *
    * @param {Context} ctx
    */
-  async dashboard({ req, res, view }) {
+  async dashboard({ req, res, auth, view }) {
     return view.render('dashboard')
   }
 }
