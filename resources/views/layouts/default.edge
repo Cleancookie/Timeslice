@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    @if (pageTitle)
-    <title>{{ pageTitle }}</title>
-    @else
-    <title>Timeslice</title>
-    @endif
+    <title>
+      @yield(pageTitle)
+        Timeslice
+      @endyield
+    </title>
 
     <link rel="stylesheet" href="/css/app.css">
 
