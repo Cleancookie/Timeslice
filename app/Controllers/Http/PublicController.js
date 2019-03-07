@@ -19,6 +19,11 @@ class PublicController {
     return view.render('login')
   }
 
+  async logout({ request, response, auth }) {
+    await auth.logout()
+    return response.redirect('/login')
+  }
+
   /**
    * Render dashboard page
    *

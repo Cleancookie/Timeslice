@@ -17,21 +17,22 @@
 const Route = use('Route')
 
 // Frontend
-Route.get('/', 'PublicController.home')
-Route.get('/login', 'PublicController.login')
-Route.get('/dashboard', 'PublicController.dashboard')
+Route.get('/', 'PublicController.home').as('public.homepage')
+Route.get('/login', 'PublicController.login').as('public.login')
+Route.get('/logout', 'PublicController.logout').as('public.logout')
+Route.get('/dashboard', 'PublicController.dashboard').as('public.dashboard')
 
 Route.group(()=>{
   // Login API
-  Route.post('login', 'UserController.login').as('user.login')
-  Route.post('logout', 'UserController.logout').as('user.logout')
+  Route.post('login', 'UserController.login')
+  Route.post('logout', 'UserController.logout')
   Route.get('logout', 'UserController.logout')
-  Route.post('register', 'UserController.register').as('user.register')
+  Route.post('register', 'UserController.register')
 
   // Projects API
-  Route.get('projects', 'ProjectController.index').as('project.index').middleware('auth')
+  Route.get('projects', 'ProjectController.index').middleware('auth')
   Route.get('projects/:id', 'ProjectController.show').middleware('auth')
-  Route.post('projects', 'ProjectController.create').as('project.create').middleware('auth')
+  Route.post('projects', 'ProjectController.create').middleware('auth')
   Route.post('projects/:id', 'ProjectController.update').middleware('auth')
   Route.delete('projects/:id', 'ProjectController.delete').middleware('auth')
 
