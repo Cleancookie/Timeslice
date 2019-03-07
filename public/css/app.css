@@ -10659,6 +10659,11 @@ a.text-dark:focus {
   }
 }
 
+body {
+  padding-top: 56px;
+  background-image: url(/assets/images/geometry.png);
+}
+
 .text-orange {
   color: #f8b500;
 }
@@ -10677,10 +10682,6 @@ a.text-dark:focus {
 
 .text-black {
   color: #393e46;
-}
-
-body {
-  padding-top: 56px;
 }
 
 .navbar {
