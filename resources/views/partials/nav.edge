@@ -1,15 +1,25 @@
-<div class="d-flex flex-column flex-md-row align-items-center nav">
-  <h5 class="my-0 mr-md-auto font-weight-normal nav--title"><a href="/">Timeslice</a></h5>
+ <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="/">Timeslice</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <nav class="my-2 my-md-0 mr-md-3">
-    @loggedIn
-    Hello, <span class="text-teal">{{ _('capitalize', auth.user.username) }}</span>
-    <a class="p-2 text-dark" href="{{ route('public.dashboard') }}">Dashboard</a>
-    @endloggedIn
-  </nav>
-  @loggedIn
-  <a class="btn btn-outline-primary" href="{{ route('public.logout') }}">Sign out</a>
-  @else
-  <a class="btn btn-outline-primary" href="{{ route('public.login') }}">Sign in</a>
-  @endloggedIn
-</div>
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+
+          @loggedIn
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello, {{ _('capitalize', auth.user.username) }}</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="{{ route('public.dashboard') }}">Dashboard</a>
+              <a class="dropdown-item" href="{{ route('public.logout') }}">Logout</a>
+            </div>
+          </li>
+          @else
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('public.login') }}">Login</a>
+          </li>
+          @endloggedIn
+        </ul>
+      </div>
+    </nav>

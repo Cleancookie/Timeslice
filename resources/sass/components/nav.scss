@@ -1,6 +1,36 @@
-.nav {
-  background-color: #f8f8f8;
-  padding: 0.5rem 2rem;
-  border-bottom: 6px dashed $dark-grey;
-  background-image: url(/assets/images/dust_scratches.png);
+body {
+  padding-top: 56px;
+}
+
+.navbar {
+  // DONT DO THIS IT BREAKS THE DROPDOWN ON MOBILE
+  // max-height: 56px;
+  background-image: url(/assets/images/prism.png);
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+.navbar-brand {
+  &:after {
+    display: block;
+    content: '';
+    border-bottom: solid 3px $red;
+    transform: scaleX(0);
+    transition: transform 100ms ease-in-out;
+  }
+  &:hover:after {
+    transform: scaleX(1);
+  }
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: $white;
+}
+
+.dropdown-menu {
+  left: -56px;
+  border-radius: 0;
+  text-align: right;
 }

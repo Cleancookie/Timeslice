@@ -10659,6 +10659,64 @@ a.text-dark:focus {
   }
 }
 
+.text-orange {
+  color: #f8b500;
+}
+
+.text-teal {
+  color: #00adb5;
+}
+
+.text-red {
+  color: #fc3c3c;
+}
+
+.text-white {
+  color: white;
+}
+
+.text-black {
+  color: #393e46;
+}
+
+body {
+  padding-top: 56px;
+}
+
+.navbar {
+  background-image: url(/assets/images/prism.png);
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+.navbar-brand:after {
+  display: block;
+  content: "";
+  border-bottom: solid 3px #fc3c3c;
+  -webkit-transform: scaleX(0);
+          transform: scaleX(0);
+  transition: -webkit-transform 100ms ease-in-out;
+  transition: transform 100ms ease-in-out;
+  transition: transform 100ms ease-in-out, -webkit-transform 100ms ease-in-out;
+}
+
+.navbar-brand:hover:after {
+  -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+}
+
+.dropdown-menu {
+  left: -56px;
+  border-radius: 0;
+  text-align: right;
+}
+
 .login--submit.error {
   background-color: red;
   border-color: red;
