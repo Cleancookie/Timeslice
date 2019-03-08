@@ -10,20 +10,52 @@ class Dashboard {
 
   getAppProjects() {
     const response = axios.get('/api/v1/projects').then((response) => {
-      window.yerd = response
       response.data.data.forEach((project) => {
-        $('[data-cloneable="project-li"]')
-          .clone()
-          .attr('data-cloneable', false)
-          .text(function() {
-            return $(this)
-              .text()
-              .replace('{{project.name}}', project.name)
-          })
-          .appendTo('[data-project-ul]')
-          .show()
+        this.appendProject(project)
       })
     })
+  }
+
+  getTasks(projectId) {
+    const response = axios
+      .get(`/api/v1/projects/${projectId}/tasks`)
+      .then((response) => {
+        $('[data-task-id]').remove()
+        response.data.data.forEach((task) => {
+          this.appendTask(task)
+        })
+      })
+  }
+
+  appendProject(project) {
+    let newProjectEle = $('[data-cloneable="project-li"]')
+      .clone()
+      .attr('data-cloneable', false)
+      .attr('data-project-id', project.id)
+      .text(function() {
+        return $(this)
+          .text()
+          .replace('{{project.name}}', project.name)
+      })
+      .click(() => {
+        this.getTasks(project.id)
+      })
+
+    newProjectEle.appendTo('[data-project-ul]').show()
+  }
+
+  appendTask(task) {
+    let newProjectEle = $('[data-cloneable="task-li"]')
+      .clone()
+      .attr('data-cloneable', false)
+      .attr('data-task-id', task.id)
+      .text(function() {
+        return $(this)
+          .text()
+          .replace('{{task.name}}', task.name)
+      })
+
+    newProjectEle.appendTo('[data-task-ul]').show()
   }
 }
 
