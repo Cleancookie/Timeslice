@@ -7,3 +7,13 @@
     overflow-x: hidden;
   }
 }
+
+.project {
+  &--li {
+    border: none;
+
+    &:nth-child(odd) {
+      background-color: $light-grey;
+    }
+  }
+}

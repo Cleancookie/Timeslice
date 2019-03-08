@@ -9,22 +9,28 @@ class Dashboard {
   }
 
   getAppProjects() {
+    this.loading(true)
     const response = axios.get('/api/v1/projects').then((response) => {
       response.data.data.forEach((project) => {
         this.appendProject(project)
       })
     })
+    this.loading(false)
   }
 
   getTasks(projectId) {
+    this.loading(true)
+
     const response = axios
       .get(`/api/v1/projects/${projectId}/tasks`)
       .then((response) => {
         $('[data-task-id]').remove()
-        response.data.data.forEach((task) => {
+        response.data.data.forEach((task, index) => {
           this.appendTask(task)
         })
       })
+
+    this.loading(false)
   }
 
   appendProject(project) {
@@ -41,7 +47,7 @@ class Dashboard {
         this.getTasks(project.id)
       })
 
-    newProjectEle.appendTo('[data-project-ul]').show()
+    newProjectEle.appendTo('[data-project-ul]').fadeIn(200)
   }
 
   appendTask(task) {
@@ -55,7 +61,15 @@ class Dashboard {
           .replace('{{task.name}}', task.name)
       })
 
-    newProjectEle.appendTo('[data-task-ul]').show()
+    newProjectEle.appendTo('[data-task-ul]').fadeIn(200)
+  }
+
+  loading(isLoading) {
+    if (isLoading) {
+      $('[data-loading-bar]').fadeIn(200)
+    } else {
+      $('[data-loading-bar]').fadeOut(200)
+    }
   }
 }
 
