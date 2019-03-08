@@ -11,8 +11,17 @@ class Dashboard {
   getAppProjects() {
     const response = axios.get('/api/v1/projects').then((response) => {
       window.yerd = response
-      let cards = response.data.data.map((project) => {
-        console.log(project.name)
+      response.data.data.forEach((project) => {
+        $('[data-cloneable="project-li"]')
+          .clone()
+          .attr('data-cloneable', false)
+          .text(function() {
+            return $(this)
+              .text()
+              .replace('{{project.name}}', project.name)
+          })
+          .appendTo('[data-project-ul]')
+          .show()
       })
     })
   }
