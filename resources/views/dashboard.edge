@@ -3,10 +3,18 @@
 @section('content')
 <div class="container-fluid" data-dashboard>
   <div class="row">
-    <div class="col">
+    <div class="col col-md-4 sidebar p-0">
       <ul class="list-group" data-project-ul>
         @include('cloneables/project-li')
       </ul>
+    </div>
+
+    <div class="d-none d-md-block" style="width: 200px">
+      {{--  Just a spacer  --}}
+    </div>
+
+    <div class="col-12 col-md main">
+      <h2>Main (fluid width...)</h2>
     </div>
   </div>
 </div>

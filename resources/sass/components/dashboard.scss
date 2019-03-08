@@ -1,0 +1,9 @@
+@include media-breakpoint-up(md) {
+  .sidebar {
+    max-width: 200px;
+    position: absolute;
+    height: calc(100vh - 56px);
+    overflow-y: visible;
+    overflow-x: hidden;
+  }
+}
