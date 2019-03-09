@@ -33,18 +33,32 @@ class Dashboard {
     this.loading(false)
   }
 
+  getStagesAndTheirTasks(projectId) {
+    this.loading(true)
+
+    const response = axios
+      .get(`/api/v1/projects/${projectId}/stages`)
+      .then((response) => {
+        $('main').html('')
+        console.log(response)
+      })
+
+    this.loading(false)
+  }
+
   appendProject(project) {
     let newProjectEle = $('[data-cloneable="project-li"]')
       .clone()
       .attr('data-cloneable', false)
       .attr('data-project-id', project.id)
       .text(function() {
+        window.yerd = project
         return $(this)
           .text()
           .replace('{{project.name}}', project.name)
       })
       .click(() => {
-        this.getTasks(project.id)
+        this.getStagesAndTheirTasks(project.id)
       })
 
     newProjectEle.appendTo('[data-project-ul]').fadeIn(200)

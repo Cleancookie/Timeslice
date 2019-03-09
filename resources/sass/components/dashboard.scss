@@ -6,25 +6,8 @@
     overflow-y: visible;
     overflow-x: hidden;
   }
-}
 
-.project {
-  &--li {
-    border: none;
-
-    &:nth-child(odd) {
-      background-color: $light-grey;
-    }
-  }
-}
-
-.task {
-  &s--container {
-    // tasks container (plural)
-    // display: flex;
-  }
-  &--container {
-    // task container (individual)
-    // border: none;
+  .dashboard--main {
+    margin-left: 200px;
   }
 }

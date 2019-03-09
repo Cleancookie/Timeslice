@@ -2,18 +2,14 @@
 
 @section('content')
 <div class="container-fluid" data-dashboard>
-  <div class="row">
-    <div class="col col-md-4 sidebar p-0">
+  <div class="row dashboard--container">
+    <div class="col col-md-4 sidebar p-0 dashboard--sidebar">
       @include('partials/project-ul')
     </div>
 
-    <div class="d-none d-md-block" style="width: 200px">
-      {{--  Just a spacer  --}}
-    </div>
-
-    <div class="col-12 col-md tasks-container">
+    <div class="col-12 col-md mt-3 dashboard--main">
       @include('partials/loading-animation')
-      @include('partials/task-ul')
+      @include('partials/stage-ul')
     </div>
   </div>
 </div>
