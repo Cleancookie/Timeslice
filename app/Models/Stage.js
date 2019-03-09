@@ -7,6 +7,10 @@ class Stage extends Model {
   tasks() {
     return this.hasMany('App/Models/Task')
   }
+
+  projects() {
+    return this.belongsTo('App/Models/Project')
+  }
 }
 
 module.exports = Stage

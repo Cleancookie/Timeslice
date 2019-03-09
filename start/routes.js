@@ -42,6 +42,10 @@ Route.group(()=>{
   Route.post('projects/:id/tasks', 'TaskController.create').middleware('auth')
   Route.post('tasks/:id', 'TaskController.update').middleware('auth')
   Route.post('tasks/:id/delete', 'TaskController.delete').middleware('auth')
+
+  // Stage API
+  Route.get('projects/:id/stages', 'StageController.index').middleware('auth')
+
   // Task actions
   Route.post('tasks/:id/update-user', 'TaskController.updateUser')
   Route.post('tasks/:id/update-stage', 'TaskController.updateStage')
