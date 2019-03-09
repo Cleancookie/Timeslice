@@ -6,7 +6,7 @@ const Project = use('App/Models/Project')
 const Stage = use('App/Models/Stage')
 
 class StageController {
-  async index({ auth, params }) {
+  async index({ auth, params, response }) {
     let user = await auth.getUser()
     let { id } = params
     let project = await Project.find(id)
@@ -16,7 +16,7 @@ class StageController {
       return {
         success: false,
         error: 403,
-        message: `Could not find project(${project.name})`
+        message: `Could not find project`
       }
     }
 
@@ -24,11 +24,15 @@ class StageController {
       .where('project_id', project.id)
       .where('deleted_at', null)
       .orderBy('order')
+      .with('tasks', (builder) => {
+        builder.where('deleted_at', null).with('users')
+      })
       .fetch()
 
     return {
       success: true,
       model: 'Stage',
+      project: project,
       data: stages
     }
   }
