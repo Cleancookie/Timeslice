@@ -24,6 +24,7 @@ class AlexSeeder {
     // Create a few projects for Alex
     await Alex.projects().saveMany(projects)
     projects.forEach(async (project) => {
+      console.log(project.id)
       // Create stages for each project
       const stages = await Factory.model('App/Models/Stage').createMany(5)
       await project.stages().saveMany(stages)
@@ -31,6 +32,13 @@ class AlexSeeder {
       // Create tasks are in each stage
       stages.forEach(async (stage) => {
         const tasks = await Factory.model('App/Models/Task').createMany(5)
+
+        // Assign all tasks to Alex
+        tasks.forEach(async (task) => {
+          task.user_id = Alex.id
+          task.project_id = project.id
+        })
+
         await stage.tasks().saveMany(tasks)
       })
     })

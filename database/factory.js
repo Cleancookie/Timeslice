@@ -25,10 +25,44 @@ Factory.blueprint('App/Models/User', async (faker, i, data) => {
   }
 })
 
-Factory.blueprint('App/Models/Stage', (faker, i, data) => {
+Factory.blueprint('App/Models/Project', (faker, i, data) => {
   return {
-    name: faker.word(),
-    order: i
+    name: faker.word()
+  }
+})
+
+Factory.blueprint('App/Models/Stage', (faker, i, data) => {
+  switch (i) {
+    case 0:
+      return {
+        name: 'Backlog',
+        order: i
+      }
+    case 1:
+      return {
+        name: 'Scheduled',
+        order: i
+      }
+    case 2:
+      return {
+        name: 'In Progress',
+        order: i
+      }
+    case 3:
+      return {
+        name: 'Testing',
+        order: i
+      }
+    case 4:
+      return {
+        name: 'Awaiting Sign Off',
+        order: i
+      }
+    case 5:
+      return {
+        name: 'Ready to Deploy',
+        order: i
+      }
   }
 })
 
@@ -36,11 +70,5 @@ Factory.blueprint('App/Models/Task', (faker, i, data) => {
   return {
     name: faker.word(),
     description: faker.sentence()
-  }
-})
-
-Factory.blueprint('App/Models/Project', (faker, i, data) => {
-  return {
-    name: faker.word()
   }
 })
