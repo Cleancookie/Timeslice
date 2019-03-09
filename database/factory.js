@@ -18,14 +18,28 @@ const Hash = use('Hash')
 /** @type {import('@adonisjs/lucid/src/Database')} */
 const Database = use('Database')
 
-Factory.blueprint('App/Models/User', async (faker) => {
+Factory.blueprint('App/Models/User', async (faker, i, data) => {
   return {
     username: faker.username(),
-    password: await Hash.make(faker.password())
+    password: await Hash.make('pass')
   }
 })
 
-Factory.blueprint('App/Models/Stage', (faker) => {
+Factory.blueprint('App/Models/Stage', (faker, i, data) => {
+  return {
+    name: faker.word(),
+    order: i
+  }
+})
+
+Factory.blueprint('App/Models/Task', (faker, i, data) => {
+  return {
+    name: faker.word(),
+    description: faker.sentence()
+  }
+})
+
+Factory.blueprint('App/Models/Project', (faker, i, data) => {
   return {
     name: faker.word()
   }
