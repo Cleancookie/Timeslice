@@ -17,3 +17,14 @@
     }
   }
 }
+
+.task {
+  &s--container {
+    // tasks container (plural)
+    // display: flex;
+  }
+  &--container {
+    // task container (individual)
+    // border: none;
+  }
+}
