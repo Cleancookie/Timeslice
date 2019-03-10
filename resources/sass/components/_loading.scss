@@ -1,7 +1,8 @@
 // FROM https://loading.io/css/
 .lds-ellipsis {
-  position: absolute;
-  left: 50%;
+  position: fixed;
+  left: 50vw;
+  top: 50vh;
   z-index: 9999;
 }
 .lds-ellipsis div {

@@ -75,6 +75,11 @@ class Dashboard {
   }
 
   refreshStagesTasks(stageEle) {
+    // Delete all old tasks
+    $(stageEle)
+      .find('[data-cloneable="false"]')
+      .remove()
+
     stageEle.data.stage.tasks.forEach((task) => {
       let newTaskEle = $(stageEle)
         .find('[data-cloneable="task-li"]')
@@ -102,7 +107,9 @@ class Dashboard {
     if (isLoading) {
       $('[data-loading-bar]').fadeIn(200)
     } else {
-      $('[data-loading-bar]').fadeOut(200)
+      setTimeout(() => {
+        $('[data-loading-bar]').fadeOut(200)
+      }, 300)
     }
   }
 }
