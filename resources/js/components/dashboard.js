@@ -123,10 +123,29 @@ class Dashboard {
       $('[data-project-name]').show()
     })
 
-    $('[data-project-name-form]').submit(function(e) {
+    $('[data-project-name-form]').submit(async (e) => {
       e.preventDefault()
-      const newTitle = $('[data-project-name-input]').val()
+      this.loading(true)
+
+      const newName = $('[data-project-name-input]').val()
       const projectId = $('.project--container__active').attr('data-project-id')
+
+      try {
+        const res = await axios.post(`/api/v1/projects/${projectId}`, {
+          name: newName
+        })
+
+        $('[data-project-name]').text(res.data.data.name)
+        $(`[data-project-id="${res.data.data.id}"]`)
+          .find('h2')
+          .text(res.data.data.name)
+      } catch (err) {
+        alert('Could not update project name')
+      }
+
+      $('[data-project-name-input]').hide()
+      $('[data-project-name]').show()
+      this.loading(false)
     })
   }
 
@@ -136,7 +155,7 @@ class Dashboard {
     } else {
       setTimeout(() => {
         $('[data-loading-bar]').fadeOut(200)
-      }, 300)
+      }, 350)
     }
   }
 }
