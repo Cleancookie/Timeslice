@@ -1,3 +1,9 @@
-<li class="list-group-item stage--container" data-cloneable="stage-li" style="display: none">
-{stage.name}
+<li
+  class="list-group-item stage--container"
+  data-cloneable="stage-li"
+  data-stage-id="{stage.id}"
+  style="display: none"
+>
+  {stage.name}
+  @include('partials/task-ul')
 </li>
