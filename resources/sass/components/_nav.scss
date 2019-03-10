@@ -9,6 +9,18 @@
 }
 
 .navbar-brand {
+  &:before {
+    position: absolute;
+    content: '';
+    background-image: url(/assets/psd/icon.png);
+    height: 35px;
+    background-size: contain;
+    width: 35px;
+    left: 100px;
+    top: 12.5px;
+    margin-left: 5px;
+  }
+
   &:after {
     display: block;
     content: '';
