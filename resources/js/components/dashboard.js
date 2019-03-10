@@ -5,6 +5,7 @@ class Dashboard {
     if ($('[data-dashboard]').length) {
       console.log('Dashboard loaded')
       this.getAppProjects()
+      this.attachEditProjectTitle()
     }
   }
 
@@ -106,6 +107,26 @@ class Dashboard {
       newTaskEle.appendTo($(stageEle).find('[data-task-ul]'))
       newTaskEle.data.task = task
       newTaskEle.fadeIn(200)
+    })
+  }
+
+  attachEditProjectTitle() {
+    $('[data-project-name]').click(function() {
+      $(this).hide()
+      $('[data-project-name-input]').val($(this).text())
+      $('[data-project-name-input]').show()
+      $('[data-project-name-input]').focus()
+    })
+
+    $('[data-project-name-input]').focusout(function() {
+      $(this).hide()
+      $('[data-project-name]').show()
+    })
+
+    $('[data-project-name-form]').submit(function(e) {
+      e.preventDefault()
+      const newTitle = $('[data-project-name-input]').val()
+      const projectId = $('.project--container__active').attr('data-project-id')
     })
   }
 

@@ -16,6 +16,21 @@
   background-color: rgba($white, 0);
   padding: 10px 0 0 0;
   position: relative;
+  border: none;
+  font-family: lato;
+  font-weight: 500;
+  font-size: 2rem;
+  width: 100%;
+
+  &--input {
+    border-bottom: 3px solid $dark-grey;
+    background-color: $white;
+    padding: 5px 0 0 0;
+
+    &:focus {
+      outline: none;
+    }
+  }
 
   &:after {
     content: '';
