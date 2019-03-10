@@ -85,12 +85,14 @@ class Dashboard {
           return $(this)
             .html()
             .replace('{task.name}', task.name)
+            .replace('{task.user}', task.users.username)
+            .replace('{task.description}', task.description)
         })
         .click(() => {
           console.log(`Click on ${task.name}(${task.id})`)
         })
 
-      newTaskEle.appendTo($(stageEle))
+      newTaskEle.appendTo($(stageEle).find('[data-task-ul]'))
       newTaskEle.data.task = task
       newTaskEle.fadeIn(200)
     })

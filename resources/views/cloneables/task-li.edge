@@ -1,8 +1,12 @@
 <li
-  class="list-group-item task--container"
+  class="list-group-item task--container bg-sunset"
   data-cloneable="task-li"
   data-task-id="{task.id}"
   style="display: none"
 >
-  {task.name}
+  <h4 class="task--name">{task.name}</h4>
+
+  <p class="task--assigned-to">Assigned to: <span class="task--user">{task.user}</span></p>
+
+  <p class="task--description">{task.description}</p>
 </li>

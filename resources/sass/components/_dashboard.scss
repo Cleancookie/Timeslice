@@ -1,0 +1,75 @@
+@include media-breakpoint-up(md) {
+  .sidebar {
+    max-width: 200px;
+    position: absolute;
+    height: calc(100vh - 56px);
+    overflow-y: visible;
+    overflow-x: hidden;
+  }
+
+  .dashboard--main {
+    margin-left: 200px;
+  }
+}
+
+.project {
+  &--name {
+    font-size: 1rem;
+    font-weight: normal;
+  }
+}
+
+.stage {
+  &--container {
+    margin: 10px 0;
+  }
+
+  &--name {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+}
+
+.task {
+  &s {
+    flex-direction: row;
+  }
+
+  &--container {
+    width: 400px;
+    height: 180px;
+    overflow: hidden auto;
+    margin: 0 30px 0 0;
+    border: none;
+    box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 1);
+
+    /* width */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: rgba($light-grey, 0.9);
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: $orange;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: $black;
+    }
+  }
+
+  &--name {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  &--assigned-to {
+    font-family: $sans-serif;
+  }
+}
