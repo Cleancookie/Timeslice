@@ -12,6 +12,30 @@
   }
 }
 
+.project-name-heading {
+  background-color: rgba($white, 0);
+  padding: 10px 0 0 0;
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    display: block;
+    margin-top: 5px;
+    left: 0;
+    background: $dark-grey;
+    transition: width 0.2s ease;
+  }
+
+  &:hover:after {
+    width: 100%;
+    left: 0;
+    background: $dark-grey;
+  }
+}
+
 .project {
   &--name {
     font-size: 1rem;
@@ -21,6 +45,10 @@
   &--container {
     border: none;
     cursor: pointer;
+
+    &:hover {
+      background-color: $light-grey;
+    }
 
     &__active {
       border-right: 4px solid $red;

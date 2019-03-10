@@ -52,6 +52,8 @@ class Dashboard {
         $('.project--container__active').removeClass(
           'project--container__active'
         )
+        $('[data-project-name]').text(project.name)
+        $('[data-project-name]').fadeIn(200)
         $(newProjectEle).addClass('project--container__active')
       })
 
