@@ -1,0 +1,12 @@
+@mixin hover {
+  &:hover {
+    .no-touch & {
+      @content;
+    }
+  }
+  &:active {
+    .touch & {
+      @content;
+    }
+  }
+}

@@ -26,6 +26,10 @@ class Project extends Model {
     return this.belongsTo('App/Models/Project')
   }
 
+  stages() {
+    return this.hasMany('App/Models/Stage')
+  }
+
   /**
    * Checks if user has permission to edit the current project
    *

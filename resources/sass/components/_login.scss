@@ -1,0 +1,8 @@
+.login {
+  &--submit {
+    &.error {
+      background-color: red;
+      border-color: red;
+    }
+  }
+}

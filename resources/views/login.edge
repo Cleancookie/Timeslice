@@ -1,21 +1,14 @@
 @layout("layouts/default")
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <div class="col">
-      <div class="d-flex flex-column text-center pt-3">
-        <h1>Register</h1>
-        <p>Placeholder page</p>
-      </div>
-      @include('partials/register-form')
+    <div class="col-12 order-lg-2 col-lg-6">
+      @include('partials/forms/login')
     </div>
-    <div class="col">
-        <div class="d-flex flex-column text-center pt-3">
-            <h1>Login</h1>
-            <p>Placeholder page</p>
-          </div>
-      @include('partials/login-form')
+
+    <div class="col-12 order-lg-1 col-lg-6">
+      @include('partials/forms/register')
     </div>
   </div>
 </div>

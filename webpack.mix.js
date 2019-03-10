@@ -1,16 +1,13 @@
 const mix = require('laravel-mix');
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
-
 // Full API from https://github.com/JeffreyWay/laravel-mix/blob/master/setup/webpack.mix.js
-// mix.js(src, output);
+mix.js('resources/js/app.js', 'public/js');
 // mix.react(src, output); <-- Identical to mix.js(), but registers React Babel compilation.
 // mix.preact(src, output); <-- Identical to mix.js(), but registers Preact compilation.
 // mix.coffee(src, output); <-- Identical to mix.js(), but registers CoffeeScript compilation.
 // mix.ts(src, output); <-- TypeScript support. Requires tsconfig.json to exist in the same folder as webpack.mix.js
 // mix.extract(vendorLibs);
-// mix.sass(src, output);
+mix.sass('resources/sass/app.scss', 'public/css');
 // mix.less(src, output);
 // mix.stylus(src, output);
 // mix.postCss(src, output, [require('postcss-some-plugin')()]);
@@ -27,7 +24,7 @@ mix.sourceMaps(); // Enable sourcemaps
 // mix.setResourceRoot('prefix/for/resource/locators');
 // mix.autoload({}); <-- Will be passed to Webpack's ProvidePlugin.
 // mix.webpackConfig({}); <-- Override webpack.config.js, without editing the file directly.
-// mix.babelConfig({}); <-- Merge extra Babel configuration (plugins, etc.) with Mix's default.
+mix.babelConfig({}); // <-- Merge extra Babel configuration (plugins, etc.) with Mix's default.
 // mix.then(function () {}) <-- Will be triggered each time Webpack finishes building.
 // mix.dump(); <-- Dump the generated webpack config object t the console.
 // mix.extend(name, handler) <-- Extend Mix's API with your own components.
