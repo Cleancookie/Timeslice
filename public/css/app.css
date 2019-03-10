@@ -10797,6 +10797,33 @@ p {
 
 .stage--container {
   margin: 10px 0;
+  overflow: auto;
+}
+
+@media (min-width: 768px) {
+  .stage--container {
+    max-width: calc(100vw - 250px);
+    /* width */
+    /* Track */
+    /* Handle */
+    /* Handle on hover */
+  }
+
+  .stage--container::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .stage--container::-webkit-scrollbar-track {
+    background: rgba(248, 248, 248, 0.9);
+  }
+
+  .stage--container::-webkit-scrollbar-thumb {
+    background: #9ca3af;
+  }
+
+  .stage--container::-webkit-scrollbar-thumb:hover {
+    background: #393e46;
+  }
 }
 
 .stage--name {
@@ -10809,16 +10836,22 @@ p {
 }
 
 .task--container {
-  width: 400px;
+  min-width: 250px;
+  max-width: 250px;
   height: 180px;
   overflow: hidden auto;
   margin: 0 30px 0 0;
   border: none;
   box-shadow: 0px 0px 10px -5px black;
+  transition: 200ms ease-in-out;
   /* width */
   /* Track */
   /* Handle */
   /* Handle on hover */
+}
+
+.task--container:hover {
+  box-shadow: none;
 }
 
 .task--container::-webkit-scrollbar {
@@ -10830,20 +10863,24 @@ p {
 }
 
 .task--container::-webkit-scrollbar-thumb {
-  background: #f8b500;
+  background: #505762;
 }
 
 .task--container::-webkit-scrollbar-thumb:hover {
-  background: #0c0c0c;
+  background: #393e46;
 }
 
 .task--name {
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .task--assigned-to {
   font-family: lato, Verdana, sans-serif;
+}
+
+.task--user {
+  text-decoration: underline;
 }
 
 .lds-ellipsis {

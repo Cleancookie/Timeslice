@@ -22,6 +22,12 @@
 .stage {
   &--container {
     margin: 10px 0;
+    overflow: auto;
+
+    @include media-breakpoint-up(md) {
+      max-width: calc(100vw - 250px);
+      @include horizontalScrollBar();
+    }
   }
 
   &--name {
@@ -36,40 +42,33 @@
   }
 
   &--container {
-    width: 400px;
+    min-width: 250px;
+    max-width: 250px;
     height: 180px;
     overflow: hidden auto;
     margin: 0 30px 0 0;
     border: none;
     box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 1);
+    // box-shadow: 5px 5px 0px 0px rgba($black, .8);
+    transition: 200ms ease-in-out;
 
-    /* width */
-    &::-webkit-scrollbar {
-      width: 6px;
+    &:hover {
+      box-shadow: none;
     }
 
-    /* Track */
-    &::-webkit-scrollbar-track {
-      background: rgba($light-grey, 0.9);
-    }
-
-    /* Handle */
-    &::-webkit-scrollbar-thumb {
-      background: $orange;
-    }
-
-    /* Handle on hover */
-    &::-webkit-scrollbar-thumb:hover {
-      background: $black;
-    }
+    @include verticalScrollBar();
   }
 
   &--name {
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   &--assigned-to {
     font-family: $sans-serif;
+  }
+
+  &--user {
+    text-decoration: underline;
   }
 }
