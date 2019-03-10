@@ -17,6 +17,16 @@
     font-size: 1rem;
     font-weight: normal;
   }
+
+  &--container {
+    border: none;
+    cursor: pointer;
+
+    &__active {
+      border-right: 4px solid $red;
+      background-color: $light-grey;
+    }
+  }
 }
 
 .stage {
@@ -51,6 +61,7 @@
     box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 1);
     // box-shadow: 5px 5px 0px 0px rgba($black, .8);
     transition: 200ms ease-in-out;
+    cursor: default;
 
     &:hover {
       box-shadow: none;
@@ -62,6 +73,7 @@
   &--name {
     font-size: 1rem;
     font-weight: 600;
+    cursor: text;
   }
 
   &--assigned-to {
@@ -70,5 +82,10 @@
 
   &--user {
     text-decoration: underline;
+    cursor: text;
+  }
+
+  &--description {
+    cursor: text;
   }
 }

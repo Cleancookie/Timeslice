@@ -49,6 +49,10 @@ class Dashboard {
       })
       .click(() => {
         this.getStagesAndTheirTasks(project.id)
+        $('.project--container__active').removeClass(
+          'project--container__active'
+        )
+        $(newProjectEle).addClass('project--container__active')
       })
 
     newProjectEle.appendTo('[data-project-ul]').fadeIn(200)
