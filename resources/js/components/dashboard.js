@@ -18,29 +18,20 @@ class Dashboard {
     this.loading(false)
   }
 
-  getTasks(projectId) {
-    this.loading(true)
-
-    const response = axios
-      .get(`/api/v1/projects/${projectId}/tasks`)
-      .then((response) => {
-        $('[data-task-id]').remove()
-        response.data.data.forEach((task, index) => {
-          this.appendTask(task)
-        })
-      })
-
-    this.loading(false)
-  }
-
   getStagesAndTheirTasks(projectId) {
     this.loading(true)
 
     const response = axios
       .get(`/api/v1/projects/${projectId}/stages`)
       .then((response) => {
-        $('main').html('')
-        console.log(response)
+        // Clear the dashboard's stages
+        $('[data-stage-ul]')
+          .find('[data-cloneable="false"]')
+          .remove()
+
+        response.data.data.forEach((stage) => {
+          this.appendStage(stage)
+        })
       })
 
     this.loading(false)
@@ -52,10 +43,9 @@ class Dashboard {
       .attr('data-cloneable', false)
       .attr('data-project-id', project.id)
       .text(function() {
-        window.yerd = project
         return $(this)
           .text()
-          .replace('{{project.name}}', project.name)
+          .replace('{project.name}', project.name)
       })
       .click(() => {
         this.getStagesAndTheirTasks(project.id)
@@ -64,18 +54,22 @@ class Dashboard {
     newProjectEle.appendTo('[data-project-ul]').fadeIn(200)
   }
 
-  appendTask(task) {
-    let newProjectEle = $('[data-cloneable="task-li"]')
+  appendStage(stage) {
+    console.log(stage)
+    let newStageEle = $('[data-cloneable="stage-li"]')
       .clone()
       .attr('data-cloneable', false)
-      .attr('data-task-id', task.id)
+      .attr('data-project-id', stage.id)
       .text(function() {
         return $(this)
           .text()
-          .replace('{{task.name}}', task.name)
+          .replace('{stage.name}', stage.name)
+      })
+      .click(() => {
+        console.log(`Click on ${stage.name}(${stage.id})`)
       })
 
-    newProjectEle.appendTo('[data-task-ul]').fadeIn(200)
+    newStageEle.appendTo('[data-stage-ul]').fadeIn(200)
   }
 
   loading(isLoading) {
