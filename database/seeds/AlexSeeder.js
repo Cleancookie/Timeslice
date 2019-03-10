@@ -19,7 +19,7 @@ class AlexSeeder {
   async run() {
     const Alex = await User.findBy('username', 'alex')
 
-    const projects = await Factory.model('App/Models/Project').createMany(5)
+    const projects = await Factory.model('App/Models/Project').createMany(20)
 
     // Create a few projects for Alex
     await Alex.projects().saveMany(projects)
@@ -31,10 +31,10 @@ class AlexSeeder {
 
       // Create tasks are in each stage
       stages.forEach(async (stage) => {
-        const tasks = await Factory.model('App/Models/Task').createMany(5)
+        const tasks = await Factory.model('App/Models/Task').createMany(10)
 
         // Assign all tasks to Alex
-        tasks.forEach(async (task) => {
+        tasks.forEach((task) => {
           task.user_id = Alex.id
           task.project_id = project.id
         })
