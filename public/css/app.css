@@ -10779,7 +10779,7 @@ p {
 @media (min-width: 768px) {
   .sidebar {
     max-width: 200px;
-    position: absolute;
+    position: fixed;
     height: calc(100vh - 56px);
     overflow-y: visible;
     overflow-x: hidden;
@@ -10794,6 +10794,21 @@ p {
   background-color: rgba(255, 255, 255, 0);
   padding: 10px 0 0 0;
   position: relative;
+  border: none;
+  font-family: lato;
+  font-weight: 500;
+  font-size: 2rem;
+  width: 100%;
+}
+
+.project-name-heading--input {
+  border-bottom: 3px solid #393e46;
+  background-color: white;
+  padding: 5px 0 0 0;
+}
+
+.project-name-heading--input:focus {
+  outline: none;
 }
 
 .project-name-heading:after {
