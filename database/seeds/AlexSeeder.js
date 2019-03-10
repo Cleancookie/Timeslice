@@ -17,31 +17,27 @@ const User = use('App/Models/User')
 
 class AlexSeeder {
   async run() {
-    const Alex = await User.findBy('username', 'alex')
+    this.Alex = await User.findBy('username', 'alex')
 
-    const projects = await Factory.model('App/Models/Project').createMany(20)
+    let projects = await Factory.model('App/Models/Project').createMany(5)
 
     // Create a few projects for Alex
-    await Alex.projects().saveMany(projects)
-    projects.forEach(async (project) => {
-      console.log(project.id)
-      // Create stages for each project
-      const stages = await Factory.model('App/Models/Stage').createMany(5)
-      await project.stages().saveMany(stages)
+    await this.Alex.projects().saveMany(projects)
 
-      // Create tasks are in each stage
-      stages.forEach(async (stage) => {
-        const tasks = await Factory.model('App/Models/Task').createMany(10)
+    // Add stages to each project
+    for (let i = 0; i < projects.length; i++) {
+      console.log(`Creating project ${i + 1} of ${projects.length}`)
+      let stages = await Factory.model('App/Models/Stage').createMany(5)
+      await projects[i].stages().saveMany(stages)
 
-        // Assign all tasks to Alex
-        tasks.forEach((task) => {
-          task.user_id = Alex.id
-          task.project_id = project.id
-        })
-
-        await stage.tasks().saveMany(tasks)
-      })
-    })
+      // Create tasks for each stage
+      for (let j = 0; j < stages.length; j++) {
+        let tasks = await Factory.model('App/Models/Task').createMany(5)
+        await stages[j].tasks().saveMany(tasks)
+        await this.Alex.tasks().saveMany(tasks)
+        await projects[i].tasks().saveMany(tasks)
+      }
+    }
   }
 }
 
