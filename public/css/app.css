@@ -14715,14 +14715,14 @@ p {
   left: 26px;
   -webkit-animation: lds-ellipsis2 0.6s infinite;
           animation: lds-ellipsis2 0.6s infinite;
-  background: #393e46;
+  background: #fc3c3c;
 }
 
 .lds-ellipsis div:nth-child(4) {
   left: 45px;
   -webkit-animation: lds-ellipsis3 0.6s infinite;
           animation: lds-ellipsis3 0.6s infinite;
-  background: #393e46;
+  background: #f8b500;
 }
 
 @-webkit-keyframes lds-ellipsis1 {
