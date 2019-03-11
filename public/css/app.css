@@ -10900,6 +10900,17 @@ p {
   flex-direction: row;
 }
 
+.task--toolbar {
+  display: none;
+  position: absolute;
+  width: 100%;
+  text-align: right;
+  left: 0;
+  top: 0;
+  padding: 10px 10px;
+  color: rgba(57, 62, 70, 0.5);
+}
+
 .task--container {
   min-width: 250px;
   max-width: 250px;
@@ -10908,7 +10919,7 @@ p {
   margin: 0 30px 0 0;
   border: none;
   box-shadow: 0px 0px 10px -5px black;
-  transition: 200ms ease-in-out;
+  transition: 100ms ease-in-out;
   cursor: default;
   /* width */
   /* Track */

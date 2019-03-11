@@ -2,8 +2,13 @@
   class="list-group-item task--container bg-sunset"
   data-cloneable="task-li"
   data-task-id="{task.id}"
+  data-task-li
   style="display: none"
 >
+  <div class="task--toolbar" data-task-toolbar>
+    <i class="fas fa-chevron-circle-up"></i>
+    <i class="fas fa-chevron-circle-down"></i>
+  </div>
   <h4 class="task--name">{task.name}</h4>
 
   <p class="task--assigned-to">Assigned to: <span class="task--user">{task.user}</span></p>

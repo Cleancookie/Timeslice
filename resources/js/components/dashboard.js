@@ -79,28 +79,6 @@ class Dashboard {
     newStageEle.data.stage = stage
     this.refreshStagesTasks(newStageEle)
 
-    // From https://stackoverflow.com/questions/43173936/using-flexbox-with-jqueryuis-sortable
-    const placeholderElement = jQuery(
-      '<div style="background-color: #eee;"></div>'
-    )
-    $('.connectedSortable')
-      .sortable({
-        connectWith: '.connectedSortable',
-        activate: function(event, ui) {
-          placeholderElement.insertBefore(ui.item[0])
-
-          // Explicitly set the height and width to preserve
-          // flex calculations
-          placeholderElement.width(ui.item[0].offsetWidth)
-          placeholderElement.height(ui.item[0].offsetHeight)
-        },
-
-        // Remove it when you're done dragging.
-        deactivate: function() {
-          placeholderElement.remove()
-        }
-      })
-      .disableSelection()
     newStageEle.fadeIn(200)
   }
 
@@ -126,6 +104,18 @@ class Dashboard {
         .click(() => {
           console.log(`Click on ${task.name}(${task.id})`)
         })
+        .hover(
+          () => {
+            $(newTaskEle)
+              .find('[data-task-toolbar]')
+              .slideDown(100)
+          },
+          () => {
+            $(newTaskEle)
+              .find('[data-task-toolbar]')
+              .slideUp(100)
+          }
+        )
 
       newTaskEle.appendTo($(stageEle).find('[data-task-ul]'))
       newTaskEle.data.task = task
