@@ -21,14 +21,14 @@ class ExceptionHandler extends BaseExceptionHandler {
    * @return {void}
    */
   async handle(error, { request, response }) {
-    if (
-      error.message ==
-        'E_GUEST_ONLY: Only guest user can access the route GET' ||
-      error.message ==
-        'E_GUEST_ONLY: Only guest user can access the route GET /'
-    ) {
+    if (error.code == 'E_GUEST_ONLY') {
       return response.redirect('/dashboard')
     }
+
+    if (error.code == 'E_INVALID_SESSION') {
+      return response.redirect('/login')
+    }
+
     response.status(error.status).send(error.message)
   }
 
