@@ -1,5 +1,5 @@
-class CookieComponent {
-  setCookie(cname, cvalue) {
+export default class CookieComponent {
+  static setCookie(cname, cvalue) {
     var d = new Date()
     // All cookies last 3 days
     d.setTime(d.getTime() + 3 * 24 * 60 * 60 * 1000)
@@ -7,7 +7,7 @@ class CookieComponent {
     document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/'
   }
 
-  getCookie(cname) {
+  static getCookie(cname) {
     var name = cname + '='
     var decodedCookie = decodeURIComponent(document.cookie)
     var ca = decodedCookie.split(';')
@@ -23,5 +23,3 @@ class CookieComponent {
     return null
   }
 }
-
-module.exports = new CookieComponent()

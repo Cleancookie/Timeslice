@@ -6,7 +6,7 @@ class PublicController {
    *
    * @param {Context} ctx
    */
-  async home({ reé, res, view }) {
+  async home({ request, response, view }) {
     return view.render('homepage')
   }
 

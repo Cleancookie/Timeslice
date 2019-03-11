@@ -1,11 +1,14 @@
 const axios = require('axios')
+const _ = require('lodash')
 
-class Dashboard {
+export default class DashboardComponent {
   constructor() {
     if ($('[data-dashboard]').length) {
-      console.log('Dashboard loaded')
+      this.loadingCounter = 0
       this.getAppProjects()
       this.attachEditProjectTitle()
+      console.log('Dashboard loaded')
+      this.modalInit = false
     }
   }
 
@@ -71,51 +74,25 @@ class Dashboard {
           .html()
           .replace('{stage.name}', stage.name)
       })
-      .click(() => {
-        console.log(`Click on ${stage.name}(${stage.id})`)
-      })
 
     newStageEle.appendTo('[data-stage-ul]')
-    newStageEle.data.stage = stage
-    this.refreshStagesTasks(newStageEle)
+    this.appendTasksToStage(newStageEle, stage.tasks)
 
-    // From https://stackoverflow.com/questions/43173936/using-flexbox-with-jqueryuis-sortable
-    const placeholderElement = jQuery(
-      '<div style="background-color: #eee;"></div>'
-    )
-    $('.connectedSortable')
-      .sortable({
-        connectWith: '.connectedSortable',
-        activate: function(event, ui) {
-          placeholderElement.insertBefore(ui.item[0])
-
-          // Explicitly set the height and width to preserve
-          // flex calculations
-          placeholderElement.width(ui.item[0].offsetWidth)
-          placeholderElement.height(ui.item[0].offsetHeight)
-        },
-
-        // Remove it when you're done dragging.
-        deactivate: function() {
-          placeholderElement.remove()
-        }
-      })
-      .disableSelection()
     newStageEle.fadeIn(200)
   }
 
-  refreshStagesTasks(stageEle) {
+  appendTasksToStage(stageEle, tasks) {
     // Delete all old tasks
     $(stageEle)
       .find('[data-cloneable="false"]')
       .remove()
 
-    stageEle.data.stage.tasks.forEach((task) => {
+    tasks.forEach((task) => {
       let newTaskEle = $(stageEle)
         .find('[data-cloneable="task-li"]')
         .clone()
         .attr('data-cloneable', false)
-        .attr('data-task-id', task.id)
+        .attr('data-task-li-id', task.id)
         .html(function() {
           return $(this)
             .html()
@@ -123,14 +100,139 @@ class Dashboard {
             .replace('{task.user}', task.users.username)
             .replace('{task.description}', task.description)
         })
-        .click(() => {
-          console.log(`Click on ${task.name}(${task.id})`)
-        })
 
+      newTaskEle.find('form').attr('data-task-id', task.id)
+      this.attachTaskToolbarListeners(newTaskEle)
+      this.attachTaskFormListener($(newTaskEle).find('form'))
       newTaskEle.appendTo($(stageEle).find('[data-task-ul]'))
-      newTaskEle.data.task = task
       newTaskEle.fadeIn(200)
     })
+  }
+
+  attachTaskFormListener(formEl) {
+    $(formEl).submit((e) => {
+      e.preventDefault()
+    })
+
+    // Submit on submit button
+    $(formEl)
+      .closest('[data-task-li]')
+      .find('[data-toolbar-submit]')
+      .click(() => {
+        this.loading(true)
+
+        // Get values from fields
+        const taskId = $(formEl).data('task-id')
+        const name = $(formEl)
+          .find('input[name=name]')
+          .val()
+        const description = $(formEl)
+          .find('[data-task-description]')
+          .val()
+
+        // Post to API
+        const response = axios.post(`/api/v1/tasks/${taskId}`, {
+          id: taskId,
+          name: name,
+          description: description
+        })
+
+        response
+          .then((res) => {
+            if (_.get(res, 'data.success') != true) {
+              console.log(res)
+              const check = formEl
+                .closest('[data-task-li]')
+                .find('[data-toolbar-submit]')
+              check.addClass('animated shake error')
+              check.on('animationend', function() {
+                check.removeClass('animated shake error')
+              })
+            } else {
+              console.log('Task updated')
+              const el = $(`[data-task-li-id="${taskId}"]`)
+              // Toggle toolbar
+              el.find('[data-task-toolbar-tools]').fadeOut(100)
+
+              // Material guidelines shadow
+              el.removeClass('task-toolbar--container__active')
+
+              // Toggle disabled on fields
+              el.find('[data-task-input]').attr('disabled', (i, v) => {
+                return !v
+              })
+            }
+            this.loading(false)
+          })
+          .catch((err) => {
+            alert('Could not update task.')
+            this.loading(false)
+          })
+      })
+  }
+
+  attachTaskToolbarListeners(el) {
+    // Hide / show cog
+    el.hover(
+      () => {
+        $(el)
+          .find('[data-task-toolbar-container]')
+          .slideDown(100)
+      },
+      () => {
+        $(el)
+          .find('[data-task-toolbar-container]')
+          .slideUp(100)
+      }
+    )
+
+    // Hide / show toolbar
+    el.find('[data-task-toolbar-toggle]').click(() => {
+      // Toggle toolbar
+      $(el)
+        .find('[data-task-toolbar-tools]')
+        .fadeToggle(100)
+
+      // Material guidelines shadow
+      $(el).toggleClass('task-toolbar--container__active')
+
+      // Make cog spin
+      $(el)
+        .find('[data-task-toolbar-toggle]')
+        .find('i')
+        .toggleClass('spin')
+
+      // Toggle disabled on fields
+      $(el)
+        .find('[data-task-input]')
+        .attr('disabled', (i, v) => {
+          return !v
+        })
+    })
+
+    // Show modal to delete task
+    $(el)
+      .find('[data-toolbar-delete]')
+      .click(() => {
+        const taskId = $(el).data('task-li-id')
+        $('#delete-task--modal')
+          .find('[data-delete-task-button]')
+          .data('delete-task-id', taskId)
+        $('#delete-task--modal').modal('show')
+      })
+
+    // Delete task modal
+    if (!this.modalInit) {
+      $('#delete-task--modal')
+        .find('[data-delete-task-button]')
+        .click(function() {
+          const taskId = $(this).data('delete-task-id')
+          console.log(taskId)
+          // TODO send delete request based on this id
+        })
+
+      this.modalInit = true
+    }
   }
 
   attachEditProjectTitle() {
@@ -174,13 +276,17 @@ class Dashboard {
 
   loading(isLoading) {
     if (isLoading) {
-      $('[data-loading-bar]').fadeIn(200)
+      this.loadingCounter++
     } else {
+      this.loadingCounter--
+    }
+
+    if (this.loadingCounter == 0) {
       setTimeout(() => {
         $('[data-loading-bar]').fadeOut(200)
       }, 350)
+    } else {
+      $('[data-loading-bar]').fadeIn(200)
     }
   }
 }
-
-module.exports = new Dashboard()

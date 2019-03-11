@@ -107,7 +107,7 @@ class TaskController {
     let { id } = params
     let task = await Task.find(id)
 
-    task.merge(request.only(['name', 'description', 'stage_id']))
+    task.merge(request.only(['name', 'description']))
 
     const success = await task.save()
     return {

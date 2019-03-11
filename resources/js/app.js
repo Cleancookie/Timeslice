@@ -1,8 +1,11 @@
 'use strict'
 // Dependencies
-// window.$ = require('jquery')
+window.$ = require('jquery')
 import 'bootstrap'
-// require('jquery-ui')
+
 // Components
-require('./components/login')
-require('./components/dashboard')
+import LoginComponent from './components/login'
+const login = new LoginComponent()
+
+import DashboardComponent from './components/dashboard'
+const dashboard = new DashboardComponent()

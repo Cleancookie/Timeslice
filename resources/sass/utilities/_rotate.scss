@@ -1,0 +1,7 @@
+.rotateable {
+  transition: all 0.2s ease-out;
+}
+
+.spin {
+  transform: rotate(90deg);
+}
