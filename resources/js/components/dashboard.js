@@ -8,6 +8,7 @@ export default class DashboardComponent {
       this.getAppProjects()
       this.attachEditProjectTitle()
       console.log('Dashboard loaded')
+      this.modalInit = false
     }
   }
 
@@ -171,6 +172,7 @@ export default class DashboardComponent {
   }
 
   attachTaskToolbarListeners(el) {
+    // Hide / show cog
     el.hover(
       () => {
         $(el)
@@ -184,6 +186,7 @@ export default class DashboardComponent {
       }
     )
 
+    // Hide / show toolbar
     el.find('[data-task-toolbar-toggle]').click(() => {
       // Toggle toolbar
       $(el)
@@ -206,6 +209,30 @@ export default class DashboardComponent {
           return !v
         })
     })
+
+    // Show modal to delete task
+    $(el)
+      .find('[data-toolbar-delete]')
+      .click(() => {
+        const taskId = $(el).data('task-li-id')
+        $('#delete-task--modal')
+          .find('[data-delete-task-button]')
+          .data('delete-task-id', taskId)
+        $('#delete-task--modal').modal('show')
+      })
+
+    // Delete task modal
+    if (!this.modalInit) {
+      $('#delete-task--modal')
+        .find('[data-delete-task-button]')
+        .click(function() {
+          const taskId = $(this).data('delete-task-id')
+          console.log(taskId)
+          // TODO send delete request based on this id
+        })
+
+      this.modalInit = true
+    }
   }
 
   attachEditProjectTitle() {
