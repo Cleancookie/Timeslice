@@ -1,4 +1,5 @@
 const axios = require('axios')
+const _ = require('lodash')
 
 export default class DashboardComponent {
   constructor() {
