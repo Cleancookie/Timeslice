@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-class Dashboard {
+export default class DashboardComponent {
   constructor() {
     if ($('[data-dashboard]').length) {
       console.log('Dashboard loaded')
@@ -104,22 +104,32 @@ class Dashboard {
         .click(() => {
           console.log(`Click on ${task.name}(${task.id})`)
         })
-        .hover(
-          () => {
-            $(newTaskEle)
-              .find('[data-task-toolbar]')
-              .slideDown(100)
-          },
-          () => {
-            $(newTaskEle)
-              .find('[data-task-toolbar]')
-              .slideUp(100)
-          }
-        )
 
+      this.attachTaskToolbarListeners(newTaskEle)
       newTaskEle.appendTo($(stageEle).find('[data-task-ul]'))
       newTaskEle.data.task = task
       newTaskEle.fadeIn(200)
+    })
+  }
+
+  attachTaskToolbarListeners(el) {
+    el.hover(
+      () => {
+        $(el)
+          .find('[data-task-toolbar-container]')
+          .slideDown(100)
+      },
+      () => {
+        $(el)
+          .find('[data-task-toolbar-container]')
+          .slideUp(100)
+      }
+    )
+
+    el.find('[data-task-toolbar-toggle]').click(() => {
+      $(el)
+        .find('[data-task-toolbar-tools]')
+        .fadeToggle(100)
     })
   }
 
@@ -172,5 +182,3 @@ class Dashboard {
     }
   }
 }
-
-module.exports = new Dashboard()

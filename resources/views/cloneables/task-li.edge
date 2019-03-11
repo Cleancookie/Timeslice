@@ -5,9 +5,16 @@
   data-task-li
   style="display: none"
 >
-  <div class="task--toolbar" data-task-toolbar>
-    <i class="fas fa-chevron-circle-up"></i>
-    <i class="fas fa-chevron-circle-down"></i>
+  <div class="task-toolbar--container" data-task-toolbar-container style="display: none">
+    <div class="task-toolbar--toolbar" data-task-toolbar-tools style="display: none">
+      <i class="fas fa-chevron-circle-up"></i>
+      <i class="fas fa-chevron-circle-down"></i>
+      <i class="fas fa-times"></i>
+    </div>
+
+    <div class="task-toolbar--toggle" data-task-toolbar-toggle>
+      <i class="fas fa-cog"></i>
+    </div>
   </div>
   <h4 class="task--name">{task.name}</h4>
 

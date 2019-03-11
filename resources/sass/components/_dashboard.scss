@@ -94,15 +94,27 @@
     flex-direction: row;
   }
 
-  &--toolbar {
-    display: none;
-    position: absolute;
-    width: 100%;
-    text-align: right;
-    left: 0;
-    top: 0;
-    padding: 10px 10px;
-    color: rgba($dark-grey, 0.5);
+  &-toolbar {
+    &--container {
+      text-align: right;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      padding: 5px 10px;
+      color: lighten($dark-grey, 40%);
+    }
+    &--toolbar {
+      display: inline;
+      color: $dark-grey;
+      cursor: pointer;
+    }
+    &--toggle {
+      display: inline;
+      &:hover {
+        color: $dark-grey;
+      }
+    }
   }
 
   &--container {

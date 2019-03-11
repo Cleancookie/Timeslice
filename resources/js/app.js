@@ -2,6 +2,10 @@
 // Dependencies
 window.$ = require('jquery')
 import 'bootstrap'
+
 // Components
-require('./components/login')
-require('./components/dashboard')
+import LoginComponent from './components/login'
+const login = new LoginComponent()
+
+import DashboardComponent from './components/dashboard'
+const dashboard = new DashboardComponent()

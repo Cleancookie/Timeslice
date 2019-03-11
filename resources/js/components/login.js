@@ -2,9 +2,9 @@
 // Dependencies
 const $ = require('jquery')
 const _ = require('lodash')
-const Cookie = require('./cookies')
+import CookieComponent from './cookies'
 
-class LoginComponent {
+export default class LoginComponent {
   constructor() {
     this.submitLoginFormListener()
     this.submitRegisterFormListener()
@@ -75,5 +75,3 @@ class LoginComponent {
     })
   }
 }
-
-module.exports = new LoginComponent()
