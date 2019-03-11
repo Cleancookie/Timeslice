@@ -91,7 +91,7 @@ export default class DashboardComponent {
         .find('[data-cloneable="task-li"]')
         .clone()
         .attr('data-cloneable', false)
-        .attr('data-task-id', task.id)
+        .attr('data-task-li-id', task.id)
         .html(function() {
           return $(this)
             .html()
@@ -111,22 +111,63 @@ export default class DashboardComponent {
   attachTaskFormListener(formEl) {
     $(formEl).submit((e) => {
       e.preventDefault()
-      this.loading(true)
-      window.yerd = formEl
-
-      // Get values from fields
-      const taskId = $(formEl).data('task-id')
-      const name = $(formEl)
-        .find('input[name=name]')
-        .val()
-      const description = $(formEl)
-        .find('[data-task-description]')
-        .val()
-
-      // Post to API
-      // axios.post('/api/v1/')
-      this.loading(false)
     })
+
+    // Submit on submit button
+    $(formEl)
+      .closest('[data-task-li]')
+      .find('[data-toolbar-submit]')
+      .click(() => {
+        this.loading(true)
+
+        // Get values from fields
+        const taskId = $(formEl).data('task-id')
+        const name = $(formEl)
+          .find('input[name=name]')
+          .val()
+        const description = $(formEl)
+          .find('[data-task-description]')
+          .val()
+
+        // Post to API
+        const response = axios.post(`/api/v1/tasks/${taskId}`, {
+          id: taskId,
+          name: name,
+          description: description
+        })
+
+        response
+          .then((res) => {
+            if (_.get(res, 'data.success') != true) {
+              console.log(res)
+              const check = formEl
+                .closest('[data-task-li]')
+                .find('[data-toolbar-submit]')
+              check.addClass('animated shake error')
+              check.on('animationend', function() {
+                check.removeClass('animated shake error')
+              })
+            } else {
+              console.log('Task updated')
+              const el = $(`[data-task-li-id="${taskId}"]`)
+              // Toggle toolbar
+              el.find('[data-task-toolbar-tools]').fadeOut(100)
+
+              // Material guidelines shadow
+              el.removeClass('task-toolbar--container__active')
+
+              // Toggle disabled on fields
+              el.find('[data-task-input]').attr('disabled', (i, v) => {
+                return !v
+              })
+            }
+            this.loading(false)
+          })
+          .catch((err) => {
+            alert('Could not update task.')
+            this.loading(false)
+          })
+      })
   }
 
   attachTaskToolbarListeners(el) {

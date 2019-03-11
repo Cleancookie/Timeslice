@@ -10945,6 +10945,14 @@ p {
   color: #393e46;
 }
 
+.task-toolbar--toolbar .error {
+  color: #fc3c3c;
+}
+
+.task-toolbar--toolbar .error:hover {
+  color: #fc3c3c;
+}
+
 .task-toolbar--toggle {
   display: inline;
 }

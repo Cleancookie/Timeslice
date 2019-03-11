@@ -122,6 +122,13 @@
         }
         cursor: pointer;
       }
+
+      .error {
+        color: $red;
+        &:hover {
+          color: $red;
+        }
+      }
     }
     &--toggle {
       display: inline;
