@@ -14587,6 +14587,51 @@ p {
   padding-top: 15px;
 }
 
+.task--input__name {
+  border: none;
+  display: inline;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: text;
+  background-color: inherit;
+}
+
+.task--input__name:focus {
+  outline: none;
+}
+
+.task--input__description {
+  cursor: text;
+  resize: none;
+  border: none;
+  background-color: inherit;
+  font-family: lora;
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+.task--input__description::-webkit-scrollbar {
+  width: 6px;
+}
+
+.task--input__description::-webkit-scrollbar-track {
+  background: rgba(248, 248, 248, 0.9);
+}
+
+.task--input__description::-webkit-scrollbar-thumb {
+  background: #505762;
+}
+
+.task--input__description::-webkit-scrollbar-thumb:hover {
+  background: #393e46;
+}
+
+.task--input__description:focus {
+  outline: none;
+}
+
 .task--container {
   min-width: 250px;
   max-width: 250px;
@@ -14634,15 +14679,6 @@ p {
   background: #393e46;
 }
 
-.task--name input {
-  border: none;
-  display: inline;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: text;
-  background-color: inherit;
-}
-
 .task--assigned-to {
   font-family: lato, Verdana, sans-serif;
 }
@@ -14650,34 +14686,6 @@ p {
 .task--user {
   text-decoration: underline;
   cursor: text;
-}
-
-.task--description {
-  cursor: text;
-  resize: none;
-  border: none;
-  background-color: inherit;
-  font-family: lora;
-  /* width */
-  /* Track */
-  /* Handle */
-  /* Handle on hover */
-}
-
-.task--description::-webkit-scrollbar {
-  width: 6px;
-}
-
-.task--description::-webkit-scrollbar-track {
-  background: rgba(248, 248, 248, 0.9);
-}
-
-.task--description::-webkit-scrollbar-thumb {
-  background: #505762;
-}
-
-.task--description::-webkit-scrollbar-thumb:hover {
-  background: #393e46;
 }
 
 .lds-ellipsis {

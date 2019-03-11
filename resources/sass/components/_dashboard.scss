@@ -142,6 +142,34 @@
     padding-top: 15px;
   }
 
+  &--input {
+    &__name {
+      border: none;
+      display: inline;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: text;
+      background-color: inherit;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &__description {
+      cursor: text;
+      resize: none;
+      border: none;
+      background-color: inherit;
+      font-family: lora;
+      @include verticalScrollBar();
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
   &--container {
     min-width: 250px;
     max-width: 250px;
@@ -172,17 +200,6 @@
     @include verticalScrollBar();
   }
 
-  &--name {
-    input {
-      border: none;
-      display: inline;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: text;
-      background-color: inherit;
-    }
-  }
-
   &--assigned-to {
     font-family: $sans-serif;
   }
@@ -190,14 +207,5 @@
   &--user {
     text-decoration: underline;
     cursor: text;
-  }
-
-  &--description {
-    cursor: text;
-    resize: none;
-    border: none;
-    background-color: inherit;
-    font-family: lora;
-    @include verticalScrollBar();
   }
 }
