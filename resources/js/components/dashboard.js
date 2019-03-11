@@ -223,13 +223,34 @@ export default class DashboardComponent {
 
     // Delete task modal
     if (!this.modalInit) {
-      $('#delete-task--modal')
-        .find('[data-delete-task-button]')
-        .click(function() {
-          const taskId = $(this).data('delete-task-id')
-          console.log(taskId)
-          // TODO send delete request based on this id
-        })
+      const btnDelete = $('#delete-task--modal').find(
+        '[data-delete-task-button]'
+      )
+
+      btnDelete.click(() => {
+        this.loading(true)
+        const taskId = btnDelete.data('delete-task-id')
+        const response = axios.post(`/api/v1/tasks/${taskId}/delete`)
+        response
+          .then((res) => {
+            this.loading(false)
+            if (res.data.success != true) {
+              alert('Could not delete task!')
+              return
+            }
+
+            // Delete task div
+            $('#delete-task--modal').modal('hide')
+            $(`[data-task-li-id="${taskId}"]`).addClass('bounceOut animated')
+            $(`[data-task-li-id="${taskId}"]`).on('animationend', () => {
+              $(`[data-task-li-id="${taskId}"]`).remove()
+            })
+          })
+          .catch((err) => {
+            this.loading(false)
+            alert('Could not delete task!')
+          })
+      })
 
       this.modalInit = true
     }
