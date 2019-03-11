@@ -20,7 +20,15 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async handle (error, { request, response }) {
+  async handle(error, { request, response }) {
+    if (
+      error.message ==
+        'E_GUEST_ONLY: Only guest user can access the route GET' ||
+      error.message ==
+        'E_GUEST_ONLY: Only guest user can access the route GET /'
+    ) {
+      return response.redirect('/dashboard')
+    }
     response.status(error.status).send(error.message)
   }
 
@@ -34,8 +42,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async report (error, { request }) {
-  }
+  async report(error, { request }) {}
 }
 
 module.exports = ExceptionHandler

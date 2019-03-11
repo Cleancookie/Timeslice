@@ -17,8 +17,8 @@
 const Route = use('Route')
 
 // Frontend
-Route.get('/', 'PublicController.home').as('public.homepage')
-Route.get('/login', 'PublicController.login').as('public.login')
+Route.get('/', 'PublicController.home').middleware(['guest']).as('public.homepage')
+Route.get('/login', 'PublicController.login').middleware(['guest']).as('public.login')
 Route.get('/logout', 'PublicController.logout').as('public.logout')
 Route.get('/dashboard', 'PublicController.dashboard').as('public.dashboard')
 
