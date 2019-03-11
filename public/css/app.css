@@ -10737,6 +10737,15 @@ p {
   background-color: white;
 }
 
+.rotateable {
+  transition: all 0.2s ease-out;
+}
+
+.spin {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
 .navbar {
   background-image: url(/assets/images/prism.png);
 }
@@ -10900,25 +10909,52 @@ p {
   flex-direction: row;
 }
 
-.task--toolbar {
-  display: none;
+.task-toolbar--container {
+  text-align: right;
   position: absolute;
   width: 100%;
-  text-align: right;
   left: 0;
   top: 0;
-  padding: 10px 10px;
-  color: rgba(57, 62, 70, 0.5);
+  padding: 5px 10px;
+  color: #9ca3af;
+}
+
+.task-toolbar--container .fas {
+  margin-left: 3px;
+}
+
+.task-toolbar--toolbar {
+  display: inline;
+}
+
+.task-toolbar--toolbar i {
+  cursor: pointer;
+}
+
+.task-toolbar--toolbar i:hover {
+  color: #393e46;
+}
+
+.task-toolbar--toggle {
+  display: inline;
+}
+
+.task-toolbar--toggle:hover {
+  color: #393e46;
+}
+
+.task--form {
+  padding-top: 15px;
 }
 
 .task--container {
   min-width: 250px;
   max-width: 250px;
-  height: 180px;
+  height: 200px;
   overflow: hidden auto;
   margin: 0 30px 0 0;
   border: none;
-  box-shadow: 0px 0px 10px -5px black;
+  box-shadow: 0px 20px 15px -26px #0c0c0c;
   transition: 100ms ease-in-out;
   cursor: default;
   /* width */
@@ -10929,6 +10965,17 @@ p {
 
 .task--container:hover {
   box-shadow: none;
+}
+
+.task--container:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-width: 0 0 26px 26px;
+  border-style: solid;
+  border-color: #ffd994 white;
+  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
 }
 
 .task--container::-webkit-scrollbar {
@@ -10947,10 +10994,13 @@ p {
   background: #393e46;
 }
 
-.task--name {
+.task--name input {
+  border: none;
+  display: inline;
   font-size: 1rem;
   font-weight: 600;
   cursor: text;
+  background-color: inherit;
 }
 
 .task--assigned-to {
@@ -10964,6 +11014,30 @@ p {
 
 .task--description {
   cursor: text;
+  resize: none;
+  border: none;
+  background-color: inherit;
+  font-family: lora;
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+.task--description::-webkit-scrollbar {
+  width: 6px;
+}
+
+.task--description::-webkit-scrollbar-track {
+  background: rgba(248, 248, 248, 0.9);
+}
+
+.task--description::-webkit-scrollbar-thumb {
+  background: #505762;
+}
+
+.task--description::-webkit-scrollbar-thumb:hover {
+  background: #393e46;
 }
 
 .lds-ellipsis {

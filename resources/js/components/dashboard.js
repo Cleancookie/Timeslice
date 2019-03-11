@@ -76,19 +76,18 @@ export default class DashboardComponent {
       })
 
     newStageEle.appendTo('[data-stage-ul]')
-    newStageEle.data.stage = stage
-    this.refreshStagesTasks(newStageEle)
+    this.appendTasksToStage(newStageEle, stage.tasks)
 
     newStageEle.fadeIn(200)
   }
 
-  refreshStagesTasks(stageEle) {
+  appendTasksToStage(stageEle, tasks) {
     // Delete all old tasks
     $(stageEle)
       .find('[data-cloneable="false"]')
       .remove()
 
-    stageEle.data.stage.tasks.forEach((task) => {
+    tasks.forEach((task) => {
       let newTaskEle = $(stageEle)
         .find('[data-cloneable="task-li"]')
         .clone()
@@ -105,10 +104,24 @@ export default class DashboardComponent {
           console.log(`Click on ${task.name}(${task.id})`)
         })
 
+      newTaskEle.find('form').attr('data-task-id', task.id)
       this.attachTaskToolbarListeners(newTaskEle)
+      this.attachTaskFormListener($(newTaskEle).find('form'))
       newTaskEle.appendTo($(stageEle).find('[data-task-ul]'))
-      newTaskEle.data.task = task
       newTaskEle.fadeIn(200)
+    })
+  }
+
+  attachTaskFormListener(formEl) {
+    $(formEl).submit((e) => {
+      e.preventDefault()
+      window.yerd = formEl
+      const name = $(formEl)
+        .find('input[name=name]')
+        .val()
+      const description = $(formEl)
+        .find('[data-task-description')
+        .val()
     })
   }
 
@@ -127,9 +140,23 @@ export default class DashboardComponent {
     )
 
     el.find('[data-task-toolbar-toggle]').click(() => {
+      // Toggle toolbar
       $(el)
         .find('[data-task-toolbar-tools]')
         .fadeToggle(100)
+
+      // Make cog spin
+      $(el)
+        .find('[data-task-toolbar-toggle]')
+        .find('i')
+        .toggleClass('spin')
+
+      // Toggle disabled on fields
+      $(el)
+        .find('[data-task-input]')
+        .attr('disabled', (i, v) => {
+          return !v
+        })
     })
   }
 

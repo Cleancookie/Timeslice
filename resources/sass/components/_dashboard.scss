@@ -103,11 +103,19 @@
       top: 0;
       padding: 5px 10px;
       color: lighten($dark-grey, 40%);
+
+      .fas {
+        margin-left: 3px;
+      }
     }
     &--toolbar {
       display: inline;
-      color: $dark-grey;
-      cursor: pointer;
+      i {
+        &:hover {
+          color: $dark-grey;
+        }
+        cursor: pointer;
+      }
     }
     &--toggle {
       display: inline;
@@ -117,14 +125,18 @@
     }
   }
 
+  &--form {
+    padding-top: 15px;
+  }
+
   &--container {
     min-width: 250px;
     max-width: 250px;
-    height: 180px;
+    height: 200px;
     overflow: hidden auto;
     margin: 0 30px 0 0;
     border: none;
-    box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 1);
+    box-shadow: 0px 20px 15px -26px $black;
     // box-shadow: 5px 5px 0px 0px rgba($black, .8);
     transition: 100ms ease-in-out;
     cursor: default;
@@ -133,13 +145,29 @@
       box-shadow: none;
     }
 
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-width: 0 0 26px 26px;
+      border-style: solid;
+      border-color: darken($sunset, 15%) $white;
+      box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
+    }
+
     @include verticalScrollBar();
   }
 
   &--name {
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: text;
+    input {
+      border: none;
+      display: inline;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: text;
+      background-color: inherit;
+    }
   }
 
   &--assigned-to {
@@ -153,5 +181,10 @@
 
   &--description {
     cursor: text;
+    resize: none;
+    border: none;
+    background-color: inherit;
+    font-family: lora;
+    @include verticalScrollBar();
   }
 }
