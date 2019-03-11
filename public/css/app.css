@@ -10746,6 +10746,10 @@ p {
           transform: rotate(90deg);
 }
 
+.big-shadow {
+  box-shadow: 0px 20px 50px -26px #0c0c0c !important;
+}
+
 .navbar {
   background-image: url(/assets/images/prism.png);
 }
@@ -10916,7 +10920,13 @@ p {
   left: 0;
   top: 0;
   padding: 5px 10px;
-  color: #9ca3af;
+  color: rgba(156, 163, 175, 0.5);
+}
+
+.task-toolbar--container__active {
+  box-shadow: 0px 20px 50px -26px #0c0c0c !important;
+  background-color: linear-gra;
+  background-image: linear-gradient(to bottom right, #ffedcb, #fff4e0);
 }
 
 .task-toolbar--container .fas {

@@ -4,9 +4,10 @@ const _ = require('lodash')
 export default class DashboardComponent {
   constructor() {
     if ($('[data-dashboard]').length) {
-      console.log('Dashboard loaded')
+      this.loadingCounter = 0
       this.getAppProjects()
       this.attachEditProjectTitle()
+      console.log('Dashboard loaded')
     }
   }
 
@@ -72,9 +73,6 @@ export default class DashboardComponent {
           .html()
           .replace('{stage.name}', stage.name)
       })
-      .click(() => {
-        console.log(`Click on ${stage.name}(${stage.id})`)
-      })
 
     newStageEle.appendTo('[data-stage-ul]')
     this.appendTasksToStage(newStageEle, stage.tasks)
@@ -101,9 +99,6 @@ export default class DashboardComponent {
             .replace('{task.user}', task.users.username)
             .replace('{task.description}', task.description)
         })
-        .click(() => {
-          console.log(`Click on ${task.name}(${task.id})`)
-        })
 
       newTaskEle.find('form').attr('data-task-id', task.id)
       this.attachTaskToolbarListeners(newTaskEle)
@@ -116,13 +111,21 @@ export default class DashboardComponent {
   attachTaskFormListener(formEl) {
     $(formEl).submit((e) => {
       e.preventDefault()
+      this.loading(true)
       window.yerd = formEl
+
+      // Get values from fields
+      const taskId = $(formEl).data('task-id')
       const name = $(formEl)
         .find('input[name=name]')
         .val()
       const description = $(formEl)
-        .find('[data-task-description')
+        .find('[data-task-description]')
         .val()
+
+      // Post to API
+      // axios.post('/api/v1/')
+      this.loading(false)
     })
   }
 
@@ -145,6 +148,9 @@ export default class DashboardComponent {
       $(el)
         .find('[data-task-toolbar-tools]')
         .fadeToggle(100)
+
+      // Material guidelines shadow
+      $(el).toggleClass('task-toolbar--container__active')
 
       // Make cog spin
       $(el)
@@ -202,11 +208,17 @@ export default class DashboardComponent {
 
   loading(isLoading) {
     if (isLoading) {
-      $('[data-loading-bar]').fadeIn(200)
+      this.loadingCounter++
     } else {
+      this.loadingCounter--
+    }
+
+    if (this.loadingCounter == 0) {
       setTimeout(() => {
         $('[data-loading-bar]').fadeOut(200)
       }, 350)
+    } else {
+      $('[data-loading-bar]').fadeIn(200)
     }
   }
 }
