@@ -34,14 +34,16 @@ Route.group(()=>{
   Route.get('projects/:id', 'ProjectController.show').middleware('auth')
   Route.post('projects', 'ProjectController.create').middleware('auth')
   Route.post('projects/:id', 'ProjectController.update').middleware('auth')
-  Route.delete('projects/:id', 'ProjectController.delete').middleware('auth')
+  Route.post('projects/:id/delete', 'ProjectController.delete').middleware('auth')
 
   // Tasks API
   Route.get('projects/:id/tasks', 'TaskController.index').middleware('auth')
   Route.get('tasks/:id', 'TaskController.show').middleware('auth')
   Route.post('projects/:id/tasks', 'TaskController.create').middleware('auth')
-  Route.post('tasks/:id', 'TaskController.update').middleware('auth')
+  Route.post('tasks/:id/next-stage', 'TaskController.nextStage').middleware('auth')
+  Route.post('tasks/:id/prev-stage', 'TaskController.prevStage').middleware('auth')
   Route.post('tasks/:id/delete', 'TaskController.delete').middleware('auth')
+  Route.post('tasks/:id', 'TaskController.update').middleware('auth')
 
   // Stage API
   Route.get('projects/:id/stages', 'StageController.index').middleware('auth')
