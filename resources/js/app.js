@@ -1,4 +1,7 @@
 'use strict'
+// Polyfill
+import '@babel/polyfill'
+
 // Dependencies
 window.$ = require('jquery')
 import 'bootstrap'
