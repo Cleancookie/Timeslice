@@ -40,7 +40,8 @@
     "lodash": "^4.17.11",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.24.0",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "select2": "^4.0.6-rc.1"
   },
   "devDependencies": {
     "adonisjs-types": "^1.3.4",

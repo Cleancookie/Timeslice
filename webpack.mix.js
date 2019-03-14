@@ -22,7 +22,11 @@ mix.sourceMaps(); // Enable sourcemaps
 // mix.disableNotifications();
 // mix.setPublicPath('path/to/public');
 // mix.setResourceRoot('prefix/for/resource/locators');
-// mix.autoload({}); <-- Will be passed to Webpack's ProvidePlugin.
+mix.autoload({
+  // jQuery: 'jquery',
+  // $: 'jquery',
+  // jquery: 'jquery'
+}); //< -- Will be passed to Webpack's ProvidePlugin.
 // mix.webpackConfig({}); <-- Override webpack.config.js, without editing the file directly.
 mix.babelConfig({}); // <-- Merge extra Babel configuration (plugins, etc.) with Mix's default.
 // mix.then(function () {}) <-- Will be triggered each time Webpack finishes building.
