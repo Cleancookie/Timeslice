@@ -22,7 +22,7 @@
       <input type="text" name="name" class="task--input__name" autocomplete="off" disabled data-task-input value="{task.name}">
     </h4>
 
-    <p class="task--assigned-to mb-0">@<span class="task--user">{task.user}</span></p>
+    <p class="task--assigned-to mb-0 pr-2 d-flex flex-column"><select class="task--input__user" data-input-user multiple></select></p>
 
     <textarea name="description" class="task--input__description" cols="23" rows="4" disabled data-task-input data-task-description>{task.description}</textarea>
   </form>

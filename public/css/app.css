@@ -14632,6 +14632,10 @@ p {
   outline: none;
 }
 
+.task--input__user {
+  display: none;
+}
+
 .task--container {
   min-width: 250px;
   max-width: 250px;
@@ -14683,9 +14687,18 @@ p {
   font-family: lato, Verdana, sans-serif;
 }
 
+.task--assigned-to .select2-selection--multiple {
+  border: none !important;
+  background-color: #fff4e0 !important;
+}
+
 .task--user {
   text-decoration: underline;
   cursor: text;
+}
+
+.select2-dropdown {
+  background-color: #fff4e0;
 }
 
 .lds-ellipsis {

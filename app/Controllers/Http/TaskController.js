@@ -178,6 +178,23 @@ class TaskController {
 
     return response.json(await task.nextStage())
   }
+
+  /**
+   * Returns all users for select2
+   *
+   * @param {Context} ctx
+   */
+  async assignableUsers({ request, params }) {
+    const { id } = params
+    const { search } = request.all()
+    const task = await Task.find(id)
+    const project = await task.projects().fetch()
+    const users = await project
+      .users()
+      .where('username', 'LIKE', `%${search}%`)
+      .fetch()
+    return users
+  }
 }
 
 module.exports = TaskController

@@ -42,6 +42,12 @@ export default class DashboardComponent {
   }
 
   appendProject(project) {
+    let newProjectEle = this.createProjectLi(project)
+
+    newProjectEle.appendTo('[data-project-ul]').fadeIn(200)
+  }
+
+  createProjectLi(project) {
     let newProjectEle = $('[data-cloneable="project-li"]')
       .clone()
       .attr('data-cloneable', false)
@@ -61,10 +67,19 @@ export default class DashboardComponent {
         $(newProjectEle).addClass('project--container__active')
       })
 
-    newProjectEle.appendTo('[data-project-ul]').fadeIn(200)
+    return newProjectEle
   }
 
   appendStage(stage) {
+    let newStageEle = this.createStageLi(stage)
+
+    newStageEle.appendTo('[data-stage-ul]')
+    this.appendTasksToStage(newStageEle, stage.tasks)
+
+    newStageEle.fadeIn(200)
+  }
+
+  createStageLi(stage) {
     let newStageEle = $('[data-cloneable="stage-li"]')
       .clone()
       .attr('data-cloneable', false)
@@ -75,10 +90,7 @@ export default class DashboardComponent {
           .replace('{stage.name}', stage.name)
       })
 
-    newStageEle.appendTo('[data-stage-ul]')
-    this.appendTasksToStage(newStageEle, stage.tasks)
-
-    newStageEle.fadeIn(200)
+    return newStageEle
   }
 
   appendTasksToStage(stageEle, tasks) {
@@ -88,25 +100,67 @@ export default class DashboardComponent {
       .remove()
 
     tasks.forEach((task) => {
-      let newTaskEle = $(stageEle)
-        .find('[data-cloneable="task-li"]')
-        .clone()
-        .attr('data-cloneable', false)
-        .attr('data-task-li-id', task.id)
-        .html(function() {
-          return $(this)
-            .html()
-            .replace('{task.name}', task.name)
-            .replace('{task.user}', task.users.username)
-            .replace('{task.description}', task.description)
-        })
+      let newTaskEle = this.createTaskLiInStage(task, stageEle)
 
-      newTaskEle.find('form').attr('data-task-id', task.id)
-      this.attachTaskToolbarListeners(newTaskEle)
-      this.attachTaskFormListener($(newTaskEle).find('form'))
       newTaskEle.appendTo($(stageEle).find('[data-task-ul]'))
       newTaskEle.fadeIn(200)
     })
+  }
+
+  createTaskLiInStage(task, stageEle) {
+    let newTaskEle = $(stageEle)
+      .find('[data-cloneable="task-li"]')
+      .clone()
+      .attr('data-cloneable', false)
+      .attr('data-task-li-id', task.id)
+      .html(function() {
+        return $(this)
+          .html()
+          .replace('{task.name}', task.name)
+          .replace('{task.description}', task.description)
+      })
+
+    newTaskEle.find('form').attr('data-task-id', task.id)
+
+    // Init select2
+    newTaskEle.find('[data-input-user]').select2({
+      minimumInputLength: 1,
+      maximumSelectionLength: 1,
+      ajax: {
+        url: `/api/v1/tasks/${task.id}/assignable-users`,
+        delay: 250, // wait 250 milliseconds before triggering the request
+        data: function(params) {
+          var query = {
+            search: params.term
+          }
+
+          // Query parameters will be ?search=[term]&page=[page]
+          return query
+        },
+        processResults: function(data) {
+          let results = []
+          for (let i = 0; i < data.length; i++) {
+            results.push({
+              id: data[i].id,
+              text: _.capitalize(data[i].username)
+            })
+          }
+          return { results: results }
+        }
+      },
+      language: {
+        maximumSelected: function(e) {
+          var t = 'You can only select ' + e.maximum + ' item'
+          e.maximum != 1 && (t += 's')
+          return 'Only one user may be assigned'
+        }
+      }
+    })
+
+    this.attachTaskToolbarListeners(newTaskEle)
+    this.attachTaskFormListener($(newTaskEle).find('form'))
+
+    return newTaskEle
   }
 
   attachTaskFormListener(formEl) {

@@ -44,6 +44,7 @@ Route.group(()=>{
   Route.post('tasks/:id/prev-stage', 'TaskController.prevStage').middleware('auth')
   Route.post('tasks/:id/delete', 'TaskController.delete').middleware('auth')
   Route.post('tasks/:id', 'TaskController.update').middleware('auth')
+  Route.get('tasks/:id/assignable-users', 'TaskController.assignableUsers').middleware('auth')
 
   // Stage API
   Route.get('projects/:id/stages', 'StageController.index').middleware('auth')

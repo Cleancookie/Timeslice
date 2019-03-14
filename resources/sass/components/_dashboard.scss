@@ -168,6 +168,11 @@
         outline: none;
       }
     }
+
+    &__user {
+      // field is hidden by select2
+      display: none;
+    }
   }
 
   &--container {
@@ -202,10 +207,19 @@
 
   &--assigned-to {
     font-family: $sans-serif;
+
+    .select2-selection--multiple {
+      border: none !important; // overriding select2 styles
+      background-color: $sunset !important;
+    }
   }
 
   &--user {
     text-decoration: underline;
     cursor: text;
   }
+}
+
+.select2-dropdown {
+  background-color: $sunset;
 }
