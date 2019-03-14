@@ -28,6 +28,7 @@ class TaskController {
     }
     const tasks = await project
       .tasks()
+      .where('deleted_at', null)
       .with('users')
       .with('stages')
       .fetch()
@@ -169,6 +170,13 @@ class TaskController {
       success: success,
       data: task
     }
+  }
+
+  async nextStage({ request, response, auth, params }) {
+    let { id } = params
+    let task = await Task.find(id)
+
+    return response.json(await task.nextStage())
   }
 }
 

@@ -19,7 +19,7 @@ class AlexSeeder {
   async run() {
     this.Alex = await User.findBy('username', 'alex')
 
-    let projects = await Factory.model('App/Models/Project').createMany(5)
+    let projects = await Factory.model('App/Models/Project').createMany(15)
 
     // Create a few projects for Alex
     await this.Alex.projects().saveMany(projects)
@@ -32,7 +32,7 @@ class AlexSeeder {
 
       // Create tasks for each stage
       for (let j = 0; j < stages.length; j++) {
-        let tasks = await Factory.model('App/Models/Task').createMany(5)
+        let tasks = await Factory.model('App/Models/Task').createMany(10)
         await stages[j].tasks().saveMany(tasks)
         await this.Alex.tasks().saveMany(tasks)
         await projects[i].tasks().saveMany(tasks)
