@@ -4,6 +4,8 @@ import '@babel/polyfill'
 
 // Dependencies
 window.$ = require('jquery')
+import 'jquery-ui/ui/core'
+import 'jquery-ui/ui/widgets/autocomplete'
 import 'bootstrap'
 import 'select2'
 import 'select2/dist/css/select2.css'

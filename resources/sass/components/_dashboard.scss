@@ -150,10 +150,6 @@
       font-weight: 600;
       cursor: text;
       background-color: inherit;
-
-      &:focus {
-        outline: none;
-      }
     }
 
     &__description {
@@ -163,15 +159,15 @@
       background-color: inherit;
       font-family: lora;
       @include verticalScrollBar();
-
-      &:focus {
-        outline: none;
-      }
     }
 
     &__user {
-      // field is hidden by select2
-      display: none;
+      border: none;
+      display: inline;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: text;
+      background-color: inherit;
     }
   }
 

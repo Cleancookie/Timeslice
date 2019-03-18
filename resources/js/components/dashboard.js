@@ -24,6 +24,9 @@ export default class DashboardComponent {
 
   getStagesAndTheirTasks(projectId) {
     this.loading(true)
+    $('[data-stage-ul]')
+      .find('[data-cloneable="false"]')
+      .fadeOut(200)
 
     const response = axios
       .get(`/api/v1/projects/${projectId}/stages`)
@@ -117,44 +120,15 @@ export default class DashboardComponent {
         return $(this)
           .html()
           .replace('{task.name}', task.name)
+          .replace('{task.users.username}', task.users.username)
           .replace('{task.description}', task.description)
       })
 
     newTaskEle.find('form').attr('data-task-id', task.id)
 
-    // Init select2
-    newTaskEle.find('[data-input-user]').select2({
-      minimumInputLength: 1,
-      maximumSelectionLength: 1,
-      ajax: {
-        url: `/api/v1/tasks/${task.id}/assignable-users`,
-        delay: 250, // wait 250 milliseconds before triggering the request
-        data: function(params) {
-          var query = {
-            search: params.term
-          }
-
-          // Query parameters will be ?search=[term]&page=[page]
-          return query
-        },
-        processResults: function(data) {
-          let results = []
-          for (let i = 0; i < data.length; i++) {
-            results.push({
-              id: data[i].id,
-              text: _.capitalize(data[i].username)
-            })
-          }
-          return { results: results }
-        }
-      },
-      language: {
-        maximumSelected: function(e) {
-          var t = 'You can only select ' + e.maximum + ' item'
-          e.maximum != 1 && (t += 's')
-          return 'Only one user may be assigned'
-        }
-      }
+    // Init Autocomplete for usernames
+    $('[data-task-input-users]').autocomplete({
+      source: []
     })
 
     this.attachTaskToolbarListeners(newTaskEle)
