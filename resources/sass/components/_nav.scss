@@ -1,7 +1,7 @@
 .navbar {
   // DONT DO THIS IT BREAKS THE DROPDOWN ON MOBILE
   // max-height: 56px;
-  background-image: url(/assets/images/prism.png);
+  background-image: url('/assets/images/prism.png');
 }
 
 .nav-link {
@@ -12,7 +12,7 @@
   &:before {
     position: absolute;
     content: '';
-    background-image: url(/assets/psd/icon.png);
+    background-image: url('/assets/psd/icon.png');
     height: 35px;
     background-size: contain;
     width: 35px;

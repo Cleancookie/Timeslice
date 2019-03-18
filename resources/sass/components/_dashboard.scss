@@ -73,6 +73,10 @@
 }
 
 .stage {
+  &s {
+    padding-bottom: 10px;
+  }
+
   &--container {
     margin: 10px 0;
     overflow: auto;
