@@ -1,7 +1,18 @@
 'use strict'
+// Polyfill
+import '@babel/polyfill'
+
 // Dependencies
 window.$ = require('jquery')
+import 'jquery-ui/ui/core'
+import 'jquery-ui/ui/widgets/autocomplete'
 import 'bootstrap'
+import 'select2'
+import 'select2/dist/css/select2.css'
+
 // Components
-require('./components/login')
-require('./components/dashboard')
+import LoginComponent from './components/login'
+const login = new LoginComponent()
+
+import DashboardComponent from './components/dashboard'
+const dashboard = new DashboardComponent()

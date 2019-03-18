@@ -20,7 +20,15 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async handle (error, { request, response }) {
+  async handle(error, { request, response }) {
+    if (error.code == 'E_GUEST_ONLY') {
+      return response.redirect('/dashboard')
+    }
+
+    if (error.code == 'E_INVALID_SESSION') {
+      return response.redirect('/login')
+    }
+
     response.status(error.status).send(error.message)
   }
 
@@ -34,8 +42,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async report (error, { request }) {
-  }
+  async report(error, { request }) {}
 }
 
 module.exports = ExceptionHandler

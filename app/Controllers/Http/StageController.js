@@ -29,11 +29,14 @@ class StageController {
       })
       .fetch()
 
+    const assignableUsers = await project.users().fetch()
+
     return {
       success: true,
       model: 'Stage',
       project: project,
-      data: stages
+      data: stages,
+      users: assignableUsers
     }
   }
 }
