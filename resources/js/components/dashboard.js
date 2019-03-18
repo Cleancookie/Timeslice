@@ -28,18 +28,20 @@ export default class DashboardComponent {
       .find('[data-cloneable="false"]')
       .fadeOut(200)
 
-    const response = axios
-      .get(`/api/v1/projects/${projectId}/stages`)
-      .then((response) => {
-        // Clear the dashboard's stages
-        $('[data-stage-ul]')
-          .find('[data-cloneable="false"]')
-          .remove()
+    axios.get(`/api/v1/projects/${projectId}/stages`).then((response) => {
+      // Clear the dashboard's stages
+      $('[data-stage-ul]')
+        .find('[data-cloneable="false"]')
+        .remove()
 
-        response.data.data.forEach((stage) => {
-          this.appendStage(stage)
-        })
+      projectUsers = response.data.users.map((user) => {
+        return user.username
       })
+
+      response.data.data.forEach((stage) => {
+        this.appendStage(stage)
+      })
+    })
 
     this.loading(false)
   }
@@ -127,8 +129,9 @@ export default class DashboardComponent {
     newTaskEle.find('form').attr('data-task-id', task.id)
 
     // Init Autocomplete for usernames
-    $('[data-task-input-users]').autocomplete({
-      source: []
+    newTaskEle.find('[data-task-input-user]').autocomplete({
+      source: projectUsers,
+      delay: 50
     })
 
     this.attachTaskToolbarListeners(newTaskEle)
@@ -157,11 +160,15 @@ export default class DashboardComponent {
         const description = $(formEl)
           .find('[data-task-description]')
           .val()
+        const user = $(formEl)
+          .find('[data-task-input-user]')
+          .val()
 
         // Post to API
         const response = axios.post(`/api/v1/tasks/${taskId}`, {
           id: taskId,
           name: name,
+          user: user,
           description: description
         })
 

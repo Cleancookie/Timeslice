@@ -16217,6 +16217,10 @@ p {
   background-color: #fff4e0;
 }
 
+.ui-menu-item-wrapper {
+  font-family: lato, Verdana, sans-serif;
+}
+
 .lds-ellipsis {
   position: fixed;
   left: 50vw;

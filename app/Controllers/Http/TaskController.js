@@ -6,6 +6,8 @@ const moment = require('moment')
 const Project = use('App/Models/Project')
 /** @type {typeof import('App/Models/Task')} */
 const Task = use('App/Models/Task')
+/** @type {typeof import('App/Models/User')} */
+const User = use('App/Models/User')
 
 class TaskController {
   /**
@@ -106,9 +108,17 @@ class TaskController {
   async update({ request, response, auth, params }) {
     let user = await auth.getUser()
     let { id } = params
+    let { name, description, user: username } = request.all()
     let task = await Task.find(id)
 
-    task.merge(request.only(['name', 'description']))
+    // find user with username
+    let newUser = await User.findBy('username', username)
+
+    task.merge({
+      name: name,
+      description: description,
+      user_id: newUser.id
+    })
 
     const success = await task.save()
     return {
@@ -186,13 +196,9 @@ class TaskController {
    */
   async assignableUsers({ request, params }) {
     const { id } = params
-    const { search } = request.all()
     const task = await Task.find(id)
     const project = await task.projects().fetch()
-    const users = await project
-      .users()
-      .where('username', 'LIKE', `%${search}%`)
-      .fetch()
+    const users = await project.users().fetch()
     return users
   }
 }
