@@ -351,21 +351,23 @@ export default class DashboardComponent {
 
       $('#new-project--modal').modal('hide')
 
-      // Refresh list of projects
-      $('[data-project-ul]')
-        .find('[data-cloneable="false"]')
-        .remove()
+      this.appendProject(res.data.data)
 
-      this.getAppProjects()
+      // Select the new project
+      $('.project--container__active').removeClass('project--container__active')
+      $(`[data-project-id=${res.data.data.id}]`).addClass(
+        'project--container__active'
+      )
+      this.getStagesAndTheirTasks(res.data.data.id)
+      $('[data-project-name]').text(res.data.data.name)
+      $('[data-project-name]').fadeIn(200)
 
-      // setTimeout(() => {
-      //   $('[data-sidebar]').animate(
-      //     {
-      //       scrollTop: $(`[data-project-id=${res.data.data.id}]`).offset().top
-      //     },
-      //     1000
-      //   )
-      // }, 1000)
+      $('[data-sidebar]').animate(
+        {
+          scrollTop: $(`[data-project-id=${res.data.data.id}]`).offset().top
+        },
+        1000
+      )
 
       this.loading(false)
     })
