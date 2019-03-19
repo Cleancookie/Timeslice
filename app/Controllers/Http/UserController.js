@@ -63,6 +63,23 @@ class UserController {
 
     return this.login(...arguments)
   }
+
+  /**
+   * Gets a list of all users
+   *
+   * @param {Context} ctx
+   */
+  async index({ request, response }) {
+    let { q } = request.all()
+    let users = await User.query()
+      .where('username', 'LIKE', `%${q}%`)
+      .fetch()
+
+    return response.json({
+      success: true,
+      data: users
+    })
+  }
 }
 
 module.exports = UserController

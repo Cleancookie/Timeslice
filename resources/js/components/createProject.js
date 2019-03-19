@@ -9,6 +9,23 @@ export default class CreateProjectComponent {
   }
 
   newProjectListener() {
-    $('[data-create-project-users]').select2({ width: '100%' })
+    $('[data-create-project-users]').select2({
+      width: '100%',
+      minimumInputLength: 1,
+      ajax: {
+        url: '/api/v1/users',
+        dataType: 'json',
+        processResults: function(res) {
+          let users = res.data.map((user) => {
+            return {
+              id: user.id,
+              text: user.username
+            }
+          })
+
+          return { results: users }
+        }
+      }
+    })
   }
 }

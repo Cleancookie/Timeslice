@@ -52,4 +52,7 @@ Route.group(()=>{
   // Task actions
   Route.post('tasks/:id/update-user', 'TaskController.updateUser')
   Route.post('tasks/:id/update-stage', 'TaskController.updateStage')
+
+  // Users API
+  Route.get('users', 'UserController.index')
 }).prefix('api/v1')
