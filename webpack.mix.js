@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // Full API from https://github.com/JeffreyWay/laravel-mix/blob/master/setup/webpack.mix.js
 mix.js('resources/js/app.js', 'public/js');
@@ -27,7 +28,11 @@ mix.autoload({
   // $: 'jquery',
   // jquery: 'jquery'
 }); //< -- Will be passed to Webpack's ProvidePlugin.
-// mix.webpackConfig({}); <-- Override webpack.config.js, without editing the file directly.
+mix.webpackConfig({
+  plugins: [
+    // new BundleAnalyzerPlugin(),
+  ],
+}); // <-- Override webpack.config.js, without editing the file directly.
 mix.babelConfig({}); // <-- Merge extra Babel configuration (plugins, etc.) with Mix's default.
 // mix.then(function () {}) <-- Will be triggered each time Webpack finishes building.
 // mix.dump(); <-- Dump the generated webpack config object t the console.
