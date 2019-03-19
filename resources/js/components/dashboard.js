@@ -19,12 +19,12 @@ export default class DashboardComponent {
 
   getAppProjects() {
     this.loading(true)
-    const response = axios.get('/api/v1/projects').then((response) => {
+    let response = axios.get('/api/v1/projects').then((response) => {
       response.data.data.forEach((project) => {
         this.appendProject(project)
       })
+      this.loading(false)
     })
-    this.loading(false)
   }
 
   getStagesAndTheirTasks(projectId) {
@@ -345,9 +345,27 @@ export default class DashboardComponent {
         .find('[data-create-project-name]')
         .val()
 
-      await axios.post(`/api/v1/projects`, {
+      let res = await axios.post(`/api/v1/projects`, {
         name: name
       })
+
+      $('#new-project--modal').modal('hide')
+
+      // Refresh list of projects
+      $('[data-project-ul]')
+        .find('[data-cloneable="false"]')
+        .remove()
+
+      this.getAppProjects()
+
+      // setTimeout(() => {
+      //   $('[data-sidebar]').animate(
+      //     {
+      //       scrollTop: $(`[data-project-id=${res.data.data.id}]`).offset().top
+      //     },
+      //     1000
+      //   )
+      // }, 1000)
 
       this.loading(false)
     })
