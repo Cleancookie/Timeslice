@@ -1,0 +1,28 @@
+<div class="modal fade" id="new-project--modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Create New Project</h5>
+      </div>
+      <form data-create-project-form>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="create-project--name">Name: </label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Project Name"
+              id="create-project--name"
+              class="form-control create-project--name"
+              data-create-project-name
+            >
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn bg-teal text-white" data-create-project-submit>Create Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

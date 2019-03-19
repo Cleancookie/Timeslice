@@ -2,11 +2,16 @@ const axios = require('axios')
 const _ = require('lodash')
 
 export default class DashboardComponent {
-  constructor() {
+  constructor(init = true) {
     if ($('[data-dashboard]').length) {
       this.loadingCounter = 0
-      this.getAppProjects()
-      this.attachEditProjectTitle()
+
+      if (init) {
+        this.getAppProjects()
+        this.attachEditProjectTitle()
+        this.createProjectListener()
+      }
+
       console.log('Dashboard loaded')
       this.modalInit = false
     }
@@ -14,12 +19,12 @@ export default class DashboardComponent {
 
   getAppProjects() {
     this.loading(true)
-    const response = axios.get('/api/v1/projects').then((response) => {
+    let response = axios.get('/api/v1/projects').then((response) => {
       response.data.data.forEach((project) => {
         this.appendProject(project)
       })
+      this.loading(false)
     })
-    this.loading(false)
   }
 
   getStagesAndTheirTasks(projectId) {
@@ -327,6 +332,64 @@ export default class DashboardComponent {
       $('[data-project-name-input]').hide()
       $('[data-project-name]').show()
       this.loading(false)
+    })
+  }
+
+  createProjectListener() {
+    // Submit button
+    $('[data-create-project-form]').submit(async (e) => {
+      e.preventDefault()
+      this.loading(true)
+
+      let name = $(e.currentTarget)
+        .find('[data-create-project-name]')
+        .val()
+
+      let res = await axios.post(`/api/v1/projects`, {
+        name: name
+      })
+
+      $('#new-project--modal').modal('hide')
+
+      this.appendProject(res.data.data)
+
+      // Select the new project
+      $('.project--container__active').removeClass('project--container__active')
+      $(`[data-project-id=${res.data.data.id}]`).addClass(
+        'project--container__active'
+      )
+      this.getStagesAndTheirTasks(res.data.data.id)
+      $('[data-project-name]').text(res.data.data.name)
+      $('[data-project-name]').fadeIn(200)
+
+      $('[data-sidebar]').animate(
+        {
+          scrollTop: $(`[data-project-id=${res.data.data.id}]`).offset().top
+        },
+        1000
+      )
+
+      this.loading(false)
+    })
+
+    // Autocomplete users pillbox
+    $('[data-create-project-users]').select2({
+      width: '100%',
+      minimumInputLength: 1,
+      ajax: {
+        url: '/api/v1/users',
+        dataType: 'json',
+        processResults: function(res) {
+          let users = res.data.map((user) => {
+            return {
+              id: user.id,
+              text: user.username
+            }
+          })
+
+          return { results: users }
+        }
+      }
     })
   }
 
