@@ -2,11 +2,16 @@ const axios = require('axios')
 const _ = require('lodash')
 
 export default class DashboardComponent {
-  constructor() {
+  constructor(init = true) {
     if ($('[data-dashboard]').length) {
       this.loadingCounter = 0
-      this.getAppProjects()
-      this.attachEditProjectTitle()
+
+      if (init) {
+        this.getAppProjects()
+        this.attachEditProjectTitle()
+        this.createProjectListener()
+      }
+
       console.log('Dashboard loaded')
       this.modalInit = false
     }
@@ -327,6 +332,44 @@ export default class DashboardComponent {
       $('[data-project-name-input]').hide()
       $('[data-project-name]').show()
       this.loading(false)
+    })
+  }
+
+  createProjectListener() {
+    // Submit button
+    $('[data-create-project-form]').submit(async (e) => {
+      e.preventDefault()
+      this.loading(true)
+
+      let name = $(e.currentTarget)
+        .find('[data-create-project-name]')
+        .val()
+
+      await axios.post(`/api/v1/projects`, {
+        name: name
+      })
+
+      this.loading(false)
+    })
+
+    // Autocomplete users pillbox
+    $('[data-create-project-users]').select2({
+      width: '100%',
+      minimumInputLength: 1,
+      ajax: {
+        url: '/api/v1/users',
+        dataType: 'json',
+        processResults: function(res) {
+          let users = res.data.map((user) => {
+            return {
+              id: user.id,
+              text: user.username
+            }
+          })
+
+          return { results: users }
+        }
+      }
     })
   }
 

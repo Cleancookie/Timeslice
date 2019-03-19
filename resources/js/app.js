@@ -15,6 +15,3 @@ const login = new LoginComponent()
 
 import DashboardComponent from './components/dashboard'
 const dashboard = new DashboardComponent()
-
-import CreateProjectModalComponent from './components/createProjectModal'
-const createProjectModalComponent = new CreateProjectModalComponent()
