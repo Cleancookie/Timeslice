@@ -8,16 +8,29 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="create-project--name">Name: </label>
-            <input type="text" name="name" placeholder="Project Name" id="create-project--name" class="form-control create-project--name">
+            <input
+              type="text"
+              name="name"
+              placeholder="Project Name"
+              id="create-project--name"
+              class="form-control create-project--name"
+              data-create-project-name
+            >
           </div>
-          <div class="form-group">
+          {{--  <div class="form-group">
             <label for="create-project--users">Users: </label>
-            <select class="form-control create-project--users" id="create-project--users" data-create-project-users name="users[]" multiple="multiple"></select>
-          </div>
+            <select
+              class="form-control create-project--users"
+              id="create-project--users"
+              data-create-project-users
+              name="users[]"
+              multiple="multiple">
+            </select>
+          </div>  --}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn bg-teal text-white">Create Project</button>
+          <button type="submit" class="btn bg-teal text-white" data-create-project-submit>Create Project</button>
         </div>
       </form>
     </div>
