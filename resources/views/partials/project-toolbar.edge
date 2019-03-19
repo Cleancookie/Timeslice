@@ -1,0 +1,14 @@
+<h2 class="project-name-heading" data-project-name data-project-id="" style="display: none">{project.name}</h2>
+<form action="#" data-project-name-form>
+  <input type="text" name="name" class="project-name-heading project-name-heading--input" data-project-name-input style="display: none">
+</form>
+
+<div class="row mt-3">
+  <div class="col" data-project-toolbar>
+    <button class="btn btn-primary" type="button">Add Section</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-edit-members-button>Edit Members</button>
+    <button class="btn btn-danger">Delete Project</button>
+  </div>
+</div>
+
+@include('partials/edit-users-in-project-modal')

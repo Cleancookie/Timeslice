@@ -1,0 +1,27 @@
+<div class="modal fade" id="edit-users-in-project--modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Edit Members</h5>
+      </div>
+      <form data-create-project-form>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="create-project--users">Users: </label>
+            <select
+              class="form-control create-project--users"
+              id="create-project--users"
+              data-create-project-users
+              name="users[]"
+              multiple="multiple">
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn bg-teal text-white" data-create-project-submit>Create Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

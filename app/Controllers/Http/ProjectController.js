@@ -63,6 +63,7 @@ class ProjectController {
     project = await Project.query()
       .where({ id: id })
       .with('projects')
+      .with('users')
       .fetch()
 
     if (!project) {
