@@ -384,6 +384,13 @@ export default class DashboardComponent {
       $('#edit-users-in-project--modal').modal('show')
     })
 
+    $('[data-edit-members-form]').unbind('submit')
+    $('[data-edit-members-form]').submit((e) => {
+      e.preventDefault()
+      console.log('submit blocked')
+    })
+    console.log('yerd')
+
     // Add all assigned users as already selected options
     let currentMembers = project[0].users.map((user) => {
       return {
@@ -417,18 +424,18 @@ export default class DashboardComponent {
 
     // Autocomplete pillbox with assigned users already filled in
     if (
-      $('[data-create-project-users]').hasClass('select2-hidden-accessible')
+      $('[data-edit-members--select]').hasClass('select2-hidden-accessible')
     ) {
       // Re-init the selected options
       let newCurrentMembers = currentMembers.map((opt) => {
         return opt.id
       })
-      $('[data-create-project-users]')
+      $('[data-edit-members--select]')
         .val(newCurrentMembers)
         .trigger('change')
     } else {
       // init select2
-      $('[data-create-project-users]').select2(select2Config)
+      $('[data-edit-members--select]').select2(select2Config)
     }
   }
 

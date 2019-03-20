@@ -4,22 +4,22 @@
       <div class="modal-header">
         <h5>Edit Members</h5>
       </div>
-      <form data-create-project-form>
+      <form data-edit-members-form>
         <div class="modal-body">
           <div class="form-group">
-            <label for="create-project--users">Users: </label>
+            <label for="edit-members--users">Users: </label>
             <select
-              class="form-control create-project--users"
-              id="create-project--users"
-              data-create-project-users
+              class="form-control edit-members--users"
+              id="edit-members--users"
+              data-edit-members--select
               name="users[]"
               multiple="multiple">
             </select>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn bg-teal text-white" data-create-project-submit>Create Project</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hide</button>
+          <button type="submit" class="btn bg-teal text-white" data-edit-members-submit>Update Members</button>
         </div>
       </form>
     </div>
