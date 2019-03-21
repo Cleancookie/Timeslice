@@ -21,6 +21,7 @@ class ProjectController {
     const projects = await user
       .projects()
       .orderBy('name')
+      .where('deleted_at', null)
       .fetch()
 
     return {
@@ -127,15 +128,15 @@ class ProjectController {
     let { id } = params
     let project = await Project.find(id)
 
-    if (await project.canBeEditedBy(user)) {
-      return response.status(403).json({
-        success: false,
-        error: 403,
-        message: `User(${user.username}) could not delete project(${
-          project.name
-        })`
-      })
-    }
+    // if (await project.canBeEditedBy(user)) {
+    //   return response.status(403).json({
+    //     success: false,
+    //     error: 403,
+    //     message: `User(${user.username}) could not delete project(${
+    //       project.name
+    //     })`
+    //   })
+    // }
 
     project.deleted_at = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     let success = await project.save()

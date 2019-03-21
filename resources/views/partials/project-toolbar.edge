@@ -9,8 +9,9 @@
   <div class="col-12" data-project-toolbar>
     <button class="btn btn-primary" type="button"><i class="fas fa-folder-plus"></i> Add Section</button>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-edit-members-button> <i class="fas fa-users"></i> Edit Members</button>
-    <button class="btn btn-danger"><i class="fas fa-trash"></i> Delete Project</button>
+    <button class="btn btn-danger" data-delete-project><i class="fas fa-trash"></i> Delete Project</button>
   </div>
 </div>
 
 @include('partials/edit-users-in-project-modal')
+@include('partials/delete-project-modal')

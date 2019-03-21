@@ -44,9 +44,12 @@ export default class DashboardComponent {
       .find('[data-cloneable="false"]')
       .fadeOut(200)
 
-    // Init edit project member modal
     axios.get(`/api/v1/projects/${projectId}`).then((response) => {
-      this.initEditProjectModal(response.data.data)
+      // Init edit project member modal
+      this.initEditProjectModal(response.data.data[0])
+
+      // Init delete project modal
+      this.initDeleteProjectModal(response.data.data[0])
     })
 
     axios.get(`/api/v1/projects/${projectId}/stages`).then((response) => {
@@ -378,6 +381,36 @@ export default class DashboardComponent {
     })
   }
 
+  initDeleteProjectModal(project) {
+    $('[data-delete-project]').click(async (e) => {
+      console.log('clicked')
+      console.log(project)
+      $('[data-delete-project-confirm-button]').attr(
+        'data-delete-project-id',
+        project.id
+      )
+      $('#delete-project--modal').modal('show')
+    })
+
+    $('[data-delete-project-confirm-button]').click(async (e) => {
+      this.loading(true)
+      const projectId = $(e.currentTarget).data('delete-project-id')
+      const response = await axios.post(`/api/v1/projects/${projectId}/delete`)
+      this.loading(false)
+      if (response) {
+        // Hide everything!!
+        $('[data-project-toolbar-container]').hide()
+        $('[data-stage-ul]')
+          .find('[data-cloneable=false]')
+          .remove()
+        $('.project--container__active').remove()
+        $('#delete-project--modal').modal('hide')
+      } else {
+        alert('There was an error, please try again later!')
+      }
+    })
+  }
+
   initEditProjectModal(project) {
     $('[data-edit-members-button]').click(async (e) => {
       // Show modal
@@ -403,7 +436,7 @@ export default class DashboardComponent {
     })
 
     // Add all assigned users as already selected options
-    let currentMembers = project[0].users.map((user) => {
+    let currentMembers = project.users.map((user) => {
       return {
         id: user.id,
         text: user.username,
