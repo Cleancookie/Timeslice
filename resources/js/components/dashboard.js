@@ -27,11 +27,30 @@ export default class DashboardComponent {
     })
   }
 
-  getStagesAndTheirTasks(projectId) {
+  loadProject(projectId) {
     this.loading(true)
+
+    $('.project--container__active').removeClass('project--container__active')
+
+    $(`[data-project-id=${projectId}]`).addClass('project--container__active')
+    $('[data-project-name]').text(
+      $(`[data-project-id=${projectId}]`)
+        .find('h2')
+        .text()
+    )
+    $('[data-project-toolbar-container]').fadeIn(200)
+
     $('[data-stage-ul]')
       .find('[data-cloneable="false"]')
       .fadeOut(200)
+
+    axios.get(`/api/v1/projects/${projectId}`).then((response) => {
+      // Init edit project member modal
+      this.initEditProjectModal(response.data.data[0])
+
+      // Init delete project modal
+      this.initDeleteProjectModal(response.data.data[0])
+    })
 
     axios.get(`/api/v1/projects/${projectId}/stages`).then((response) => {
       // Clear the dashboard's stages
@@ -68,13 +87,7 @@ export default class DashboardComponent {
           .replace('{project.name}', project.name)
       })
       .click(() => {
-        this.getStagesAndTheirTasks(project.id)
-        $('.project--container__active').removeClass(
-          'project--container__active'
-        )
-        $('[data-project-name]').text(project.name)
-        $('[data-project-name]').fadeIn(200)
-        $(newProjectEle).addClass('project--container__active')
+        this.loadProject(project.id)
       })
 
     return newProjectEle
@@ -180,7 +193,6 @@ export default class DashboardComponent {
         response
           .then((res) => {
             if (_.get(res, 'data.success') != true) {
-              console.log(res)
               const check = formEl
                 .closest('[data-task-li]')
                 .find('[data-toolbar-submit]')
@@ -354,13 +366,9 @@ export default class DashboardComponent {
       this.appendProject(res.data.data)
 
       // Select the new project
-      $('.project--container__active').removeClass('project--container__active')
-      $(`[data-project-id=${res.data.data.id}]`).addClass(
-        'project--container__active'
-      )
-      this.getStagesAndTheirTasks(res.data.data.id)
+      this.loadProject(res.data.data.id)
       $('[data-project-name]').text(res.data.data.name)
-      $('[data-project-name]').fadeIn(200)
+      $('[data-project-toolbar-container]').show(200)
 
       $('[data-sidebar]').animate(
         {
@@ -371,9 +379,75 @@ export default class DashboardComponent {
 
       this.loading(false)
     })
+  }
 
-    // Autocomplete users pillbox
-    $('[data-create-project-users]').select2({
+  initDeleteProjectModal(project) {
+    $('[data-delete-project]').click(async (e) => {
+      console.log('clicked')
+      console.log(project)
+      $('[data-delete-project-confirm-button]').attr(
+        'data-delete-project-id',
+        project.id
+      )
+      $('#delete-project--modal').modal('show')
+    })
+
+    $('[data-delete-project-confirm-button]').click(async (e) => {
+      this.loading(true)
+      const projectId = $(e.currentTarget).data('delete-project-id')
+      const response = await axios.post(`/api/v1/projects/${projectId}/delete`)
+      this.loading(false)
+      if (response) {
+        // Hide everything!!
+        $('[data-project-toolbar-container]').hide()
+        $('[data-stage-ul]')
+          .find('[data-cloneable=false]')
+          .remove()
+        $('.project--container__active').remove()
+        $('#delete-project--modal').modal('hide')
+      } else {
+        alert('There was an error, please try again later!')
+      }
+    })
+  }
+
+  initEditProjectModal(project) {
+    $('[data-edit-members-button]').click(async (e) => {
+      // Show modal
+      $('#edit-users-in-project--modal').modal('show')
+    })
+
+    $('[data-edit-members-form]').unbind('submit')
+    $('[data-edit-members-form]').submit(async (e) => {
+      e.preventDefault()
+      this.loading(true)
+      const newUsers = $('[data-edit-members--select]').val()
+      const projectId = $('.project--container__active').data('project-id')
+
+      const response = await axios.post(
+        `/api/v1/projects/${projectId}/members`,
+        { newUsers }
+      )
+      this.loading(false)
+
+      if (response.status == 200) {
+        $('#edit-users-in-project--modal').modal('hide')
+      }
+    })
+
+    // Add all assigned users as already selected options
+    let currentMembers = project.users.map((user) => {
+      return {
+        id: user.id,
+        text: user.username,
+        selected: true
+      }
+    })
+
+    // Setup select2 options
+    let select2Config = {
+      multiple: true,
+      data: currentMembers,
       width: '100%',
       minimumInputLength: 1,
       ajax: {
@@ -390,7 +464,23 @@ export default class DashboardComponent {
           return { results: users }
         }
       }
-    })
+    }
+
+    // Autocomplete pillbox with assigned users already filled in
+    if (
+      $('[data-edit-members--select]').hasClass('select2-hidden-accessible')
+    ) {
+      // Re-init the selected options
+      let newCurrentMembers = currentMembers.map((opt) => {
+        return opt.id
+      })
+      $('[data-edit-members--select]')
+        .val(newCurrentMembers)
+        .trigger('change')
+    } else {
+      // init select2
+      $('[data-edit-members--select]').select2(select2Config)
+    }
   }
 
   loading(isLoading) {

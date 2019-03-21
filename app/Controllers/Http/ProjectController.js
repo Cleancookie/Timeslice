@@ -18,7 +18,11 @@ class ProjectController {
    */
   async index({ auth }) {
     const user = await auth.getUser()
-    const projects = await user.projects().fetch()
+    const projects = await user
+      .projects()
+      .orderBy('name')
+      .where('deleted_at', null)
+      .fetch()
 
     return {
       success: true,
@@ -63,6 +67,7 @@ class ProjectController {
     project = await Project.query()
       .where({ id: id })
       .with('projects')
+      .with('users')
       .fetch()
 
     if (!project) {
@@ -123,15 +128,15 @@ class ProjectController {
     let { id } = params
     let project = await Project.find(id)
 
-    if (await project.canBeEditedBy(user)) {
-      return response.status(403).json({
-        success: false,
-        error: 403,
-        message: `User(${user.username}) could not delete project(${
-          project.name
-        })`
-      })
-    }
+    // if (await project.canBeEditedBy(user)) {
+    //   return response.status(403).json({
+    //     success: false,
+    //     error: 403,
+    //     message: `User(${user.username}) could not delete project(${
+    //       project.name
+    //     })`
+    //   })
+    // }
 
     project.deleted_at = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
     let success = await project.save()
@@ -144,6 +149,23 @@ class ProjectController {
       success: success,
       data: project
     }
+  }
+
+  /**
+   * Edit members attached to a project
+   *
+   * @param {Context} ctx
+   */
+  async editMembers({ request, response, params }) {
+    const { id } = params
+    const { newUsers } = request.all()
+    const project = await Project.find(id)
+    const result = await project.users().sync(newUsers)
+
+    return response.json({
+      success: true,
+      data: result
+    })
   }
 }
 

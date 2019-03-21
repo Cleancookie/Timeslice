@@ -35,6 +35,7 @@ Route.group(()=>{
   Route.post('projects', 'ProjectController.create').middleware('auth')
   Route.post('projects/:id', 'ProjectController.update').middleware('auth')
   Route.post('projects/:id/delete', 'ProjectController.delete').middleware('auth')
+  Route.post('projects/:id/members', 'ProjectController.editMembers').middleware('auth')
 
   // Tasks API
   Route.get('projects/:id/tasks', 'TaskController.index').middleware('auth')
