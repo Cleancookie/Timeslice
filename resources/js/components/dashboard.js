@@ -38,7 +38,7 @@ export default class DashboardComponent {
         .find('h2')
         .text()
     )
-    $('[data-project-name]').fadeIn(200)
+    $('[data-project-toolbar-container]').fadeIn(200)
 
     $('[data-stage-ul]')
       .find('[data-cloneable="false"]')
@@ -365,7 +365,7 @@ export default class DashboardComponent {
       // Select the new project
       this.loadProject(res.data.data.id)
       $('[data-project-name]').text(res.data.data.name)
-      $('[data-project-name]').fadeIn(200)
+      $('[data-project-toolbar-container]').show(200)
 
       $('[data-sidebar]').animate(
         {
@@ -389,7 +389,6 @@ export default class DashboardComponent {
       e.preventDefault()
       console.log('submit blocked')
     })
-    console.log('yerd')
 
     // Add all assigned users as already selected options
     let currentMembers = project[0].users.map((user) => {
