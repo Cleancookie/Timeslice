@@ -16707,6 +16707,181 @@ p {
   font-family: lato, Verdana, sans-serif;
 }
 
+@media (min-width: 768px) {
+  .vertical .stages {
+    padding-bottom: 10px;
+    flex-direction: row;
+  }
+
+  .vertical .stage--container {
+    min-width: 290px;
+    margin: 5px 10px;
+  }
+
+  .vertical .tasks {
+    flex-direction: row;
+  }
+
+  .vertical .task-toolbar--container {
+    text-align: right;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    padding: 5px 10px;
+    color: rgba(156, 163, 175, 0.5);
+  }
+
+  .vertical .task-toolbar--container__active {
+    box-shadow: 0px 20px 50px -26px #0c0c0c !important;
+    background-color: linear-gra;
+    background-image: linear-gradient(to bottom right, #ffedcb, #fff4e0);
+  }
+
+  .vertical .task-toolbar--container .fas {
+    margin-left: 3px;
+  }
+
+  .vertical .task-toolbar--toolbar {
+    display: inline;
+  }
+
+  .vertical .task-toolbar--toolbar i {
+    cursor: pointer;
+  }
+
+  .vertical .task-toolbar--toolbar i:hover {
+    color: #393e46;
+  }
+
+  .vertical .task-toolbar--toolbar .error {
+    color: #fc3c3c;
+  }
+
+  .vertical .task-toolbar--toolbar .error:hover {
+    color: #fc3c3c;
+  }
+
+  .vertical .task-toolbar--toggle {
+    display: inline;
+  }
+
+  .vertical .task-toolbar--toggle:hover {
+    color: #393e46;
+  }
+
+  .vertical .task--form {
+    padding-top: 15px;
+  }
+
+  .vertical .task--input__name {
+    border: none;
+    display: inline;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: text;
+    background-color: inherit;
+  }
+
+  .vertical .task--input__description {
+    cursor: text;
+    resize: none;
+    border: none;
+    background-color: inherit;
+    font-family: lora;
+    /* width */
+    /* Track */
+    /* Handle */
+    /* Handle on hover */
+  }
+
+  .vertical .task--input__description::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .vertical .task--input__description::-webkit-scrollbar-track {
+    background: rgba(248, 248, 248, 0.9);
+  }
+
+  .vertical .task--input__description::-webkit-scrollbar-thumb {
+    background: #505762;
+  }
+
+  .vertical .task--input__description::-webkit-scrollbar-thumb:hover {
+    background: #393e46;
+  }
+
+  .vertical .task--input__user {
+    border: none;
+    display: inline;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: text;
+    background-color: inherit;
+  }
+
+  .vertical .task--container {
+    min-width: 250px;
+    max-width: 250px;
+    height: 200px;
+    overflow: hidden auto;
+    margin: 0 30px 0 0;
+    border: none;
+    box-shadow: 0px 20px 15px -26px #0c0c0c;
+    transition: 100ms ease-in-out;
+    cursor: default;
+    /* width */
+    /* Track */
+    /* Handle */
+    /* Handle on hover */
+  }
+
+  .vertical .task--container:hover {
+    box-shadow: none;
+  }
+
+  .vertical .task--container:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-width: 0 0 26px 26px;
+    border-style: solid;
+    border-color: #ffd994 white;
+    box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
+  }
+
+  .vertical .task--container::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .vertical .task--container::-webkit-scrollbar-track {
+    background: rgba(248, 248, 248, 0.9);
+  }
+
+  .vertical .task--container::-webkit-scrollbar-thumb {
+    background: #505762;
+  }
+
+  .vertical .task--container::-webkit-scrollbar-thumb:hover {
+    background: #393e46;
+  }
+
+  .vertical .task--assigned-to {
+    font-family: lato, Verdana, sans-serif;
+  }
+
+  .vertical .task--assigned-to .select2-selection--multiple {
+    border: none !important;
+    background-color: #fff4e0 !important;
+  }
+
+  .vertical .task--user {
+    text-decoration: underline;
+    cursor: text;
+  }
+}
+
 .lds-ellipsis {
   position: fixed;
   left: 50vw;
