@@ -385,9 +385,21 @@ export default class DashboardComponent {
     })
 
     $('[data-edit-members-form]').unbind('submit')
-    $('[data-edit-members-form]').submit((e) => {
+    $('[data-edit-members-form]').submit(async (e) => {
       e.preventDefault()
-      console.log('submit blocked')
+      this.loading(true)
+      const newUsers = $('[data-edit-members--select]').val()
+      const projectId = $('.project--container__active').data('project-id')
+
+      const response = await axios.post(
+        `/api/v1/projects/${projectId}/members`,
+        { newUsers }
+      )
+      this.loading(false)
+
+      if (response.status == 200) {
+        $('#edit-users-in-project--modal').modal('hide')
+      }
     })
 
     // Add all assigned users as already selected options

@@ -18,7 +18,10 @@ class ProjectController {
    */
   async index({ auth }) {
     const user = await auth.getUser()
-    const projects = await user.projects().fetch()
+    const projects = await user
+      .projects()
+      .orderBy('name')
+      .fetch()
 
     return {
       success: true,
@@ -145,6 +148,23 @@ class ProjectController {
       success: success,
       data: project
     }
+  }
+
+  /**
+   * Edit members attached to a project
+   *
+   * @param {Context} ctx
+   */
+  async editMembers({ request, response, params }) {
+    const { id } = params
+    const { newUsers } = request.all()
+    const project = await Project.find(id)
+    const result = await project.users().sync(newUsers)
+
+    return response.json({
+      success: true,
+      data: result
+    })
   }
 }
 
