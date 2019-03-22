@@ -1,0 +1,39 @@
+<div class="modal fade" id="new-task--modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Create New Tassk</h5>
+      </div>
+      <form data-create-task-form data-stage-id>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="create-task--name">Name: </label>
+            <input
+              type="text"
+              name="name"
+              placeholder="task Name"
+              id="create-task--name"
+              class="form-control create-task--name"
+              data-create-task-name
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="create-task--name">Description: </label>
+
+            <textarea
+              name="description"
+              class="create-task--description"
+              id="create-task--description"
+              data-create-task-description
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn bg-teal text-white" data-create-task-submit>Create Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -113,6 +113,8 @@ export default class DashboardComponent {
           .replace('{stage.name}', stage.name)
       })
 
+    this.attachStageToolbarListeners(newStageEle)
+
     return newStageEle
   }
 
@@ -221,6 +223,38 @@ export default class DashboardComponent {
             this.loading(false)
           })
       })
+  }
+
+  attachStageToolbarListeners(el) {
+    el.find('[data-stage-toolbar-new-task-button]').click((e) => {
+      e.preventDefault()
+      const stageId = el.attr('data-stage-id')
+      $('#new-task--modal')
+        .find('[data-create-task-form]')
+        .attr('data-stage-id', stageId)
+
+      $('[data-create-task-form]').unbind('submit')
+      $('[data-create-task-form]').submit(async (e) => {
+        e.preventDefault()
+        const stageId = $('[data-create-task-form]').attr('data-stage-id')
+        const projectId = $('.project--container__active').attr(
+          'data-project-id'
+        )
+        const name = $('[data-create-task-name]').val()
+        const description = $('[data-create-task-description]').val()
+
+        const response = await axios.post(
+          `/api/v1/projects/${projectId}/tasks`,
+          {
+            stage_id: stageId,
+            project_id: projectId,
+            name,
+            description
+          }
+        )
+      })
+      $('#new-task--modal').modal('show')
+    })
   }
 
   attachTaskToolbarListeners(el) {

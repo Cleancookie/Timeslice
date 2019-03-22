@@ -73,16 +73,16 @@ class TaskController {
     let { id } = params
     let project = await Project.find(id)
 
-    if (!(await project.canBeEditedBy(user))) {
-      response.status(403)
-      return {
-        success: false,
-        error: 403,
-        message: `User(${user.username}) is not permitted to update project(${
-          project.name
-        })`
-      }
-    }
+    // if (!(await project.canBeEditedBy(user))) {
+    //   response.status(403)
+    //   return {
+    //     success: false,
+    //     error: 403,
+    //     message: `User(${user.username}) is not permitted to update project(${
+    //       project.name
+    //     })`
+    //   }
+    // }
 
     let task = new Task()
     task.fill({
