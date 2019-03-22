@@ -1,13 +1,13 @@
 @layout("layouts/default")
 
 @section('content')
-<div class="container-fluid" data-dashboard>
+<div class="container-fluid vertical" data-dashboard>
   <div class="row dashboard--container">
     <div class="col col-md-4 sidebar p-0 dashboard--sidebar" data-sidebar>
       @include('partials/project-ul')
     </div>
 
-    <div class="col-12 col-md mt-3 dashboard--main vertical">
+    <div class="col-12 col-md mt-3 dashboard--main">
       @include('partials/project-toolbar')
       @include('partials/loading-animation')
       @include('partials/stage-ul')
