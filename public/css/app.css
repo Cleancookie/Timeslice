@@ -16431,6 +16431,7 @@ p {
     height: calc(100vh - 56px);
     overflow-y: visible;
     overflow-x: hidden;
+    background-color: white;
   }
 
   .dashboard--main {
@@ -16705,6 +16706,70 @@ p {
 
 .ui-menu-item-wrapper {
   font-family: lato, Verdana, sans-serif;
+}
+
+@media (min-width: 768px) {
+  .vertical .sidebar {
+    z-index: 10;
+  }
+
+  .vertical .stages {
+    padding-bottom: 10px;
+    flex-direction: row;
+  }
+
+  .vertical .stage--container {
+    min-width: 290px;
+    margin: 5px 10px;
+    /* width */
+    /* Track */
+    /* Handle */
+    /* Handle on hover */
+  }
+
+  .vertical .stage--container::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .vertical .stage--container::-webkit-scrollbar-track {
+    background: rgba(248, 248, 248, 0.9);
+  }
+
+  .vertical .stage--container::-webkit-scrollbar-thumb {
+    background: #505762;
+  }
+
+  .vertical .stage--container::-webkit-scrollbar-thumb:hover {
+    background: #393e46;
+  }
+
+  .vertical .tasks {
+    flex-direction: column;
+  }
+
+  .vertical .task--container {
+    margin: 15px 0;
+    /* width */
+    /* Track */
+    /* Handle */
+    /* Handle on hover */
+  }
+
+  .vertical .task--container::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .vertical .task--container::-webkit-scrollbar-track {
+    background: rgba(248, 248, 248, 0.9);
+  }
+
+  .vertical .task--container::-webkit-scrollbar-thumb {
+    background: #505762;
+  }
+
+  .vertical .task--container::-webkit-scrollbar-thumb:hover {
+    background: #393e46;
+  }
 }
 
 .lds-ellipsis {
