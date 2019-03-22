@@ -69,7 +69,7 @@ class TaskController {
    */
   async create({ request, auth, params }) {
     let user = await auth.getUser()
-    let { name, description, project_id, stage_id } = request.all()
+    let { name, description, project_id, stage_id, user_id } = request.all()
     let { id } = params
     let project = await Project.find(id)
 
@@ -84,12 +84,17 @@ class TaskController {
     //   }
     // }
 
+    if (!user_id) {
+      user_id = user.id
+    }
+
     let task = new Task()
     task.fill({
       name: name,
       description: description,
       project_id: project_id,
-      stage_id: stage_id
+      stage_id: stage_id,
+      user_id: user_id
     })
 
     const success = await project.tasks().save(task)

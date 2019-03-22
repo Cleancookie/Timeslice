@@ -253,6 +253,13 @@ export default class DashboardComponent {
           }
         )
       })
+      // Init autocomplete on assigned user box
+      $('#new-task--modal')
+        .find('[data-create-task-user]')
+        .autocomplete({
+          source: projectUsers,
+          delay: 50
+        })
       $('#new-task--modal').modal('show')
     })
   }

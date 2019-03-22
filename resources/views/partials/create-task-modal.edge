@@ -18,6 +18,18 @@
             >
           </div>
 
+          <div class="form-group create-task-modal--user ui-front">
+            Assigned To: <input
+              type="text"
+              name="user"
+              class="create-task--user"
+              autocomplete="off"
+              data-create-task-user
+              value=""
+              placeholder="{{ auth.user.username}}"
+            >
+          </div>
+
           <div class="form-group">
             <label for="create-task--name">Description: </label>
 
