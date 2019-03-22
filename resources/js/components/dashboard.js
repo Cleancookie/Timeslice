@@ -242,6 +242,7 @@ export default class DashboardComponent {
         )
         const name = $('[data-create-task-name]').val()
         const description = $('[data-create-task-description]').val()
+        const username = $('[data-create-task-user]').val()
 
         const response = await axios.post(
           `/api/v1/projects/${projectId}/tasks`,
@@ -249,10 +250,12 @@ export default class DashboardComponent {
             stage_id: stageId,
             project_id: projectId,
             name,
-            description
+            description,
+            username
           }
         )
       })
+
       // Init autocomplete on assigned user box
       $('#new-task--modal')
         .find('[data-create-task-user]')

@@ -69,7 +69,7 @@ class TaskController {
    */
   async create({ request, auth, params }) {
     let user = await auth.getUser()
-    let { name, description, project_id, stage_id, user_id } = request.all()
+    let { name, description, project_id, stage_id, username } = request.all()
     let { id } = params
     let project = await Project.find(id)
 
@@ -83,9 +83,10 @@ class TaskController {
     //     })`
     //   }
     // }
-
-    if (!user_id) {
-      user_id = user.id
+    let user_id = user.id
+    if (username) {
+      const assignedUser = await User.findBy('username', username)
+      user_id = assignedUser.id
     }
 
     let task = new Task()
