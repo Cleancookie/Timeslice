@@ -100,9 +100,14 @@ class TaskController {
 
     const success = await project.tasks().save(task)
 
+    const newTask = await Task.query()
+      .where('id', task.id)
+      .with('users')
+      .fetch()
+
     return {
       success: success,
-      data: task
+      data: newTask
     }
   }
 

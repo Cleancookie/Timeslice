@@ -236,6 +236,7 @@ export default class DashboardComponent {
       $('[data-create-task-form]').unbind('submit')
       $('[data-create-task-form]').submit(async (e) => {
         e.preventDefault()
+        this.loading(true)
         const stageId = $('[data-create-task-form]').attr('data-stage-id')
         const projectId = $('.project--container__active').attr(
           'data-project-id'
@@ -254,6 +255,20 @@ export default class DashboardComponent {
             username
           }
         )
+
+        $('#new-task--modal').modal('hide')
+
+        const newTaskEle = this.createTaskLiInStage(
+          response.data.data[0],
+          $(`[data-stage-id=${stageId}]`)
+        )
+
+        newTaskEle.appendTo(
+          $(`[data-stage-id=${stageId}]`).find('[data-task-ul]')
+        )
+        newTaskEle.fadeIn(200)
+
+        this.loading(false)
       })
 
       // Init autocomplete on assigned user box
