@@ -268,6 +268,14 @@ export default class DashboardComponent {
         )
         newTaskEle.fadeIn(200)
 
+        // Scroll to new task
+        $(`[data-stage-id=${stageId}]`).animate(
+          {
+            scrollLeft: $(newTaskEle).offset().left
+          },
+          1000
+        )
+
         this.loading(false)
       })
 
