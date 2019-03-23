@@ -2,16 +2,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5>Create New Tassk</h5>
+        <h5>Create New Task</h5>
       </div>
-      <form data-create-task-form data-stage-id>
+      <form data-create-task-form data-stage-id class="new-task--form">
         <div class="modal-body">
           <div class="form-group">
-            <label for="create-task--name">Name: </label>
             <input
               type="text"
               name="name"
-              placeholder="task Name"
+              placeholder="Task Name"
               id="create-task--name"
               class="form-control create-task--name"
               data-create-task-name
@@ -19,15 +18,20 @@
           </div>
 
           <div class="form-group create-task-modal--user ui-front">
-            Assigned To: <input
+            <div class="input-group">
+                          <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">@</span>
+            </div>
+            <input
               type="text"
               name="user"
-              class="create-task--user"
+              class="form-control create-task--user"
               autocomplete="off"
               data-create-task-user
               value=""
               placeholder="{{ auth.user.username}}"
             >
+            </div>
           </div>
 
           <div class="form-group">
@@ -35,7 +39,7 @@
 
             <textarea
               name="description"
-              class="create-task--description"
+              class="form-control create-task--description"
               id="create-task--description"
               data-create-task-description
             ></textarea>

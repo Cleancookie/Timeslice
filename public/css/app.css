@@ -16717,6 +16717,10 @@ p {
   font-family: lato, Verdana, sans-serif;
 }
 
+.new-task--form .create-task--description {
+  min-height: 120px;
+}
+
 @media (min-width: 768px) {
   .vertical .sidebar {
     z-index: 10;
