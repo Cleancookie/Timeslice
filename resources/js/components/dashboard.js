@@ -279,6 +279,10 @@ export default class DashboardComponent {
           delay: 50
         })
       $('#new-task--modal').modal('show')
+      $('#new-task--modal').unbind('shown.bs.modal')
+      $('#new-task--modal').on('shown.bs.modal', (e) => {
+        $('[data-create-task-name]').focus()
+      })
     })
   }
 
