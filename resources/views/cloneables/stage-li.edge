@@ -6,7 +6,13 @@
 >
   <h3 class="stage--name">{stage.name}</h3>
   <span class="stage-toolbar--container">
-    <button type="button" class="btn btn-primary" data-stage-toolbar-new-task-button>New Task</button>
+    <button
+      type="button"
+      class="btn btn-primary stage-toolbar--new-task"
+      data-stage-toolbar-new-task-button
+    >
+      <i class="far fa-calendar-plus"></i> New Task
+    </button>
   </span>
   @include('partials/task-ul')
 </li>
