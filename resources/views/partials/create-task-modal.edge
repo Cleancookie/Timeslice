@@ -15,24 +15,24 @@
               class="form-control create-task--name"
               data-create-task-name
               required="required"
-            >
+            />
           </div>
 
           <div class="form-group create-task-modal--user ui-front">
             <div class="input-group">
-                          <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">@</span>
-            </div>
-            <input
-              type="text"
-              name="user"
-              class="form-control create-task--user"
-              autocomplete="off"
-              data-create-task-user
-              value=""
-              placeholder="{{ auth.user.username}}"
-              required="required"
-            >
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">@</span>
+              </div>
+              <input
+                type="text"
+                name="user"
+                class="form-control create-task--user"
+                autocomplete="off"
+                data-create-task-user
+                value=""
+                placeholder="{{ auth.user.username }}"
+                required="required"
+              />
             </div>
           </div>
 
@@ -48,8 +48,16 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn bg-teal text-white" data-create-task-submit>Create Task</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button
+            type="submit"
+            class="btn bg-teal text-white"
+            data-create-task-submit
+          >
+            Create Task
+          </button>
         </div>
       </form>
     </div>
