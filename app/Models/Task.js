@@ -5,6 +5,8 @@ const Model = use('Model')
 /** @type {typeof import('App/Models/Stage')} */
 const Stage = use('App/Models/Stage')
 
+const { LogicalException } = require('@adonisjs/generic-exceptions')
+
 class Task extends Model {
   projects() {
     return this.belongsTo('App/Models/Project')
@@ -29,6 +31,13 @@ class Task extends Model {
           .where('order', newStageOrderPos)
           .fetch()
 
+        if (!newStage) {
+          const message = `${stage.order} is not a valid stage order.`
+          const status = 500
+          const code = 'E_INVALID_NEW_STAGE'
+          throw new LogicalException(message, status, code)
+        }
+
         return newStage
       })
     return newStage
@@ -44,6 +53,13 @@ class Task extends Model {
           .where('project_id', this.project_id)
           .where('order', newStageOrderPos)
           .fetch()
+
+        if (!prevStage) {
+          const message = `${stage.order} is not a valid stage order.`
+          const status = 500
+          const code = 'E_INVALID_NEW_STAGE'
+          throw new LogicalException(message, status, code)
+        }
 
         return prevStage
       })
