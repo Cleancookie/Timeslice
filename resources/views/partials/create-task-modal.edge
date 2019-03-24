@@ -7,10 +7,11 @@
       <form data-create-task-form data-stage-id class="new-task--form">
         <div class="modal-body">
           <div class="form-group">
+            <label for="create-task--name">Task Name:</label>
             <input
               type="text"
               name="name"
-              placeholder="Task Name"
+              placeholder="Write blog post"
               id="create-task--name"
               class="form-control create-task--name"
               data-create-task-name
@@ -19,6 +20,7 @@
           </div>
 
           <div class="form-group create-task-modal--user ui-front">
+            <label for="create-task--user">Assign To:</label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">@</span>
@@ -27,6 +29,7 @@
                 type="text"
                 name="user"
                 class="form-control create-task--user"
+                id="creat-task--user"
                 autocomplete="off"
                 data-create-task-user
                 value=""
@@ -44,6 +47,7 @@
               class="form-control create-task--description"
               id="create-task--description"
               data-create-task-description
+              placeholder="Write up about Front End Sheffield conference"
             ></textarea>
           </div>
         </div>
