@@ -200,6 +200,13 @@ class TaskController {
     return response.json(await task.nextStage())
   }
 
+  async prevStage({ request, response, auth, params }) {
+    let { id } = params
+    let task = await Task.find(id)
+
+    return response.json(await task.prevStage())
+  }
+
   /**
    * Returns all users for select2
    *
