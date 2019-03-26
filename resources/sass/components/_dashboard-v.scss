@@ -28,5 +28,10 @@
         @include verticalScrollBar();
       }
     }
+
+    .stage-toolbar--new-task {
+      display: block;
+      margin: 0;
+    }
   }
 }
