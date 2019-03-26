@@ -3,6 +3,8 @@
 const Project = use('App/Models/Project')
 /** @type {typeof import('App/Models/User')} */
 const User = use('App/Models/User')
+/** @type {typeof import('App/Models/Stage')} */
+const Stage = use('App/Models/Stage')
 /** @type {typeof import('@adonisjs/lucid/src/Database')} */
 const Database = use('Adonis/Src/Database')
 /** @type {typeof import('lodash')} */
@@ -49,6 +51,46 @@ class ProjectController {
     if (!success) {
       // TODO: check if project actually saved or has validation errors
     }
+
+    // Create default stages
+    let stages = []
+    let stage = new Stage()
+    stage.fill({
+      name: 'Backlog',
+      order: 0
+    })
+    stages.push(stage)
+    stage = new Stage()
+    stage.fill({
+      name: 'Scheduled',
+      order: 1
+    })
+    stages.push(stage)
+    stage = new Stage()
+    stage.fill({
+      name: 'In Progress',
+      order: 2
+    })
+    stages.push(stage)
+    stage = new Stage()
+    stage.fill({
+      name: 'Testing',
+      order: 3
+    })
+    stages.push(stage)
+    stage = new Stage()
+    stage.fill({
+      name: 'Awaiting Sign Off',
+      order: 4
+    })
+    stages.push(stage)
+    stage = new Stage()
+    stage.fill({
+      name: 'Ready to Deploy',
+      order: 5
+    })
+    stages.push(stage)
+    project.stages().saveMany(stages)
 
     return {
       success: true,

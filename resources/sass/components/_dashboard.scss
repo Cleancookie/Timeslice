@@ -1,3 +1,8 @@
+.sidebar {
+  .create-project-button {
+    border-radius: 0;
+  }
+}
 @include media-breakpoint-up(md) {
   .sidebar {
     max-width: 200px;
@@ -91,6 +96,16 @@
   &--name {
     font-size: 1.5rem;
     font-weight: 500;
+    display: inline-block;
+  }
+
+  &-toolbar {
+    &--new-task {
+      margin-left: 16px;
+      padding: 2px 15px;
+      margin-top: -10px;
+      border-radius: 18px;
+    }
   }
 }
 
@@ -187,6 +202,7 @@
     // box-shadow: 5px 5px 0px 0px rgba($black, .8);
     transition: 100ms ease-in-out;
     cursor: default;
+    border-radius: 0 15px 15px 15px;
 
     &:hover {
       box-shadow: none;

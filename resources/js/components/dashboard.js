@@ -1,5 +1,6 @@
 const axios = require('axios')
 const _ = require('lodash')
+const delay = require('delay')
 
 export default class DashboardComponent {
   constructor(init = true) {
@@ -113,6 +114,8 @@ export default class DashboardComponent {
           .replace('{stage.name}', stage.name)
       })
 
+    this.attachStageToolbarListeners(newStageEle)
+
     return newStageEle
   }
 
@@ -223,6 +226,75 @@ export default class DashboardComponent {
       })
   }
 
+  attachStageToolbarListeners(el) {
+    el.find('[data-stage-toolbar-new-task-button]').click((e) => {
+      e.preventDefault()
+      const stageId = el.attr('data-stage-id')
+      $('#new-task--modal')
+        .find('[data-create-task-form]')
+        .attr('data-stage-id', stageId)
+
+      $('[data-create-task-form]').unbind('submit')
+      $('[data-create-task-form]').submit(async (e) => {
+        e.preventDefault()
+        this.loading(true)
+        const stageId = $('[data-create-task-form]').attr('data-stage-id')
+        const projectId = $('.project--container__active').attr(
+          'data-project-id'
+        )
+        const name = $('[data-create-task-name]').val()
+        const description = $('[data-create-task-description]').val()
+        const username = $('[data-create-task-user]').val()
+
+        const response = await axios.post(
+          `/api/v1/projects/${projectId}/tasks`,
+          {
+            stage_id: stageId,
+            project_id: projectId,
+            name,
+            description,
+            username
+          }
+        )
+
+        $('#new-task--modal').modal('hide')
+
+        const newTaskEle = this.createTaskLiInStage(
+          response.data.data[0],
+          $(`[data-stage-id=${stageId}]`)
+        )
+
+        newTaskEle.appendTo(
+          $(`[data-stage-id=${stageId}]`).find('[data-task-ul]')
+        )
+        newTaskEle.fadeIn(200)
+
+        // Scroll to new task
+        $(`[data-stage-id=${stageId}]`).animate(
+          {
+            scrollLeft: $(newTaskEle).offset().left
+          },
+          1000
+        )
+
+        this.loading(false)
+      })
+
+      // Init autocomplete on assigned user box
+      $('#new-task--modal')
+        .find('[data-create-task-user]')
+        .autocomplete({
+          source: projectUsers,
+          delay: 50
+        })
+      $('#new-task--modal').modal('show')
+      $('#new-task--modal').unbind('shown.bs.modal')
+      $('#new-task--modal').on('shown.bs.modal', (e) => {
+        $('[data-create-task-name]').focus()
+      })
+    })
+  }
+
   attachTaskToolbarListeners(el) {
     // Hide / show cog
     el.hover(
@@ -306,6 +378,63 @@ export default class DashboardComponent {
 
       this.modalInit = true
     }
+
+    // Move task from stage to stage
+    el.find('[data-toolbar-prev]').click(async (e) => {
+      this.loading(true)
+      try {
+        const taskId = $(e.currentTarget)
+          .closest('[data-task-li]')
+          .attr('data-task-li-id')
+        const response = await axios.post(`/api/v1/tasks/${taskId}/prev-stage`)
+        this.loading(false)
+        const taskLi = $(`[data-task-li-id=${taskId}]`)
+        taskLi.find('[data-task-toolbar-toggle]').trigger('click')
+        taskLi.addClass('animated bounceOutUp')
+        await delay(700)
+        taskLi.hide()
+        taskLi.appendTo(
+          `[data-stage-id=${response.data.newStage[0].id}] [data-task-ul]`
+        )
+        taskLi.show()
+        taskLi.removeClass('bounceOutUp')
+        taskLi.addClass('bounceInUp')
+        await delay(700)
+        taskLi.removeClass('animated bounceInUp')
+      } catch (e) {
+        alert('Could not update task')
+        console.log(e)
+        this.loading(false)
+      }
+    })
+
+    el.find('[data-toolbar-next]').click(async (e) => {
+      this.loading(true)
+      try {
+        const taskId = $(e.currentTarget)
+          .closest('[data-task-li]')
+          .attr('data-task-li-id')
+        const response = await axios.post(`/api/v1/tasks/${taskId}/next-stage`)
+        this.loading(false)
+        const taskLi = $(`[data-task-li-id=${taskId}]`)
+        taskLi.find('[data-task-toolbar-toggle]').trigger('click')
+        taskLi.addClass('animated bounceOutDown')
+        await delay(700)
+        taskLi.hide()
+        taskLi.appendTo(
+          `[data-stage-id=${response.data.newStage[0].id}] [data-task-ul]`
+        )
+        taskLi.show()
+        taskLi.removeClass('bounceOutDown')
+        taskLi.addClass('bounceInDown')
+        await delay(700)
+        taskLi.removeClass('animated bounceInDown')
+      } catch (e) {
+        alert('Could not update task')
+        console.log(e)
+        this.loading(false)
+      }
+    })
   }
 
   attachEditProjectTitle() {
@@ -483,17 +612,16 @@ export default class DashboardComponent {
     }
   }
 
-  loading(isLoading) {
+  async loading(isLoading) {
     if (isLoading) {
       this.loadingCounter++
     } else {
       this.loadingCounter--
     }
 
-    if (this.loadingCounter == 0) {
-      setTimeout(() => {
-        $('[data-loading-bar]').fadeOut(200)
-      }, 350)
+    if (this.loadingCounter <= 0) {
+      await delay(300)
+      $('[data-loading-bar]').fadeOut(200)
     } else {
       $('[data-loading-bar]').fadeIn(200)
     }

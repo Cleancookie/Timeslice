@@ -69,19 +69,24 @@ class TaskController {
    */
   async create({ request, auth, params }) {
     let user = await auth.getUser()
-    let { name, description, project_id, stage_id } = request.all()
+    let { name, description, project_id, stage_id, username } = request.all()
     let { id } = params
     let project = await Project.find(id)
 
-    if (!(await project.canBeEditedBy(user))) {
-      response.status(403)
-      return {
-        success: false,
-        error: 403,
-        message: `User(${user.username}) is not permitted to update project(${
-          project.name
-        })`
-      }
+    // if (!(await project.canBeEditedBy(user))) {
+    //   response.status(403)
+    //   return {
+    //     success: false,
+    //     error: 403,
+    //     message: `User(${user.username}) is not permitted to update project(${
+    //       project.name
+    //     })`
+    //   }
+    // }
+    let user_id = user.id
+    if (username) {
+      const assignedUser = await User.findBy('username', username)
+      user_id = assignedUser.id
     }
 
     let task = new Task()
@@ -89,14 +94,20 @@ class TaskController {
       name: name,
       description: description,
       project_id: project_id,
-      stage_id: stage_id
+      stage_id: stage_id,
+      user_id: user_id
     })
 
     const success = await project.tasks().save(task)
 
+    const newTask = await Task.query()
+      .where('id', task.id)
+      .with('users')
+      .fetch()
+
     return {
       success: success,
-      data: task
+      data: newTask
     }
   }
 
@@ -186,7 +197,22 @@ class TaskController {
     let { id } = params
     let task = await Task.find(id)
 
-    return response.json(await task.nextStage())
+    const nextStage = await task.nextStage()
+    task.stage_id = nextStage.toJSON()[0].id
+    await task.save()
+
+    return response.json({ success: true, data: task, newStage: nextStage })
+  }
+
+  async prevStage({ request, response, auth, params }) {
+    let { id } = params
+    let task = await Task.find(id)
+
+    const prevStage = await task.prevStage()
+    task.stage_id = prevStage.toJSON()[0].id
+    await task.save()
+
+    return response.json({ success: true, data: task, newStage: prevStage })
   }
 
   /**
