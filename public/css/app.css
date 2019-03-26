@@ -16787,6 +16787,11 @@ p {
   .vertical .task--container::-webkit-scrollbar-thumb:hover {
     background: #393e46;
   }
+
+  .vertical .stage-toolbar--new-task {
+    display: block;
+    margin: 0;
+  }
 }
 
 .lds-ellipsis {
