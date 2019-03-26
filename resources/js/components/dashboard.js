@@ -414,7 +414,6 @@ export default class DashboardComponent {
           .closest('[data-task-li]')
           .attr('data-task-li-id')
         const response = await axios.post(`/api/v1/tasks/${taskId}/next-stage`)
-        console.log(response)
         this.loading(false)
         const taskLi = $(`[data-task-li-id=${taskId}]`)
         taskLi.addClass('animated bounceOutDown')
