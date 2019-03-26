@@ -1,5 +1,6 @@
 const axios = require('axios')
 const _ = require('lodash')
+const delay = require('delay')
 
 export default class DashboardComponent {
   constructor(init = true) {
@@ -377,6 +378,62 @@ export default class DashboardComponent {
 
       this.modalInit = true
     }
+
+    // Move task from stage to stage
+    el.find('[data-toolbar-prev]').click(async (e) => {
+      this.loading(true)
+      try {
+        const taskId = $(e.currentTarget)
+          .closest('[data-task-li]')
+          .attr('data-task-li-id')
+        const response = await axios.post(`/api/v1/tasks/${taskId}/prev-stage`)
+        this.loading(false)
+        const taskLi = $(`[data-task-li-id=${taskId}]`)
+        taskLi.addClass('animated bounceOutUp')
+        await delay(700)
+        taskLi.hide()
+        taskLi.appendTo(
+          `[data-stage-id=${response.data.newStage[0].id}] [data-task-ul]`
+        )
+        taskLi.show()
+        taskLi.removeClass('bounceOutUp')
+        taskLi.addClass('bounceInUp')
+        await delay(700)
+        taskLi.removeClass('animated bounceInUp')
+      } catch (e) {
+        alert('Could not update task')
+        console.log(e)
+        this.loading(false)
+      }
+    })
+
+    el.find('[data-toolbar-next]').click(async (e) => {
+      this.loading(true)
+      try {
+        const taskId = $(e.currentTarget)
+          .closest('[data-task-li]')
+          .attr('data-task-li-id')
+        const response = await axios.post(`/api/v1/tasks/${taskId}/next-stage`)
+        console.log(response)
+        this.loading(false)
+        const taskLi = $(`[data-task-li-id=${taskId}]`)
+        taskLi.addClass('animated bounceOutDown')
+        await delay(700)
+        taskLi.hide()
+        taskLi.appendTo(
+          `[data-stage-id=${response.data.newStage[0].id}] [data-task-ul]`
+        )
+        taskLi.show()
+        taskLi.removeClass('bounceOutDown')
+        taskLi.addClass('bounceInDown')
+        await delay(700)
+        taskLi.removeClass('animated bounceInDown')
+      } catch (e) {
+        alert('Could not update task')
+        console.log(e)
+        this.loading(false)
+      }
+    })
   }
 
   attachEditProjectTitle() {
@@ -554,17 +611,16 @@ export default class DashboardComponent {
     }
   }
 
-  loading(isLoading) {
+  async loading(isLoading) {
     if (isLoading) {
       this.loadingCounter++
     } else {
       this.loadingCounter--
     }
 
-    if (this.loadingCounter == 0) {
-      setTimeout(() => {
-        $('[data-loading-bar]').fadeOut(200)
-      }, 350)
+    if (this.loadingCounter <= 0) {
+      await delay(300)
+      $('[data-loading-bar]').fadeOut(200)
     } else {
       $('[data-loading-bar]').fadeIn(200)
     }

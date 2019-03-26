@@ -47,7 +47,7 @@ class Task extends Model {
     let prevStage = this.stages()
       .fetch()
       .then((stage) => {
-        let prevStageOrderPos = stage.order - 1
+        let newStageOrderPos = stage.order - 1
 
         let prevStage = Stage.query()
           .where('project_id', this.project_id)

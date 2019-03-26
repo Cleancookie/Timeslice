@@ -197,14 +197,22 @@ class TaskController {
     let { id } = params
     let task = await Task.find(id)
 
-    return response.json(await task.nextStage())
+    const nextStage = await task.nextStage()
+    task.stage_id = nextStage.toJSON()[0].id
+    await task.save()
+
+    return response.json({ success: true, data: task, newStage: nextStage })
   }
 
   async prevStage({ request, response, auth, params }) {
     let { id } = params
     let task = await Task.find(id)
 
-    return response.json(await task.prevStage())
+    const prevStage = await task.prevStage()
+    task.stage_id = prevStage.toJSON()[0].id
+    await task.save()
+
+    return response.json({ success: true, data: task, newStage: prevStage })
   }
 
   /**
