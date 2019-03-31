@@ -4,10 +4,17 @@ const $ = require('jquery')
 const _ = require('lodash')
 import CookieComponent from './cookies'
 
-export default class LoginComponent {
+export default new class LoginComponent {
   constructor() {
-    this.submitLoginFormListener()
-    this.submitRegisterFormListener()
+    if (!!$('#login-form').length) {
+      console.log('Login form loaded')
+      this.submitLoginFormListener()
+    }
+
+    if (!!$('#register-form').length) {
+      console.log('Register form loaded')
+      this.submitRegisterFormListener()
+    }
   }
 
   submitLoginFormListener() {
@@ -74,4 +81,4 @@ export default class LoginComponent {
         })
     })
   }
-}
+}()

@@ -10,8 +10,5 @@ import 'bootstrap'
 import 'select2'
 
 // Components
-import LoginComponent from './components/login'
-const login = new LoginComponent()
-
-import DashboardComponent from './components/dashboard'
-const dashboard = new DashboardComponent()
+const LoginComponent = require('./components/login')
+const DashboardComponent = require('./components/dashboard')
