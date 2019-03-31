@@ -1,10 +1,11 @@
+'use strict'
 const axios = require('axios')
 const _ = require('lodash')
 const delay = require('delay')
 
-export default class DashboardComponent {
+export default new class DashboardComponent {
   constructor(init = true) {
-    if ($('[data-dashboard]').length) {
+    if (!!$('[data-dashboard]').length) {
       this.loadingCounter = 0
 
       if (init) {
@@ -13,7 +14,7 @@ export default class DashboardComponent {
         this.createProjectListener()
       }
 
-      console.log('Dashboard loaded')
+      console.log('DashboardComponent loaded')
       this.modalInit = false
     }
   }
@@ -626,4 +627,4 @@ export default class DashboardComponent {
       $('[data-loading-bar]').fadeIn(200)
     }
   }
-}
+}()

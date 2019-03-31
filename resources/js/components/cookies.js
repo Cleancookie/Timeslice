@@ -1,4 +1,4 @@
-export default class CookieComponent {
+export default new class CookieComponent {
   static setCookie(cname, cvalue) {
     var d = new Date()
     // All cookies last 3 days
@@ -22,4 +22,4 @@ export default class CookieComponent {
     }
     return null
   }
-}
+}()
