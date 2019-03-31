@@ -344,6 +344,14 @@ export default new class DashboardComponent {
         .attr('disabled', (i, v) => {
           return !v
         })
+
+      // Reinit autcomplete
+      el.closest('[data-task-li]')
+        .find('[data-task-input-user]')
+        .autocomplete({
+          source: projectUsers,
+          delay: 50
+        })
     })
 
     // Show modal to delete task
@@ -572,6 +580,7 @@ export default new class DashboardComponent {
       this.loading(false)
 
       if (response.status == 200) {
+        projectUsers = response.data.projectUsers
         $('#edit-users-in-project--modal').modal('hide')
       }
     })

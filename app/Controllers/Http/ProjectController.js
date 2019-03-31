@@ -203,10 +203,15 @@ class ProjectController {
     const { newUsers } = request.all()
     const project = await Project.find(id)
     const result = await project.users().sync(newUsers)
+    let projectUsers = await project.users().fetch()
+    projectUsers = projectUsers.toJSON().map((user) => {
+      return user.username
+    })
 
     return response.json({
       success: true,
-      data: result
+      data: result,
+      projectUsers: projectUsers
     })
   }
 }
