@@ -27,7 +27,7 @@ class AlexSeeder {
     // Add stages to each project
     for (let i = 0; i < projects.length; i++) {
       console.log(`Creating project ${i + 1} of ${projects.length}`)
-      let stages = await Factory.model('App/Models/Stage').createMany(5)
+      let stages = await Factory.model('App/Models/Stage').createMany(6)
       await projects[i].stages().saveMany(stages)
 
       // Create tasks for each stage

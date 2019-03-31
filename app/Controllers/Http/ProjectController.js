@@ -90,7 +90,7 @@ class ProjectController {
       order: 5
     })
     stages.push(stage)
-    project.stages().saveMany(stages)
+    await project.stages().saveMany(stages)
 
     return {
       success: true,
