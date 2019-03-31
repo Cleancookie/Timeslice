@@ -247,6 +247,17 @@ export default new class DashboardComponent {
         const description = $('[data-create-task-description]').val()
         const username = $('[data-create-task-user]').val()
 
+        // Check username exists
+        if ((username != '') & (projectUsers.indexOf(username) === -1)) {
+          this.loading(false)
+          $('[data-create-task-user]').focus()
+          $('[data-create-task-user]').addClass('animated shake')
+          await delay(1500)
+          $('[data-create-task-user]').removeClass('animated shake')
+
+          return
+        }
+
         const response = await axios.post(
           `/api/v1/projects/${projectId}/tasks`,
           {
