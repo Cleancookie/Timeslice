@@ -67,10 +67,8 @@ export default new class LoginComponent {
 
       registerResponse
         .then((data) => {
-          console.log(data)
-          window.theResponse = data
           submitButton.prop('disabled', false)
-          window.location.href = '/dashboard'
+          window.location.pathname = '/dashboard'
         })
         .catch((data) => {
           submitButton.addClass('animated shake error')
