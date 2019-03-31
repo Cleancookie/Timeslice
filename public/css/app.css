@@ -16424,6 +16424,44 @@ p {
   border-color: red;
 }
 
+.login--container {
+  background-color: white;
+  min-height: calc(100vh - 56px);
+}
+
+@media (min-width: 576px) {
+  .login--form-container {
+    display: flex;
+  }
+
+  .login--form-container:first-of-type {
+    justify-content: flex-start;
+  }
+
+  .login--form-container:last-of-type {
+    justify-content: flex-end;
+  }
+}
+
+.login--login-form,
+.login--register-form {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .login--login-form,
+  .login--register-form {
+    max-width: 400px;
+  }
+}
+
+.login--login-form {
+  background-color: #f8f8f8;
+}
+
 .sidebar .create-project-button {
   border-radius: 0;
 }

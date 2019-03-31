@@ -1,13 +1,13 @@
 @layout("layouts/default")
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid login--container">
   <div class="row">
-    <div class="col-12 order-lg-2 col-lg-6">
+    <div class="col-12 order-md-2 col-md-6 login--form-container">
       @include('partials/forms/login')
     </div>
 
-    <div class="col-12 order-lg-1 col-lg-6">
+    <div class="col-12 order-md-1 col-md-6 login--form-container">
       @include('partials/forms/register')
     </div>
   </div>
