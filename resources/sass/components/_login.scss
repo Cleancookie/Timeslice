@@ -5,4 +5,39 @@
       border-color: red;
     }
   }
+
+  &--container {
+    background-color: $white;
+    min-height: calc(100vh - #{$nav-height});
+  }
+
+  &--form-container {
+    @include media-breakpoint-up(sm) {
+      display: flex;
+
+      &:first-of-type {
+        justify-content: flex-start;
+      }
+
+      &:last-of-type {
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  &--login-form,
+  &--register-form {
+    background-color: $white;
+    padding: 20px;
+    margin-top: 20px;
+    width: 100%;
+
+    @include media-breakpoint-up(md) {
+      max-width: 400px;
+    }
+  }
+
+  &--login-form {
+    background-color: $light-grey;
+  }
 }
