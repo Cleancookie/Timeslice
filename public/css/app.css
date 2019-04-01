@@ -16783,7 +16783,7 @@ p {
 
 .content hr {
   height: 40px;
-  width: 100vw;
+  width: 100%;
   margin-bottom: -1px;
   border: none;
 }
@@ -16831,7 +16831,7 @@ p {
 .content .section {
   padding: 50px 0;
   display: flex;
-  width: 100vw;
+  width: 100%;
   justify-content: center;
 }
 
