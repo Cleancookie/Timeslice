@@ -1,0 +1,108 @@
+.content {
+  h1,
+  h2 {
+    font-family: Montserrat;
+  }
+
+  display: flex;
+  flex-direction: column;
+
+  .light {
+    background-color: $light-grey;
+    border-color: $dark-grey;
+    color: $black;
+  }
+
+  .dark {
+    background-color: $dark-grey;
+    border-color: $light-grey;
+    color: $white;
+  }
+
+  hr {
+    height: 40px;
+    width: 100vw;
+    margin-bottom: -1px;
+    border: none;
+  }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    background-image: url('/assets/images/regal.jpg');
+    @include media-breakpoint-up(sm) {
+      margin-bottom: -50px;
+    }
+
+    &--info {
+      text-align: center;
+      max-width: 400px;
+      background-color: white;
+      padding: 30px 50px;
+      margin: 20px 0;
+
+      background: repeating-linear-gradient(
+        45deg,
+        $white,
+        $white 10px,
+        $light-grey 10px,
+        $light-grey 20px
+      );
+
+      @include media-breakpoint-up(md) {
+        margin: 50px;
+        max-width: 500px;
+        padding: 30px 90px;
+        background-color: white;
+        margin: 20px;
+        box-shadow: 10px 10px 0px 0px $black;
+      }
+    }
+
+    &--video {
+      max-width: 800px;
+      width: 100%;
+      border-radius: 20px;
+    }
+  }
+
+  .section {
+    padding: 50px 0;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+
+    &--info {
+      max-width: 50%;
+
+      @include media-breakpoint-up(md) {
+        padding: 20px;
+        max-width: 50px;
+        margin: 0 150px 0 30px;
+      }
+
+      h2 {
+        font-size: 1rem;
+        @include media-breakpoint-up(md) {
+          font-size: 2rem;
+        }
+      }
+    }
+
+    &--heading {
+      padding: 20px;
+      @include media-breakpoint-up(sm) {
+        border-bottom-width: 2px;
+        border-bottom-style: solid;
+      }
+    }
+
+    &--image {
+      border-radius: 20px;
+      max-width: 50%;
+      height: auto;
+    }
+  }
+}

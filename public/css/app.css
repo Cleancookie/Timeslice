@@ -16759,6 +16759,121 @@ p {
   font-family: lato, Verdana, sans-serif;
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.content h1,
+.content h2 {
+  font-family: Montserrat;
+}
+
+.content .light {
+  background-color: #f8f8f8;
+  border-color: #393e46;
+  color: #0c0c0c;
+}
+
+.content .dark {
+  background-color: #393e46;
+  border-color: #f8f8f8;
+  color: white;
+}
+
+.content hr {
+  height: 40px;
+  width: 100vw;
+  margin-bottom: -1px;
+  border: none;
+}
+
+.content .hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+  background-image: url("/assets/images/regal.jpg");
+}
+
+@media (min-width: 576px) {
+  .content .hero {
+    margin-bottom: -50px;
+  }
+}
+
+.content .hero--info {
+  text-align: center;
+  max-width: 400px;
+  background-color: white;
+  padding: 30px 50px;
+  margin: 20px 0;
+  background: repeating-linear-gradient(45deg, white, white 10px, #f8f8f8 10px, #f8f8f8 20px);
+}
+
+@media (min-width: 768px) {
+  .content .hero--info {
+    margin: 50px;
+    max-width: 500px;
+    padding: 30px 90px;
+    background-color: white;
+    margin: 20px;
+    box-shadow: 10px 10px 0px 0px #0c0c0c;
+  }
+}
+
+.content .hero--video {
+  max-width: 800px;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.content .section {
+  padding: 50px 0;
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+}
+
+.content .section--info {
+  max-width: 50%;
+}
+
+@media (min-width: 768px) {
+  .content .section--info {
+    padding: 20px;
+    max-width: 50px;
+    margin: 0 150px 0 30px;
+  }
+}
+
+.content .section--info h2 {
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .content .section--info h2 {
+    font-size: 2rem;
+  }
+}
+
+.content .section--heading {
+  padding: 20px;
+}
+
+@media (min-width: 576px) {
+  .content .section--heading {
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+  }
+}
+
+.content .section--image {
+  border-radius: 20px;
+  max-width: 50%;
+  height: auto;
+}
+
 .new-task--form .create-task--description {
   min-height: 120px;
 }
