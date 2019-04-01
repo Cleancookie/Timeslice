@@ -16808,7 +16808,7 @@ p {
   background-color: white;
   padding: 30px 50px;
   margin: 20px 0;
-  background: repeating-linear-gradient(45deg, white, white 10px, #f8f8f8 10px, #f8f8f8 20px);
+  background: repeating-linear-gradient(45deg, white, white 10px, rgba(248, 248, 248, 0.5) 10px, rgba(248, 248, 248, 0.5) 20px);
 }
 
 @media (min-width: 768px) {

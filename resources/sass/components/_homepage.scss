@@ -47,8 +47,8 @@
         45deg,
         $white,
         $white 10px,
-        $light-grey 10px,
-        $light-grey 20px
+        rgba($light-grey, 0.5) 10px,
+        rgba($light-grey, 0.5) 20px
       );
 
       @include media-breakpoint-up(md) {
