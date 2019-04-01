@@ -16869,9 +16869,15 @@ p {
 }
 
 .content .section--image {
-  border-radius: 20px;
   max-width: 50%;
   height: auto;
+  border-radius: 9px;
+}
+
+@media (min-width: 576px) {
+  .content .section--image {
+    border-radius: 20px;
+  }
 }
 
 .new-task--form .create-task--description {
