@@ -12,3 +12,4 @@ import 'select2'
 // Components
 const LoginComponent = require('./components/login')
 const DashboardComponent = require('./components/dashboard')
+const HomepageComponent = require('./components/homepage')
