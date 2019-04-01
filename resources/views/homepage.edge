@@ -1,11 +1,42 @@
 @layout("layouts/default")
 
 @section('content')
-<div class="container-fluid">
-  <div class="row">
-    <div class="col">
-      <h1>Homepage placeholder</h1>
+<main class="content">
+  <div class="hero">
+    <div class="hero--info">
+      <h1 class="hero--heading">Focus on Doing</h1>
+      <p><em>Timeslice</em> is a platform to help stay focused on your path.  So you can spend less time organising, and more time being productive.</p>
     </div>
+    <video src="/assets/videos/demo.mp4" muted loop autoplay class="hero--video"></video>
   </div>
-</div>
+
+  <hr class="dark">
+
+  <section class="section container-fluid dark">
+    <div class="container d-flex align-items-center justify-content-center">
+      <img class="section--image" src="assets/images/adding-members.jpg">
+      <div class="section--info">
+        <h2 class="section--heading">Easily collaberate with your friends.</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container-fluid light">
+    <div class="container d-flex align-items-center justify-content-center">
+      <div class="section--info">
+        <h2 class="section--heading">Keep track of multiple projects.</h2>
+      </div>
+      <img class="section--image" src="assets/images/multiple-projects.jpg">
+    </div>
+  </section>
+
+  <section class="section container-fluid ction__left dark">
+    <div class="container d-flex align-items-center justify-content-center">
+      <img class="section--image" src="/assets/images/task-example.jpg">
+      <div class="section--info">
+        <h2 class="section--heading">Stay productive.</h2>
+      </div>
+    </div>
+  </section>
+</main>
 @endsection
