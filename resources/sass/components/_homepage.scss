@@ -45,15 +45,15 @@
       padding: 30px 50px;
       margin: 20px 0;
 
-      background: repeating-linear-gradient(
-        45deg,
-        $white,
-        $white 10px,
-        rgba($light-grey, 0.5) 10px,
-        rgba($light-grey, 0.5) 20px
-      );
-
       @include media-breakpoint-up(md) {
+        background: repeating-linear-gradient(
+          45deg,
+          $white,
+          $white 10px,
+          rgba($light-grey, 0.5) 10px,
+          rgba($light-grey, 0.5) 20px
+        );
+
         margin: 50px;
         max-width: 500px;
         padding: 30px 90px;
@@ -67,6 +67,11 @@
       max-width: 1200px;
       width: 100%;
       border-radius: 20px;
+      display: none;
+
+      @include media-breakpoint-up(sm) {
+        display: block;
+      }
     }
   }
 
