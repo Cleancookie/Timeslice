@@ -1,7 +1,0 @@
-{
-  "compilerOptions": {
-    "baseUrl": "./"
-  },
-  "include": ["**/*"],
-  "files": ["node_modules/adonisjs-types/index.d.ts", "config/typings.d.ts"]
-}
