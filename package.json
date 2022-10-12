@@ -37,7 +37,7 @@
     "animate.css": "^3.7.0",
     "axios": "^0.18.0",
     "delay": "^4.1.0",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.2",
     "lodash": "^4.17.11",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.24.0",
